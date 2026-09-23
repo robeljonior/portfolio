@@ -1,0 +1,78 @@
+/* app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #edeae1;       /* ← the sand bg from your image */
+  --paper-2: #e8e5da;
+  --ink: #0d262b;
+  --teal-deep: #183c43;
+  --teal-mid: #1e4f57;
+  --teal-line: #1c4049;
+  --gold: #e6c669;
+  --gold-bright: #f0d482;
+  --gold-dim: #b8952e;
+}
+
+@layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--paper);
+  }
+
+  /* THE whole page background */
+  html,
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    min-height: 100%;
+  }
+
+}
+
+@layer utilities {
+  .bg-paper     { background-color: var(--paper); }
+  .bg-paper-2   { background-color: var(--paper-2); }
+  .bg-ink       { background-color: var(--ink); }
+  .bg-teal-deep { background-color: var(--teal-deep); }
+  .bg-teal-mid  { background-color: var(--teal-mid); }
+  .bg-gold      { background-color: var(--gold); }
+  .bg-gold-bright { background-color: var(--gold-bright); }
+  .bg-gold-dim  { background-color: var(--gold-dim); }
+
+  .text-ink        { color: var(--ink); }
+  .text-paper      { color: var(--paper); }
+  .text-teal-line  { color: var(--teal-line); }
+  .text-teal-mid   { color: var(--teal-mid); }
+  .text-gold       { color: var(--gold); }
+  .text-gold-bright{ color: var(--gold-bright); }
+  .text-gold-dim   { color: var(--gold-dim); }
+
+  .border-ink { border-color: var(--ink); }
+
+  .eyebrow {
+    font-family: ui-monospace, "SFMono-Regular", monospace;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
