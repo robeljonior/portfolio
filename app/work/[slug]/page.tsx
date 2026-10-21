@@ -1,104 +1,134 @@
-import { SYSTEMS } from "@/lib/Data";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import ProcessFlow from "@/components/ProcessFlow";
-import deviceTrackingImage from "@/lib/images/Distributed device tracking.png";
-import integrationImage from "@/lib/images/Distributed_system_integration.png";
-import goBackendImage from "@/lib/images/Go_backend_services.png";
-import dotnetImage from "@/lib/images/NET_enterprise_applications.png";
-import qualityImage from "@/lib/images/Qualit_ and_release_confidence.png";
-import paymentImage from "@/lib/images/payment_system.png";
-import ussdImage from "@/lib/images/ussd.png";
-
-const SYSTEM_IMAGES: Record<string, StaticImageData> = {
-  "payment-transaction-flows": paymentImage,
-  "distributed-system-integration": integrationImage,
-  "go-backend-services": goBackendImage,
-  "quality-release-confidence": qualityImage,
-  "dotnet-enterprise-applications": dotnetImage,
-  "ussd-mobile-gateway": ussdImage,
-  "realtime-device-tracking": deviceTrackingImage,
-};
+import Footer from "@/components/site/Footer";
+import { Chip } from "@/components/site/TechIcon";
+import TopBar from "@/components/site/TopBar";
+import { GITHUB_URL, PROJECTS } from "@/lib/Data";
+import { PROJECT_IMAGES } from "@/lib/projectImages";
 
 export function generateStaticParams() {
-  return SYSTEMS.map((system) => ({ slug: system.slug }));
+  return PROJECTS.map((project) => ({ slug: project.slug }));
 }
 
-export default async function WorkDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const system = SYSTEMS.find((item) => item.slug === slug);
+  const project = PROJECTS.find((item) => item.slug === slug);
+  return project ? { title: `${project.title} — Robel Mamushet`, description: project.details.summary } : {};
+}
 
-  if (!system) return notFound();
+function Block({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section className="border-t border-rule px-5 py-8 sm:px-8">
+      <h2 className="text-lg font-semibold tracking-[-0.02em]">{title}</h2>
+      <div className="mt-4">{children}</div>
+    </section>
+  );
+}
+
+export default async function WorkDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = PROJECTS.find((item) => item.slug === slug);
+  if (!project) return notFound();
+
+  const image = PROJECT_IMAGES[project.slug];
+  const index = PROJECTS.indexOf(project);
+  const next = PROJECTS[(index + 1) % PROJECTS.length];
 
   return (
-    <section className="min-h-screen bg-ink px-5 py-20 text-paper sm:px-8 sm:py-28 lg:px-10">
-      <div className="mx-auto max-w-[900px]">
-        <div className="flex items-center justify-between">
-          <Link href="/#work" className="font-mono text-[11px] text-gold-bright hover:underline">
-            ← back to work
+    <>
+      <TopBar />
+      <main className="column">
+        <div className="flex items-center justify-between px-5 py-4 sm:px-8">
+          <Link href="/#work" className="press inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink">
+            <ArrowLeft className="h-3.5 w-3.5" /> All work
           </Link>
           <a
-            href={system.github}
+            href={project.repo ?? GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-[2px] border border-[#527078] px-3 py-1.5 font-mono text-[10px] text-[#d3dfd9] transition-colors hover:border-gold-bright hover:text-gold-bright"
+            className="press inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
           >
-            View on GitHub ↗
+            {project.repo ? "View code" : "GitHub"} <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
+        <div className="hatch" aria-hidden="true" />
 
-        <p className="mt-8 font-mono text-[10px] uppercase tracking-[.13em] text-[#aebdb7]">
-          {system.number} / {system.eyebrow}
-        </p>
-        <h1 className="mt-4 text-4xl font-extrabold tracking-[-.06em] sm:text-6xl">
-          {system.title}
-        </h1>
-        <p className="mt-8 max-w-[640px] text-base leading-7 text-[#b9c7c1]">
-          {system.details.summary}
-        </p>
-
-        {SYSTEM_IMAGES[system.slug] && (
-          <div className="mt-10 overflow-hidden rounded-[2px] border border-[#3a5259] bg-white/[0.03] p-3 sm:p-5">
-            <Image
-              src={SYSTEM_IMAGES[system.slug]}
-              alt={`${system.title} preview`}
-              className="h-auto w-full object-contain"
-              sizes="(max-width: 900px) 100vw, 900px"
-              priority
-            />
+        <header className="px-5 py-8 sm:px-8">
+          <p className="font-mono text-xs text-faint">{project.number} · {project.eyebrow}</p>
+          <h1 className="mt-3 text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl">{project.title}</h1>
+          <p className="mt-4 text-[15px] leading-7 text-muted">{project.details.summary}</p>
+          <div className="mt-5 flex flex-wrap gap-1.5">
+            {project.details.stack.map((tag) => (
+              <Chip key={tag} name={tag} />
+            ))}
           </div>
+        </header>
+
+        {image && (
+          <figure className="border-t border-rule px-5 py-6 sm:px-8">
+            <div className="overflow-hidden rounded border border-rule bg-panel">
+              <Image src={image} alt={`${project.title} diagram`} className="h-auto w-full" sizes="760px" priority />
+            </div>
+            <figcaption className="mt-2 font-mono text-[11px] text-faint">Fig. {project.number}. {project.eyebrow}</figcaption>
+          </figure>
         )}
 
-        <h2 className="mt-16 font-mono text-[10px] uppercase tracking-[.13em] text-[#aebdb7]">
-          How it works
-        </h2>
-        <ProcessFlow steps={system.steps} />
+        {project.caseStudy && (
+          <>
+            <div className="grid border-t border-rule sm:grid-cols-2">
+              {[
+                ["Context", project.caseStudy.context],
+                ["Problem", project.caseStudy.problem],
+                ["My role", project.caseStudy.role],
+                ["Result", project.caseStudy.result],
+              ].map(([label, text], i) => (
+                <div key={label} className={`border-rule px-5 py-6 sm:px-8 ${i < 2 ? "border-b" : ""} ${i % 2 === 0 ? "sm:border-r" : ""} max-sm:border-b`}>
+                  <h2 className={`text-sm font-medium ${label === "Result" ? "text-gold" : "text-muted"}`}>{label}</h2>
+                  <p className="mt-2 text-[15px] leading-7 text-ink">{text}</p>
+                </div>
+              ))}
+            </div>
+            <Block title="Key decisions">
+              <ol className="space-y-3">
+                {project.caseStudy.decisions.map((item, i) => (
+                  <li key={item} className="flex gap-3 text-[15px] leading-7">
+                    <span className="mt-[3px] font-mono text-xs text-faint">{i + 1}.</span>
+                    {item}
+                  </li>
+                ))}
+              </ol>
+            </Block>
+          </>
+        )}
 
-        <h2 className="mt-16 font-mono text-[10px] uppercase tracking-[.13em] text-[#aebdb7]">
-          What I did
-        </h2>
-        <ul className="mt-4 space-y-3">
-          {system.details.responsibilities.map((item) => (
-            <li key={item} className="flex gap-3 text-sm leading-6 text-[#b9c7c1]">
-              <span className="text-gold-bright">—</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+        <Block title="How it works">
+          <ProcessFlow steps={project.steps} />
+        </Block>
 
-        <div className="mt-14 flex flex-wrap gap-2">
-          {system.details.stack.map((tag) => (
-            <span key={tag} className="rounded-[2px] border border-[#527078] px-2.5 py-1 font-mono text-[9px] text-[#d3dfd9]">
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
+        <Block title="What I did">
+          <ul className="space-y-3">
+            {project.details.responsibilities.map((item) => (
+              <li key={item} className="flex gap-3 text-[15px] leading-7">
+                <span className="mt-[11px] h-1 w-1 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Block>
+
+        <Link href={`/work/${next.slug}`} className="group flex items-center justify-between border-t border-rule px-5 py-6 transition-colors hover:bg-panel sm:px-8">
+          <span>
+            <span className="block text-sm text-muted">Next</span>
+            <span className="mt-1 block font-semibold tracking-[-0.02em]">{next.title}</span>
+          </span>
+          <ArrowUpRight className="h-5 w-5 text-faint transition-[transform,color] duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold" />
+        </Link>
+
+        <Footer />
+      </main>
+    </>
   );
 }

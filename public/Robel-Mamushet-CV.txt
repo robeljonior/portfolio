@@ -1,0 +1,35 @@
+ROBEL MAMUSHET
+Backend Software Engineer | Java | Spring Boot | Go | Banking & Fintech
+Addis Ababa, Ethiopia (UTC+3)
+Email: robelmamoshet@gmail.com
+LinkedIn: https://www.linkedin.com/in/robel-mamushet
+
+SUMMARY
+Backend engineer with nearly 4 years building banking and fintech systems for Ethiopian banks, including Hijra, Wegagen, Enat and Siinqee Bank. Migrated a production USSD gateway from Java/Spring Boot to Go and caught 12 behaviour differences before release through a side-by-side review. Focused on transaction correctness, reliable integrations and clean service boundaries.
+
+SKILLS
+- Backend: Go (Gin), Java, Spring Boot, Jakarta EE (WildFly), Node.js, REST APIs, microservices
+- Messaging & workflow: Kafka, ActiveMQ, Apache Camel, Camunda BPMN
+- Data: PostgreSQL, MySQL, Redis, Cassandra
+- Infrastructure & security: Docker, Jenkins CI/CD, Git, Keycloak
+- Frontend: Next.js, React, TypeScript, React Native
+- Domain: USSD banking, payment workflows, SOAP/XML core banking integration
+
+EXPERIENCE
+Software Engineer, Atlas Computer Technology, Addis Ababa
+Dec 2022 - Present
+Joined as a Junior Developer and grew into a Software Engineer role, building banking systems for Hijra, Wegagen, Enat and Siinqee Bank.
+- Ported the production USSD gateway from Java/Spring Boot to Go (Gin), with Redis and Cassandra session storage and Keycloak authentication; a side-by-side review caught 12 behaviour differences before release
+- Built a USSD banking platform with Spring Boot and Camunda BPMN workflows, giving bank customers mobile banking without a smartphone or internet
+- Integrated core banking systems over SOAP/XML using Apache Camel routes
+- Designed message-driven communication between microservices with Kafka and ActiveMQ
+- Built services in Node.js and web dashboards in Next.js and TypeScript on top of the backend APIs
+- Migrated and maintained Jakarta EE services on WildFly
+- Built CI/CD pipelines with Docker, Git and Jenkins; optimized PostgreSQL and MySQL queries for transactional services
+- Earlier: built web and mobile apps with React and React Native, including a customizable DTF printing e-commerce site
+
+EDUCATION
+Bachelor's Degree, Computational Science, Micro-Link, 2018 - 2022
+
+LANGUAGES
+English (professional), Amharic (native)

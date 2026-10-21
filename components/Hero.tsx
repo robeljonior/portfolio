@@ -2,7 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { TECH, SOCIALS } from "@/lib/Data";
+import { AVAILABILITY, CV_URL, EMAIL, SOCIALS, TECH } from "@/lib/Data";
 import SocialIcon from "./ui/SocialIcon";
 
 function HeroIllustration() {
@@ -49,10 +49,10 @@ function HeroIllustration() {
                 const <span className="text-[#7de08a]">dev</span> = {"{"}
               </p>
               <p className="pl-3 text-[#95a6a2]">
-                stack: <span className="text-[#f0d482]">&quot;React&quot;</span>,
+                stack: <span className="text-[#f0d482]">&quot;Spring Boot&quot;</span>,
               </p>
               <p className="pl-3 text-[#95a6a2]">
-                focus: <span className="text-[#f0d482]">&quot;UI&quot;</span>,
+                focus: <span className="text-[#f0d482]">&quot;Fintech&quot;</span>,
               </p>
               <p className="text-[#e6c669]">{"}"};</p>
             </div>
@@ -98,7 +98,7 @@ export default function Hero() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <section id="top" className="relative overflow-hidden bg-paper">
+    <section id="top" data-nav-theme="light" className="relative overflow-hidden bg-paper">
       {/* faint dot grid, warm-tinted */}
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.5]"
@@ -114,23 +114,20 @@ export default function Hero() {
       <div className="relative mx-auto grid min-h-screen max-w-[1180px] grid-cols-1 items-center gap-12 px-6 pb-24 pt-32 lg:grid-cols-2 lg:gap-8 lg:px-10">
         {/* LEFT — copy */}
         <div className={mounted ? "animate-fade-up" : "opacity-0"}>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#0d262b]/15 bg-white/40 px-4 py-1.5 text-xs font-medium text-[#38545a] backdrop-blur">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#b8952e]" />
-            Ready to Innovate
-          </div>
-
-          <h1 className="text-5xl font-extrabold leading-[1.02] tracking-[-.07em] text-ink sm:text-6xl lg:text-7xl">
-            <span className="block">Backend</span>
-            <span className="block text-teal-mid">Developer</span>
-          </h1>
-
-          <p className="mt-6 text-lg font-medium text-[#38545a]">
-            Network &amp; Telecom Student<span className="ml-1 animate-pulse">|</span>
+          <p className="inline-flex items-center gap-2 rounded-full border border-[#0d262b]/15 bg-white/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[.14em] text-[#38545a]">
+            <span className="h-2 w-2 rounded-full bg-[#2f9e5b]" aria-hidden="true" />
+            {AVAILABILITY}
           </p>
 
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-[#64736e]">
-            Menciptakan Website Yang Inovatif, Fungsional, dan User-Friendly untuk
-            Solusi Digital.
+          <h1 className="mt-6 text-4xl font-extrabold leading-[1.04] tracking-[-.06em] text-ink sm:text-5xl lg:text-6xl">
+            Backend engineer building <span className="text-teal-mid">banking systems</span> in Go and Java.
+          </h1>
+
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-[#4d5f5a]">
+            I ported a production USSD gateway from Java to Go, with{" "}
+            <strong className="font-semibold text-ink">12 behaviour differences caught before release</strong>.
+            Nearly 4 years building payment, USSD and core banking integrations for{" "}
+            <strong className="font-semibold text-ink">4 Ethiopian banks</strong>.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-2">
@@ -147,28 +144,25 @@ export default function Hero() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <a
               href="#work"
-              className="group inline-flex items-center gap-2 rounded-lg border border-[#0d262b]/20 bg-white/50 px-5 py-3 text-sm font-semibold text-ink backdrop-blur transition hover:border-ink hover:bg-white/70"
+              className="group inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-sm font-semibold text-gold-bright shadow-[0_10px_30px_-15px_rgba(13,38,43,0.6)] transition hover:bg-teal-mid"
             >
-              Projects
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="h-4 w-4 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-              >
-                <path d="M7 17 17 7M8 7h9v9" />
+              See case studies
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4 transition group-hover:translate-y-0.5">
+                <path d="M12 5v14m0 0-6-6m6 6 6-6" />
               </svg>
             </a>
             <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 rounded-lg bg-ink px-5 py-3 text-sm font-semibold text-[#f0d482] shadow-[0_10px_30px_-15px_rgba(13,38,43,0.6)] transition hover:bg-teal-mid"
+              href={CV_URL}
+              download
+              className="inline-flex items-center gap-2 rounded-lg border border-[#0d262b]/20 bg-white/50 px-5 py-3 text-sm font-semibold text-ink backdrop-blur transition hover:border-ink hover:bg-white/70"
             >
-              Contact
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                <rect x="3" y="5" width="18" height="14" rx="2" />
-                <path d="m3 7 9 6 9-6" />
-              </svg>
+              Download CV
+            </a>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="inline-flex items-center gap-2 px-1 py-3 text-sm font-semibold text-teal-mid transition hover:text-ink"
+            >
+              Email me <span aria-hidden="true">↗</span>
             </a>
           </div>
 

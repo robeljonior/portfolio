@@ -1,19 +1,26 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const sans = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-sans" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono" });
+
+const title = "Robel Mamushet — Full-Stack Engineer, Backend First (Go, Java, Next.js)";
+const description =
+  "Full-stack engineer, backend first: banking systems in Go and Java and Next.js dashboards on top. Ported a production USSD gateway from Java to Go. Open to remote roles.";
 
 export const metadata: Metadata = {
-  title: "Robel Mamushet — Backend Engineer",
-  description: "Enterprise and fintech systems with Java, Spring Boot, Go, TypeScript, and .NET.",
+  title,
+  description,
+  openGraph: { title, description, type: "website" },
+  twitter: { card: "summary_large_image", title, description },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="bg-night font-sans text-white antialiased">{children}</body>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }

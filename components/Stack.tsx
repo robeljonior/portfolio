@@ -11,10 +11,11 @@ export default function Stack() {
   return (
     <section
       id="stack"
+      data-nav-theme="light"
       className="mx-auto max-w-[1180px] px-5 py-20 sm:px-8 sm:py-28 lg:px-10"
     >
       <div ref={reveal.ref} className={reveal.className}>
-        <SectionLabel>03 / the toolkit</SectionLabel>
+        <SectionLabel>04 / the toolkit</SectionLabel>
 
         <div className="mt-9 grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-24">
           <div>

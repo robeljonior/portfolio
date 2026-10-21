@@ -1,67 +1,75 @@
-// components/Navbar.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NAV_ITEMS } from "@/lib/Data";
+
+type NavTheme = "light" | "dark" | "gold";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState<NavTheme>("light");
+
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>("[data-nav-theme]");
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visibleSections = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const activeSection = visibleSections[0];
+        const nextTheme = activeSection?.target.getAttribute("data-nav-theme") as NavTheme | null;
+
+        if (nextTheme) setTheme(nextTheme);
+      },
+      { threshold: [0.2, 0.4, 0.6], rootMargin: "-70px 0px -35% 0px" },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  const isDark = theme === "dark";
+  const isGold = theme === "gold";
+  const textClass = isDark ? "text-paper" : "text-ink";
+  const mutedTextClass = isDark ? "text-[#aebdb7]" : isGold ? "text-[#38545a]" : "text-[#52635e]";
+  const borderClass = isDark ? "border-white/10" : isGold ? "border-ink/15" : "border-ink/10";
+  const hoverClass = isDark ? "hover:text-gold-bright" : "hover:text-teal-mid";
+  const backgroundClass = isDark ? "bg-ink/75" : isGold ? "bg-gold/75" : "bg-paper/75";
+  const mobileBackgroundClass = isDark ? "bg-ink" : isGold ? "bg-gold" : "bg-paper";
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-white/5 bg-night/70 backdrop-blur-md">
+    <header className={`fixed inset-x-0 top-0 z-40 border-b backdrop-blur-md transition-colors duration-500 ${borderClass} ${backgroundClass}`}>
       <div className="mx-auto flex h-[70px] max-w-7xl items-center justify-between px-6 lg:px-10">
         <a href="#top" className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-gradient-to-br from-violet-500 to-indigo-500 text-xs font-extrabold text-white">
-            RM
-          </span>
-          <span className="hidden text-xs font-medium uppercase tracking-[.16em] text-slate-300 sm:block">
-            robel mamushet
-          </span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-md bg-ink text-xs font-extrabold text-gold-bright">RM</span>
+          <span className={`hidden text-xs font-bold uppercase tracking-[.16em] transition-colors duration-500 sm:block ${textClass}`}>robel mamushet</span>
         </a>
 
-        <nav className="hidden items-center gap-7 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {NAV_ITEMS.map((item, i) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-xs uppercase tracking-[.16em] text-slate-400 transition-colors hover:text-white"
-            >
-              <span className="mr-2 text-slate-600">0{i + 1}</span>
+            <a key={item.href} href={item.href} className={`text-xs font-semibold uppercase tracking-[.16em] transition-colors duration-500 ${mutedTextClass} ${hoverClass}`}>
+              <span className={`mr-2 transition-colors duration-500 ${isDark ? "text-gold-bright" : "text-teal-mid"}`}>0{i + 1}</span>
               {item.label}
             </a>
           ))}
         </nav>
 
-        <a
-          href="mailto:robelmamoshet@gmail.com"
-          className="hidden text-xs uppercase tracking-[.13em] text-slate-300 transition-colors hover:text-violet-300 md:inline"
-        >
-          Start a conversation ↗
+        <a href="mailto:robelmamoshet@gmail.com" className={`hidden text-xs font-semibold uppercase tracking-[.13em] transition-colors duration-500 lg:inline ${textClass} ${hoverClass}`}>
+          Email
         </a>
 
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          onClick={() => setOpen((o) => !o)}
-          className="flex h-10 w-10 items-center justify-center rounded-md border border-white/10 text-white md:hidden"
-        >
+        <button type="button" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((current) => !current)} className={`flex h-10 w-10 items-center justify-center rounded-md border transition-colors duration-500 lg:hidden ${borderClass} ${textClass}`}>
           {open ? "✕" : "☰"}
         </button>
       </div>
 
       {open && (
-        <nav className="border-t border-white/5 bg-night px-6 py-3 md:hidden">
+        <nav className={`border-t px-6 py-3 transition-colors duration-500 lg:hidden ${borderClass} ${mobileBackgroundClass}`}>
           {NAV_ITEMS.map((item, i) => (
-            <a
-              key={item.href}
-              href={item.href}
-              onClick={() => setOpen(false)}
-              className="flex items-center justify-between border-b border-white/5 py-4 text-xs uppercase tracking-[.16em] text-slate-300 last:border-b-0"
-            >
-              <span>
-                <span className="mr-4 text-violet-400">0{i + 1}</span>
-                {item.label}
-              </span>
+            <a key={item.href} href={item.href} onClick={() => setOpen(false)} className={`flex items-center justify-between border-b py-4 text-xs uppercase tracking-[.16em] transition-colors duration-500 last:border-b-0 ${borderClass} ${mutedTextClass} ${hoverClass}`}>
+              <span><span className={`mr-4 ${isDark ? "text-gold-bright" : "text-teal-mid"}`}>0{i + 1}</span>{item.label}</span>
               ↗
             </a>
           ))}

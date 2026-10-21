@@ -37,15 +37,16 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
       className="mt-6"
     >
       <div className="relative flex items-center justify-between">
-        <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-[#3a5259]" />
+        <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-rule-strong" />
         <div
-          className="absolute left-0 top-1/2 h-px -translate-y-1/2 bg-gold-bright transition-all duration-700 ease-out"
+          className="absolute left-0 top-1/2 h-px -translate-y-1/2 bg-gold transition-all duration-700 ease-out"
           style={{
             width: inView ? `${(active / (steps.length - 1)) * 100}%` : "0%",
           }}
         />
         {steps.map((step, i) => (
           <button
+            type="button"
             key={step.label}
             onClick={() => setActive(i)}
             className="group relative z-10 flex flex-col items-center gap-3"
@@ -54,9 +55,9 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
             <span
               className={`flex h-8 w-8 items-center justify-center rounded-full border font-mono text-[10px] transition-all duration-500 ${
                 i <= active
-                  ? "scale-110 border-gold-bright bg-gold-bright text-ink"
-                  : "border-[#527078] bg-ink text-[#8fa39d]"
-              } ${i === active ? "shadow-[0_0_0_4px_rgba(212,175,55,0.15)]" : ""}`}
+                  ? "scale-110 border-gold bg-gold text-ground"
+                  : "border-rule-strong bg-ground text-muted"
+              } ${i === active ? "shadow-[0_0_0_4px_rgba(230,198,105,0.15)]" : ""}`}
             >
               {String(i + 1).padStart(2, "0")}
             </span>
@@ -68,8 +69,8 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
         {steps.map((step, i) => (
           <span
             key={step.label}
-            className={`w-20 text-center font-mono text-[9px] uppercase tracking-[.08em] transition-colors duration-500 sm:w-28 ${
-              i === active ? "text-gold-bright" : "text-[#6c827c]"
+            className={`w-20 text-center font-mono text-[10px] uppercase tracking-[.06em] transition-colors duration-500 sm:w-28 ${
+              i === active ? "text-gold" : "text-faint"
             }`}
           >
             {step.label}
@@ -77,11 +78,11 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
         ))}
       </div>
 
-      <div className="relative mt-8 h-[72px] overflow-hidden rounded-[2px] border border-[#3a5259] bg-white/[0.02] px-5 py-4">
+      <div className="relative mt-8 h-[72px] overflow-hidden rounded-md border border-rule bg-panel px-5 py-4">
         {steps.map((step, i) => (
           <p
             key={step.label}
-            className={`absolute inset-x-5 top-4 text-sm leading-6 text-[#c3d0ca] transition-all duration-500 ${
+            className={`absolute inset-x-5 top-4 text-sm leading-6 text-ink transition-all duration-500 ${
               i === active ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
             }`}
           >

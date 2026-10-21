@@ -1,4 +1,5 @@
 // components/Footer.tsx
+import { CV_URL } from "@/lib/Data";
 
 export default function Footer() {
   return (
@@ -15,6 +16,9 @@ export default function Footer() {
           className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[.14em] text-gold-bright"
         >
           back to top ↑
+        </a>
+        <a href={CV_URL} download className="font-mono text-[10px] uppercase tracking-[.14em] text-gold-bright">
+          download CV ↗
         </a>
       </div>
     </footer>

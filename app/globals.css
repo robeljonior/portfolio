@@ -1,78 +1,71 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --paper: #edeae1;       /* ← the sand bg from your image */
-  --paper-2: #e8e5da;
-  --ink: #0d262b;
-  --teal-deep: #183c43;
-  --teal-mid: #1e4f57;
-  --teal-line: #1c4049;
-  --gold: #e6c669;
-  --gold-bright: #f0d482;
-  --gold-dim: #b8952e;
-}
-
 @layer base {
-  * {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  html {
-    scroll-behavior: smooth;
-    background-color: var(--paper);
-  }
-
-  /* THE whole page background */
-  html,
   body {
-    background-color: var(--paper);
-    color: var(--ink);
-    min-height: 100%;
+    @apply bg-ground text-ink;
+    font-feature-settings: "ss01", "cv11";
   }
 
+  ::selection {
+    @apply bg-gold text-ground;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-gold;
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2c3a3a transparent;
+  }
 }
 
-@layer utilities {
-  .bg-paper     { background-color: var(--paper); }
-  .bg-paper-2   { background-color: var(--paper-2); }
-  .bg-ink       { background-color: var(--ink); }
-  .bg-teal-deep { background-color: var(--teal-deep); }
-  .bg-teal-mid  { background-color: var(--teal-mid); }
-  .bg-gold      { background-color: var(--gold); }
-  .bg-gold-bright { background-color: var(--gold-bright); }
-  .bg-gold-dim  { background-color: var(--gold-dim); }
-
-  .text-ink        { color: var(--ink); }
-  .text-paper      { color: var(--paper); }
-  .text-teal-line  { color: var(--teal-line); }
-  .text-teal-mid   { color: var(--teal-mid); }
-  .text-gold       { color: var(--gold); }
-  .text-gold-bright{ color: var(--gold-bright); }
-  .text-gold-dim   { color: var(--gold-dim); }
-
-  .border-ink { border-color: var(--ink); }
-
-  .eyebrow {
-    font-family: ui-monospace, "SFMono-Regular", monospace;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-weight: 500;
+@layer components {
+  /* The page column: a fixed measure with guide rails on both sides. */
+  .column {
+    @apply relative mx-auto w-full max-w-column border-x border-rule;
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
-    transition:
-      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Hatched band that separates sections. */
+  .hatch {
+    @apply h-6 border-y border-rule;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0 6px,
+      #1f2929 6px 7px
+    );
   }
-  .reveal.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+
+  .press {
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
   }
 }
