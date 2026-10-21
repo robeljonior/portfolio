@@ -34,8 +34,7 @@ export default function Contact() {
     <Section id="contact" title="Contact">
       <p className="text-xl font-semibold tracking-[-0.025em]">Let&apos;s build something dependable.</p>
       <p className="mt-2 text-[15px] leading-7 text-muted">
-        Hiring for a backend role, or need someone who knows banking integrations? Write to me. I reply within two
-        working days.
+        Hiring for any role in backend development, frontend development, or system architecture? Need someone with experience in banking and fintech integrations? Feel free to contact me. I’ll respond immediately
       </p>
 
       <form onSubmit={submit} noValidate className="mt-6 grid gap-4 sm:grid-cols-2">
