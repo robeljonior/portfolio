@@ -69,7 +69,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
 
         {image && (
           <figure className="border-t border-rule px-5 py-6 sm:px-8">
-            <div className="overflow-hidden rounded border border-rule bg-panel">
+            <div className="overflow-hidden glass rounded-xl">
               <Image src={image} alt={`${project.title} diagram`} className="h-auto w-full" sizes="760px" priority />
             </div>
             <figcaption className="mt-2 font-mono text-[11px] text-faint">Fig. {project.number}. {project.eyebrow}</figcaption>

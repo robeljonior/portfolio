@@ -3,16 +3,93 @@
 @tailwind utilities;
 
 @layer base {
+  /* Colour tokens as RGB triples, read by tailwind.config.ts. Night is the default. */
+  :root,
+  [data-theme="dark"] {
+    --ground: 10 13 13;
+    --panel: 15 20 20;
+    --raised: 20 27 27;
+    --rule: 31 41 41;
+    --rule-strong: 44 58 58;
+    --ink: 233 236 232;
+    --muted: 151 163 160;
+    --faint: 107 119 116;
+    --veil: 255 255 255;
+    --gold: 230 198 105;
+    --gold-dim: 184 149 46;
+    --onaccent: 10 13 13;
+    --lcd: 185 210 122;
+    --glow: 1;
+    --shadow: 0 0 0;
+    color-scheme: dark;
+  }
+
+  /* Day theme: plain white and zinc greys, near-black accent, no glow. */
+  [data-theme="light"] {
+    --ground: 255 255 255;
+    --panel: 244 244 245;
+    --raised: 228 228 231;
+    --rule: 235 235 235;
+    --rule-strong: 212 212 216;
+    --ink: 9 9 11;
+    --muted: 82 82 91;
+    --faint: 113 113 122;
+    --veil: 0 0 0;
+    --gold: 24 24 27;
+    --gold-dim: 63 63 70;
+    --onaccent: 255 255 255;
+    --lcd: 22 163 74;
+    --glow: 0;
+    --shadow: 0 0 0;
+    color-scheme: light;
+  }
+
+  /* A block that stays in night colours whichever theme is on. */
+  .theme-dark {
+    --ground: 10 13 13;
+    --panel: 15 20 20;
+    --raised: 20 27 27;
+    --rule: 31 41 41;
+    --rule-strong: 44 58 58;
+    --ink: 233 236 232;
+    --muted: 151 163 160;
+    --faint: 107 119 116;
+    --veil: 255 255 255;
+    --gold: 230 198 105;
+    --onaccent: 10 13 13;
+    --glow: 1;
+    --lcd: 185 210 122;
+    color: rgb(var(--ink));
+  }
+
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     @apply bg-ground text-ink;
-    font-feature-settings: "ss01", "cv11";
+  }
+
+  /* Soft light behind the page, so the glass panels have something to blur. */
+  body {
+    transition: background-color 400ms ease, color 400ms ease;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--glow);
+    transition: opacity 400ms ease;
+    background:
+      radial-gradient(38rem 30rem at 10% 6%, rgba(230, 198, 105, 0.24), transparent 70%),
+      radial-gradient(34rem 28rem at 92% 30%, rgba(185, 210, 122, 0.17), transparent 70%),
+      radial-gradient(30rem 26rem at 70% 78%, rgba(120, 110, 220, 0.14), transparent 70%),
+      radial-gradient(42rem 30rem at 25% 100%, rgba(64, 170, 160, 0.2), transparent 70%);
   }
 
   ::selection {
@@ -29,7 +106,7 @@
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: #2c3a3a transparent;
+    scrollbar-color: rgb(var(--rule-strong)) transparent;
   }
 }
 
@@ -45,8 +122,64 @@
     background-image: repeating-linear-gradient(
       -45deg,
       transparent 0 6px,
-      #1f2929 6px 7px
+      rgb(var(--rule)) 6px 7px
     );
+  }
+
+  /* Frosted panel: translucent fill, blurred backdrop, light top edge. */
+  .glass {
+    background: linear-gradient(180deg, rgb(var(--veil) / 0.07), rgb(var(--veil) / 0.025));
+    border: 1px solid rgb(var(--veil) / 0.09);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.07),
+      0 12px 40px -16px rgb(var(--shadow) / 0.35);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+  }
+
+  [data-theme="light"] .glass:not(.theme-dark) {
+    background: rgb(var(--ground));
+    border-color: rgb(0 0 0 / 0.08);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  }
+
+  /* Light glass for small, repeated pieces (chips, fields): no blur, so it stays cheap. */
+  .glass-soft {
+    background: rgb(var(--veil) / 0.04);
+    border: 1px solid rgb(var(--veil) / 0.08);
+  }
+
+  /* Frosted bar for sticky headers. */
+  .glass-bar {
+    background: rgb(var(--ground) / 0.6);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+  }
+
+  /* Glass card lit by a gold glow from one corner. */
+  .glow {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .glow::before {
+    content: "";
+    opacity: var(--glow);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(26rem 18rem at 0% 0%, rgba(230, 198, 105, 0.16), transparent 70%),
+      radial-gradient(22rem 16rem at 100% 100%, rgba(230, 198, 105, 0.08), transparent 70%);
+  }
+
+  /* Pill button with a detached round arrow that turns on hover. */
+  .pill {
+    @apply inline-flex h-10 items-center rounded-full px-4 text-sm font-semibold transition-colors duration-200;
+  }
+  .pill-dot {
+    @apply -ml-1 grid h-10 w-10 place-items-center rounded-full transition-[transform,background-color] duration-300 ease-out group-hover:rotate-45;
   }
 
   .press {
@@ -54,6 +187,46 @@
   }
   .press:active {
     transform: scale(0.97);
+  }
+}
+
+/* Scroll reveal: ScrollEffects adds .reveal-on to <html>, then .is-in to each
+   [data-reveal] element as it scrolls into view. Without JS nothing is hidden. */
+.reveal-on [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition:
+    opacity 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 700ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-on [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgb(var(--panel));
+  }
+  .glass-bar {
+    background: rgb(var(--ground) / 0.95);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: rgb(var(--panel));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .glass-bar {
+    background: rgb(var(--ground));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
@@ -67,5 +240,80 @@
     animation-duration: 1ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
+  }
+}
+
+/* ---------- Pointer effects (PointerEffects.tsx), desktop + motion allowed only ---------- */
+
+/* Soft gold light that follows the cursor. Dark theme only (--glow is 0 by day). */
+.cursor-spot {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(230, 198, 105, 0.09), transparent 70%);
+}
+.pointer-fx.pointer-in .cursor-spot {
+  opacity: var(--glow);
+}
+
+/* 3D tilt + sheen on [data-tilt] cards. */
+.pointer-fx [data-tilt] {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 350ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+.pointer-fx.reveal-on [data-reveal][data-tilt].is-in {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition:
+    opacity 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 350ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: 0ms;
+}
+.pointer-fx [data-tilt].tilt-on {
+  transition-duration: 700ms, 700ms, 120ms;
+}
+.pointer-fx [data-tilt]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  background: radial-gradient(380px circle at var(--cx, 50%) var(--cy, 50%), rgb(var(--veil) / 0.08), transparent 60%);
+}
+.pointer-fx [data-tilt].tilt-on::after {
+  opacity: 1;
+}
+
+/* Magnetic buttons: the element's translate is set from JS; this eases it back. */
+.pointer-fx [data-magnetic] {
+  transition:
+    translate 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+/* Hero name: letters rise in one by one (SplitText.tsx). */
+.split-char {
+  display: inline-block;
+  animation: split-rise 650ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+@keyframes split-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em) rotate(6deg);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
   }
 }

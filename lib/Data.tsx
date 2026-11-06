@@ -340,7 +340,6 @@ export const SYSTEMS: SystemItem[] = [
     ],
   },
   {
-    featured: 4,
     icon: "▤",
     eyebrow: "Full stack",
     title: "Node.js services and Next.js dashboards",
@@ -377,6 +376,47 @@ export const SYSTEMS: SystemItem[] = [
     },
   },
   {
+    featured: 4,
+    icon: "✦",
+    eyebrow: "AI agent",
+    title: "An AI twin that answers for me",
+    body: "A chat on this portfolio that answers recruiters' questions about my work in my voice, streamed live from Claude and grounded only in my real profile data.",
+    tags: ["Claude API", "Next.js", "TypeScript"],
+    slug: "portfolio-ai-twin",
+    details: {
+      summary:
+        "Recruiters can ask about my systems, stack and availability and get an answer in seconds. The assistant is built from the same data the site renders, so it can't drift from the page or invent experience.",
+      responsibilities: [
+        "Built a streaming chat API route in Next.js on the Claude API",
+        "Generated the system prompt from the site's own typed data, so the chat and the page never disagree",
+        "Added guardrails: answers only from the profile, no commitments on my behalf, hand-off to email for anything else",
+        "Hardened the endpoint: input validation, message and length limits, per-IP rate limiting, typed error handling",
+        "Enabled server-side model fallback and prompt caching to keep it reliable and cheap",
+      ],
+      stack: ["Claude API", "Next.js", "TypeScript", "React", "Streaming"],
+    },
+    steps: [
+      { label: "Visitor asks", text: "A recruiter opens the chat and asks a question, or taps a suggested topic." },
+      { label: "Request checked", text: "The API route validates the conversation, trims it, and applies a rate limit." },
+      { label: "Grounded prompt", text: "The question goes to Claude with a cached profile built from the site's own data." },
+      { label: "Answer streams", text: "The reply streams back word by word, so the visitor sees it start at once." },
+      { label: "Hand-off", text: "Anything the profile can't answer is routed to my email instead of guessed." },
+    ],
+    caseStudy: {
+      context: "A recruiter spends seconds on a portfolio. Most leave with questions they never ask.",
+      problem:
+        "Let visitors ask about my work and get a fast, accurate answer, without the assistant ever inventing experience or promising things for me.",
+      role: "Designed and built it end to end: the chat UI, the streaming API, the prompt and the guardrails.",
+      decisions: [
+        "Generate the prompt from the same typed data the page renders, so there's one source of truth",
+        "Stream responses so the first words appear immediately",
+        "Strict scope: profile-only answers, and anything uncertain goes to email",
+        "Validation, length limits and per-IP rate limiting before any model call",
+      ],
+      result: "Visitors get answers about my work in seconds, and every answer traces back to what's on the page.",
+    },
+  },
+  {
     icon: "◫",
     eyebrow: "Web & mobile",
     title: "Custom DTF printing e-commerce site",
@@ -406,6 +446,43 @@ export const PROJECTS = [
   ...SYSTEMS.filter((p) => p.featured).sort((a, b) => a.featured! - b.featured!),
   ...SYSTEMS.filter((p) => !p.featured),
 ].map((p, i) => ({ ...p, number: String(i + 1).padStart(2, "0") }));
+
+/* ---------- building next ---------- */
+
+export type RoadmapItem = {
+  title: string;
+  body: string;
+  /** What the project proves to a hiring team. */
+  shows: string[];
+  stack: string[];
+  /** Change to "In progress" when you start, and move it into SYSTEMS once it ships. */
+  status: "Planned" | "In progress";
+};
+
+/** Projects I'm planning to build in public. Shown with a status badge, never as finished work. */
+export const ROADMAP: RoadmapItem[] = [
+  {
+    title: "Payment ledger service in Go",
+    body: "A double-entry ledger with idempotent transfers, a Kafka outbox for events, and load tests that publish real throughput and latency numbers.",
+    shows: ["Distributed systems", "Database performance", "Payment correctness"],
+    stack: ["Go", "PostgreSQL", "Kafka", "Redis"],
+    status: "Planned",
+  },
+  {
+    title: "Running the ledger in production",
+    body: "The same service deployed the way a bank would run it: containers, Kubernetes, infrastructure as code, CI/CD, and dashboards and alerts on the metrics that matter.",
+    shows: ["Cloud infrastructure", "DevOps", "Observability"],
+    stack: ["Docker", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
+    status: "Planned",
+  },
+  {
+    title: "AI banking support agent",
+    body: "A Claude agent that answers account questions through tools on the ledger's API, with read-only access, audit logs, and hard limits on what it may do.",
+    shows: ["AI agents", "Security", "Fintech integration"],
+    stack: ["Claude API", "Go", "TypeScript"],
+    status: "Planned",
+  },
+];
 
 /* ---------- stack ---------- */
 

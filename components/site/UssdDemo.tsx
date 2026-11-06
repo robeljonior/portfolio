@@ -199,7 +199,7 @@ export default function UssdDemo() {
         tabIndex={0}
         onKeyDown={onKeyDown}
         aria-label="Sample USSD phone. Type digits, Enter to send, Escape to hang up."
-        className="mx-auto w-[220px] rounded-[28px] border border-rule-strong bg-raised p-3 shadow-[0_24px_48px_-24px_rgba(0,0,0,.8)] focus-visible:outline-lcd"
+        className="mx-auto w-[220px] glass rounded-[28px] p-3 focus-visible:outline-lcd"
       >
         <div className="mx-auto mb-3 h-1 w-10 rounded-full bg-rule-strong" aria-hidden="true" />
         <div
@@ -227,7 +227,7 @@ export default function UssdDemo() {
             type="button"
             onClick={() => setInput((v) => v.slice(0, -1))}
             aria-label="Delete"
-            className="press grid h-8 place-items-center rounded-md bg-panel text-muted transition-colors hover:bg-rule hover:text-ink"
+            className="press grid h-8 place-items-center rounded-md bg-veil/[0.06] text-muted transition-colors hover:bg-veil/[0.12] hover:text-ink"
           >
             <Delete className="h-4 w-4" />
           </button>
@@ -244,7 +244,7 @@ export default function UssdDemo() {
               key={key}
               type="button"
               onClick={() => press(key)}
-              className="press h-9 rounded-md bg-panel font-mono text-sm text-ink transition-colors hover:bg-rule"
+              className="press h-9 rounded-md bg-veil/[0.06] font-mono text-sm text-ink transition-colors hover:bg-veil/[0.12]"
             >
               {key}
             </button>
@@ -267,7 +267,7 @@ export default function UssdDemo() {
           </button>
         </div>
 
-        <ol key={run} className="mt-4 min-h-[220px] space-y-1.5 rounded-md border border-rule bg-panel p-3 font-mono text-[11.5px]">
+        <ol key={run} className="mt-4 min-h-[220px] space-y-1.5 glass-soft rounded-xl p-3 font-mono text-[11.5px]">
           {hops.length === 0 && (
             <li className="text-faint">
               carrier → Go gateway → Redis → Keycloak → core bank → Cassandra

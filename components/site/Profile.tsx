@@ -131,7 +131,7 @@ export default function Profile() {
       <div className="flex flex-wrap gap-2 border-t border-rule px-5 py-5 sm:px-8">
         <a
           href={`mailto:${EMAIL}`}
-          className="press inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-ground transition-colors hover:bg-[#f0d482]"
+          className="press inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-onaccent transition-colors hover:bg-gold/85"
         >
           <Mail className="h-4 w-4" /> Email me
         </a>

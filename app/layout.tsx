@@ -1,10 +1,12 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
+import { Geist_Mono, Lexend } from "next/font/google";
+import Script from "next/script";
+import ChatTwin from "@/components/site/ChatTwin";
 import "./globals.css";
 
-const sans = Schibsted_Grotesk({ subsets: ["latin"], variable: "--font-sans" });
-const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono" });
+const sans = Lexend({ subsets: ["latin"], variable: "--font-sans" });
+const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const title = "Robel Mamushet — Full-Stack Engineer, Backend First (Go, Java, Next.js)";
 const description =
@@ -17,10 +19,19 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image", title, description },
 };
 
+/** Applies the saved theme before first paint, so day mode never flashes dark. */
+const themeScript = `try{var t=localStorage.getItem("theme");document.documentElement.dataset.theme=t==="light"?"light":"dark"}catch(e){}`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
-      <body className="font-sans antialiased">{children}</body>
+    <html lang="en" data-theme="dark" className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+      <body className="font-sans antialiased">
+        <Script id="theme" strategy="beforeInteractive">
+          {themeScript}
+        </Script>
+        {children}
+        <ChatTwin />
+      </body>
     </html>
   );
 }

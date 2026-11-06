@@ -55,7 +55,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
             <span
               className={`flex h-8 w-8 items-center justify-center rounded-full border font-mono text-[10px] transition-all duration-500 ${
                 i <= active
-                  ? "scale-110 border-gold bg-gold text-ground"
+                  ? "scale-110 border-gold bg-gold text-onaccent"
                   : "border-rule-strong bg-ground text-muted"
               } ${i === active ? "shadow-[0_0_0_4px_rgba(230,198,105,0.15)]" : ""}`}
             >
@@ -78,7 +78,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
         ))}
       </div>
 
-      <div className="relative mt-8 h-[72px] overflow-hidden rounded-md border border-rule bg-panel px-5 py-4">
+      <div className="relative mt-8 h-[72px] overflow-hidden glass rounded-xl px-5 py-4">
         {steps.map((step, i) => (
           <p
             key={step.label}

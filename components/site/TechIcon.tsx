@@ -24,6 +24,11 @@ const ICONS: Record<string, SimpleIcon> = {
   React: si.siReact,
   "React Native": si.siReact,
   TypeScript: si.siTypescript,
+  Kubernetes: si.siKubernetes,
+  Terraform: si.siTerraform,
+  Prometheus: si.siPrometheus,
+  Grafana: si.siGrafana,
+  "Claude API": si.siClaude,
 };
 
 /** Brand mark for a technology, or nothing when no mark exists. */
@@ -39,7 +44,7 @@ export default function TechIcon({ name, className = "h-3.5 w-3.5" }: { name: st
 
 export function Chip({ name }: { name: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-md border border-rule bg-panel px-2 py-1 font-mono text-[11px] text-muted">
+    <span className="inline-flex items-center gap-1.5 glass-soft rounded-md px-2 py-1 font-mono text-[11px] text-muted">
       <TechIcon name={name} />
       {name}
     </span>

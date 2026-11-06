@@ -1,20 +1,28 @@
 import type { Config } from 'tailwindcss';
 
+const v = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
 const config: Config = {
+  darkMode: ['selector', '[data-theme="dark"]'],
   content: ['./app/**/*.{ts,tsx}', './components/**/*.{ts,tsx}', './lib/**/*.{ts,tsx}'],
   theme: {
     extend: {
       colors: {
-        ground: '#0a0d0d',
-        panel: '#0f1414',
-        raised: '#141b1b',
-        rule: '#1f2929',
-        'rule-strong': '#2c3a3a',
-        ink: '#e9ece8',
-        muted: '#97a3a0',
-        faint: '#6b7774',
-        gold: { DEFAULT: '#e6c669', dim: '#b8952e' },
-        lcd: { DEFAULT: '#b9d27a', ground: '#1c2410', ink: '#d9ec9c' },
+        // Theme colours come from CSS variables (globals.css), so light/dark is one switch.
+        ground: v('ground'),
+        panel: v('panel'),
+        raised: v('raised'),
+        rule: v('rule'),
+        'rule-strong': v('rule-strong'),
+        ink: v('ink'),
+        muted: v('muted'),
+        faint: v('faint'),
+        /** Overlay tint: white on dark, black on light. */
+        veil: v('veil'),
+        gold: { DEFAULT: v('gold'), dim: v('gold-dim') },
+        /** Text on accent buttons: dark on gold at night, white on black by day. */
+        onaccent: v('onaccent'),
+        lcd: { DEFAULT: v('lcd'), ground: '#1c2410', ink: '#d9ec9c' },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],

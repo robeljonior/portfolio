@@ -1,12 +1,12 @@
 "use client";
 
-import { Send } from "lucide-react";
+import { ArrowUpRight, Send } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { EMAIL } from "@/lib/Data";
 import Section from "./Section";
 
 const field =
-  "mt-1.5 block w-full rounded-md border border-rule bg-panel px-3 py-2.5 text-sm text-ink outline-none transition-colors duration-150 placeholder:text-faint hover:border-rule-strong focus:border-gold";
+  "mt-1.5 block w-full rounded-lg border border-veil/10 bg-veil/[0.04] px-3 py-2.5 text-sm text-ink outline-none transition-colors duration-150 placeholder:text-faint hover:border-veil/20 focus:border-gold";
 
 export default function Contact() {
   const [error, setError] = useState("");
@@ -32,12 +32,12 @@ export default function Contact() {
 
   return (
     <Section id="contact" title="Contact">
-      <p className="text-xl font-semibold tracking-[-0.025em]">Let&apos;s build something dependable.</p>
-      <p className="mt-2 text-[15px] leading-7 text-muted">
+      <p data-reveal className="text-xl font-semibold tracking-[-0.025em]">Let&apos;s build something dependable.</p>
+      <p data-reveal className="mt-2 text-[15px] leading-7 text-muted">
         Hiring for any role in backend development, frontend development, or system architecture? Need someone with experience in banking and fintech integrations? Feel free to contact me. I’ll respond immediately
       </p>
 
-      <form onSubmit={submit} noValidate className="mt-6 grid gap-4 sm:grid-cols-2">
+      <form onSubmit={submit} noValidate data-reveal className="glass glow mt-6 grid gap-4 rounded-2xl p-5 sm:grid-cols-2 sm:p-6">
         <label className="text-sm text-muted">
           Name
           <input name="name" autoComplete="name" className={field} placeholder="Your name" />
@@ -51,8 +51,13 @@ export default function Contact() {
           <textarea name="message" rows={4} required className={`${field} resize-y`} placeholder="The role, the team, the problem." />
         </label>
         <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
-          <button type="submit" className="press inline-flex items-center gap-2 rounded-md bg-gold px-4 py-2 text-sm font-semibold text-ground transition-colors hover:bg-[#f0d482]">
-            <Send className="h-4 w-4" /> Send
+          <button type="submit" className="press group inline-flex items-center">
+            <span className="pill gap-2 bg-gold text-onaccent group-hover:bg-gold/85">
+              <Send className="h-4 w-4" /> Send
+            </span>
+            <span className="pill-dot bg-gold text-onaccent group-hover:bg-gold/85" aria-hidden="true">
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
           </button>
           <p className="text-xs text-faint" role="status" aria-live="polite">
             {error ? <span className="text-[#e59a8f]">{error}</span> : opened ? "Your email app should open now." : "Opens your email app with the message filled in."}
