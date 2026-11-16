@@ -2,7 +2,7 @@ import { ArrowDown, ArrowUpRight } from "lucide-react";
 import SocialIcon from "@/components/ui/SocialIcon";
 import LocalTime from "@/components/site/LocalTime";
 import SplitText from "@/components/site/SplitText";
-import { GITHUB_URL, HEADLINE_STACK, LINKEDIN_URL, TITLE } from "@/lib/Data";
+import { ABOUT_STATS, GITHUB_URL, HEADLINE_STACK, LINKEDIN_URL, TITLE } from "@/lib/Data";
 import AskTwin from "./HeroActions";
 import HeroVisual from "./HeroVisual";
 
@@ -13,9 +13,9 @@ function Key({ children }: { children: React.ReactNode }) {
 
 export default function Hero({ avatar }: { avatar: string | null }) {
   return (
-    <section id="top" aria-labelledby="hero-name" className="relative grid min-h-[calc(100svh-4rem)] items-center gap-10 pb-16 pt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-6 lg:pb-24">
+    <section id="top" aria-labelledby="hero-name" className="relative grid min-h-[calc(100svh-4rem)] items-center gap-10 pb-16 pt-10 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-4 lg:pb-24">
       <div className="relative z-10">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           {avatar && (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={avatar} alt="" width={40} height={40} className="h-10 w-10 rounded-full object-cover ring-1 ring-mint/40" />
@@ -24,9 +24,11 @@ export default function Hero({ avatar }: { avatar: string | null }) {
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lcd" aria-hidden="true" />
             Open to remote roles · Addis Ababa<span className="hidden sm:inline">&nbsp;· <LocalTime /></span>
           </p>
+          <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-faint">World 01 / Online</span>
         </div>
 
-        <h1 id="hero-name" className="font-display mt-8 text-[3.2rem] leading-[0.95] text-ink sm:text-7xl xl:text-[5.25rem]">
+        <p className="mt-8 font-mono text-xs uppercase tracking-[0.18em] text-mint">Backend systems · banking · fintech</p>
+        <h1 id="hero-name" className="font-display mt-4 text-[3.2rem] leading-[0.95] text-ink sm:text-7xl xl:text-[5.25rem]">
           <SplitText text="Robel Mamushet" step={30} start={120} />
         </h1>
 
@@ -63,6 +65,15 @@ export default function Hero({ avatar }: { avatar: string | null }) {
 
         <div className="mt-8 animate-rise [animation-delay:700ms]">
           <AskTwin />
+        </div>
+
+        <div className="mt-10 grid max-w-[30rem] grid-cols-3 gap-px overflow-hidden rounded-xl border border-veil/[0.1] bg-veil/[0.08] animate-rise [animation-delay:760ms]">
+          {ABOUT_STATS.map((stat) => (
+            <div key={stat.label} className="bg-ground/80 px-3 py-3 backdrop-blur-sm sm:px-4">
+              <p className="font-display text-2xl text-ink sm:text-3xl">{stat.value}</p>
+              <p className="mt-1 text-[10px] leading-4 text-muted sm:text-xs">{stat.label}</p>
+            </div>
+          ))}
         </div>
       </div>
 

@@ -168,6 +168,39 @@
     backdrop-filter: blur(16px) saturate(150%);
   }
 
+  /* The hero is a small explorable world: technical grid underneath a soft glow. */
+  .world-frame {
+    isolation: isolate;
+  }
+  .world-frame::before,
+  .world-frame::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    border: 1px solid rgb(var(--mint) / 0.13);
+    border-radius: 999px;
+  }
+  .world-frame::before {
+    inset: 10% -12% 8% 8%;
+    transform: rotate(-18deg);
+  }
+  .world-frame::after {
+    inset: -10% 12% 12% -12%;
+    transform: rotate(22deg);
+    border-color: rgb(var(--gold) / 0.11);
+  }
+  .world-grid {
+    z-index: 0;
+    opacity: 0.8;
+    background:
+      radial-gradient(circle at 50% 45%, rgb(var(--mint) / 0.14), transparent 36%),
+      linear-gradient(rgb(var(--mint) / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--mint) / 0.06) 1px, transparent 1px);
+    background-size: auto, 34px 34px, 34px 34px;
+    mask-image: linear-gradient(to bottom, transparent, black 16%, black 82%, transparent);
+  }
+
   /* Glass card lit by a gold glow from one corner. */
   .glow {
     position: relative;

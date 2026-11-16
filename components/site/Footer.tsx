@@ -48,7 +48,7 @@ export default function Footer() {
       <div className="mx-auto max-w-page overflow-hidden px-6 sm:px-10">
         <svg viewBox="0 0 1000 190" className="block w-full select-none fill-veil/[0.06]" aria-hidden="true" focusable="false">
           <text x="0" y="168" className="font-display" style={{ fontSize: 210 }} textLength="1000" lengthAdjust="spacingAndGlyphs">
-            Mamushet
+            ROBEL
           </text>
         </svg>
       </div>
