@@ -1,28 +1,45 @@
 // lib/data.ts
 
-export type Tech = string;
+export type CaseStudy = {
+  context: string;
+  problem: string;
+  /** The hard technical part, in one or two sentences. */
+  challenge?: string;
+  role: string;
+  decisions: string[];
+  result: string;
+};
 
-export type Social = {
+/** One hop of a request through a system, for the interactive architecture diagram. */
+export type FlowHop = {
   label: string;
-  href: string;
-  iconKey: "github" | "linkedin" | "instagram";
+  tech: string;
+  /** What happens on the way in. */
+  note: string;
+  /** What happens on the way back, if different. */
+  back?: string;
 };
 
 export type SystemItem = {
-  number: string;
+  /** 1, 2, 3 … shows the project as a featured case study in that order. Leave out for "More work". */
+  featured?: number;
+  /** Public repo for this project, if there is one. Falls back to the GitHub profile. */
+  repo?: string;
   icon: string;
   eyebrow: string;
   title: string;
   body: string;
   tags: string[];
   slug: string;
-  github: string;
   details: {
     summary: string;
     responsibilities: string[];
     stack: string[];
   };
   steps: { label: string; text: string }[];
+  caseStudy?: CaseStudy;
+  /** Request path for the interactive architecture diagram. Generic names only, nothing confidential. */
+  flow?: FlowHop[];
 };
 
 export type StackGroup = {
@@ -30,53 +47,94 @@ export type StackGroup = {
   values: string[];
 };
 
-/* ---------- nav ---------- */
-
-export const NAV_ITEMS = [
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Stack", href: "#stack" },
-  { label: "Contact", href: "#contact" },
-] as const;
-
 /* ---------- hero ---------- */
 
-export const TECH: Tech[] = ["Java", "Spring Boot", "Go", ".NET", "REST APIs"];
+export const EMAIL = "robelmamoshet@gmail.com";
+export const CV_URL = "/Robel-Mamushet-CV.txt";
+export const AVAILABILITY = "Addis Ababa · UTC+3 · Open to remote";
+export const TITLE = "Backend Software Engineer";
+/** The stack line under the title in the hero. */
+export const HEADLINE_STACK = ["Java", "Spring Boot", "Go", "Microservices"];
+export const PITCH =
+  "Nearly four years building banking and fintech backends: USSD banking, payment processing and core banking integrations that have to work every time.";
+/** Working-hours overlap from Addis Ababa (UTC+3, no daylight saving). */
+export const OVERLAP = "Full workday overlap with Europe, mornings with US East.";
 
-export const SOCIALS: Social[] = [
-  { label: "GitHub", href: "https://github.com/robeljonior", iconKey: "github" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/robel-mamoshet-90990b287/", iconKey: "linkedin" },
-];
+export const LINKEDIN_URL = "https://www.linkedin.com/in/robel-mamushet";
+export const GITHUB_URL = "https://github.com/robeljonior";
 
 /* ---------- about ---------- */
 
 export const ABOUT_STATS = [
-  { value: "04", label: "years shipping" },
-  { value: "24/7", label: "systems mindset" },
-  { value: "01", label: "source of truth" },
+  { value: "~4", label: "years in banking & fintech" },
+  { value: "04", label: "banks served" },
+  { value: "12", label: "diffs caught before a Go release" },
 ];
+
+export const EXPERIENCE = {
+  company: "Atlas Computer Technology",
+  location: "Addis Ababa, Ethiopia",
+  role: "Software Engineer",
+  period: "Dec 2022 — present",
+  summary:
+    "Joined as a Junior Developer and grew into a Software Engineer role, building banking systems for Hijra, Wegagen, Enat and Siinqee Bank.",
+  responsibilities: [
+    "Ported the production USSD gateway from Java/Spring Boot to Go (Gin), with Redis and Cassandra session storage and Keycloak authentication; a side-by-side review caught 12 behaviour differences before release",
+    "Built a USSD banking platform with Spring Boot and Camunda BPMN workflows, giving bank customers mobile banking without a smartphone or internet",
+    "Integrated core banking systems over SOAP/XML using Apache Camel routes",
+    "Designed message-driven communication between microservices with Kafka and ActiveMQ",
+    "Built services in Node.js and web dashboards in Next.js and TypeScript on top of the backend APIs",
+    "Migrated and maintained Jakarta EE services on WildFly",
+    "Built CI/CD pipelines with Docker, Git and Jenkins; optimized PostgreSQL and MySQL queries for transactional services",
+    "Earlier: built web and mobile apps with React and React Native, including a customizable DTF printing e-commerce site",
+  ],
+};
+
+/** Career path at Atlas, oldest first. Order of the middle steps still to be confirmed by Robel. */
+export const TIMELINE = [
+  { when: "Dec 2022", title: "Joined Atlas as a Junior Developer", text: "Web and mobile apps in React and React Native, including a customizable DTF printing e-commerce site." },
+  { when: "", title: "USSD banking platform", text: "Spring Boot and Camunda BPMN workflows: mobile banking without a smartphone or internet." },
+  { when: "", title: "Core banking integration", text: "Apache Camel routes over SOAP/XML; Kafka and ActiveMQ between microservices." },
+  { when: "", title: "Jakarta EE on WildFly", text: "Migrated and maintained enterprise services; CI/CD with Docker, Git and Jenkins." },
+  { when: "", title: "USSD gateway ported to Go", text: "Gin, Redis and Cassandra sessions, Keycloak auth. 12 behaviour differences caught before release." },
+  { when: "Now", title: "Software Engineer", text: "Banking systems for Hijra, Wegagen, Enat and Siinqee Bank." },
+];
+
+export const EDUCATION = {
+  degree: "Bachelor's Degree, Computational Science",
+  school: "Micro-Link",
+  period: "2018 — 2022",
+};
+
+export const LANGUAGES = "English (professional) · Amharic (native)";
 
 /* ---------- work ---------- */
 
 export const SYSTEMS: SystemItem[] = [
   {
-    number: "01",
     icon: "⇄",
-    eyebrow: "Enterprise payment system",
-    title: "Reliable payment transaction flows",
-    body: "Backend services and REST APIs supporting core payment workflows, with validation, exception handling, and production debugging across distributed components.",
-    tags: ["Java", "Spring Boot", "REST APIs"],
+    eyebrow: "Financial & digital banking",
+    title: "Transaction services that stay traceable",
+    body: "Backend services behind payment workflows for Ethiopian banks, with validation, error handling, tuned SQL, and production debugging.",
+    tags: ["Java", "Spring Boot", "PostgreSQL"],
+    featured: 3,
     slug: "payment-transaction-flows",
-    github: "https://github.com/robeljonior",
+    flow: [
+      { label: "Client", tech: "App · USSD · partner", note: "A customer or partner system starts a payment.", back: "The customer sees a clear success, or the exact reason it failed." },
+      { label: "API Gateway", tech: "REST", note: "One entry point routes the request and applies limits.", back: "The response goes back through the same entry point." },
+      { label: "Authentication", tech: "Token check", note: "The caller's identity and permissions are verified before anything moves." },
+      { label: "Payment Service", tech: "Java · Spring Boot", note: "Validation, available-funds and duplicate checks run before money moves.", back: "The result is logged with a reference, so it can be traced later." },
+      { label: "Core Banking", tech: "SOAP/XML", note: "The debit and credit are posted in the bank's system of record.", back: "Core banking confirms the posting, or returns a specific error code." },
+    ],
     details: {
       summary:
-        "Core payment services powering transaction processing across the platform, built for correctness under failure and full traceability in production.",
+        "Transaction services for banks including Hijra, Wegagen, Enat and Siinqee Bank, built for correctness under failure and full traceability in production.",
       responsibilities: [
-        "Designed and implemented REST APIs for payment initiation, validation, and settlement flows",
-        "Built exception handling paths for partial failures across distributed components",
-        "Investigated and resolved production incidents involving transaction state inconsistencies",
+        "Developed transaction-related business logic for banking payment workflows",
+        "Optimized PostgreSQL and MySQL queries for transactional services",
+        "Investigated payment issues and integration failures across systems",
       ],
-      stack: ["Java", "Spring Boot", "REST APIs", "SQL"],
+      stack: ["Java", "Spring Boot", "REST APIs", "PostgreSQL", "MySQL"],
     },
     steps: [
       { label: "Request comes in", text: "A payment is initiated — by a customer, a partner system, or an internal process." },
@@ -85,184 +143,402 @@ export const SYSTEMS: SystemItem[] = [
       { label: "Result confirmed", text: "Everyone gets a clear answer: success, or a specific reason it didn't go through." },
       { label: "Trail is kept", text: "Every step is logged, so any transaction can be traced and explained later." },
     ],
+    caseStudy: {
+      context: "Banks including Hijra, Wegagen, Enat and Siinqee Bank move customer money through these services every day.",
+      problem: "A payment has to be correct even when a network, a partner system or the core bank fails halfway, and every payment has to be explainable afterwards.",
+      challenge: "Payments cross several systems that can each time out. The services must never leave money half-moved, and must make every failure traceable to one step.",
+      role: "Developed transaction business logic, tuned the SQL behind it, and investigated payment and integration failures in production.",
+      decisions: [
+        "Validate and check funds before any money moves, so most failures happen before a debit",
+        "Return a specific reason for every failed payment instead of a generic error",
+        "Log each step with a reference so any transaction can be traced and explained later",
+        "Tune PostgreSQL and MySQL queries on the transactional paths",
+      ],
+      result: "Payment issues can be traced step by step across systems, so support questions get a specific answer instead of a guess.",
+    },
   },
   {
-    number: "02",
     icon: "⛓",
-    eyebrow: "Distributed system integration",
-    title: "Services that connect across systems",
-    body: "Integrated internal and external services within multi-service enterprise architectures, keeping business logic, data validation, and failure handling explicit.",
-    tags: ["JEE", "System Integration", "SQL"],
+    eyebrow: "Core banking integration",
+    title: "Core banking over SOAP/XML, events over Kafka",
+    body: "Apache Camel routes into SOAP/XML core banking systems, and message-driven communication between microservices with Kafka and ActiveMQ.",
+    tags: ["Apache Camel", "Kafka", "ActiveMQ"],
+    featured: 4,
     slug: "distributed-system-integration",
-    github: "https://github.com/robeljonior",
+    flow: [
+      { label: "Channel service", tech: "REST microservice", note: "A modern service needs data from, or a change in, the core bank.", back: "The service gets a clean JSON answer, without knowing any SOAP." },
+      { label: "Event", tech: "Kafka · ActiveMQ", note: "The request is published as a message instead of a chain of direct calls." },
+      { label: "Integration route", tech: "Apache Camel", note: "One tested Camel route translates REST/JSON into the core bank's SOAP/XML.", back: "The route translates the SOAP reply back and publishes the result." },
+      { label: "Core banking", tech: "SOAP/XML", note: "The core bank processes the request in its own format.", back: "Core banking replies, or times out and the route fails safely." },
+    ],
     details: {
       summary:
-        "Connective layer linking multiple internal and external systems together, so information stays accurate and consistent no matter which system it started in.",
+        "The connective layer between modern microservices and the banks' core systems, so data stays accurate and consistent no matter which system it started in.",
       responsibilities: [
-        "Built integration logic connecting internal enterprise systems with external partner services",
-        "Enforced data validation rules so bad or incomplete data never crosses system boundaries",
-        "Handled failure scenarios explicitly, so one system going down doesn't silently corrupt another",
+        "Integrated core banking systems over SOAP/XML using Apache Camel routes",
+        "Designed message-driven communication between microservices with Kafka and ActiveMQ",
+        "Modelled business processes as Camunda BPMN workflows",
       ],
-      stack: ["JEE", "System Integration", "SQL"],
+      stack: ["Apache Camel", "SOAP/XML", "Kafka", "ActiveMQ", "Camunda BPMN"],
     },
     steps: [
-      { label: "Data originates", text: "Information is created or updated in one system — internal or a partner's." },
+      { label: "Data originates", text: "Information is created or updated in one system — a channel, a microservice, or the core bank." },
       { label: "Rules applied", text: "The data is checked against business rules before it's allowed to move anywhere." },
-      { label: "Systems sync", text: "The relevant systems are updated so everyone is working from the same information." },
+      { label: "Systems sync", text: "Camel routes and Kafka/ActiveMQ messages update every system that needs the change." },
       { label: "Failures contained", text: "If one system is unavailable, the process fails safely instead of leaving things half-done." },
       { label: "Consistency verified", text: "The data is confirmed accurate and matching across every system involved." },
     ],
+    caseStudy: {
+      context:
+        "Core banking systems at many banks expose SOAP/XML interfaces, while new channel services are REST microservices.",
+      problem:
+        "Modern services needed reliable access to the core bank, and to each other, without every service learning SOAP or calling every other service directly.",
+      challenge: "Translating between REST/JSON and SOAP/XML in one place, and keeping a slow or unavailable core system from blocking every service that depends on it.",
+      role: "Built the Apache Camel routes into core banking and designed the messaging between microservices.",
+      decisions: [
+        "Apache Camel routes as the single, tested translation layer between REST and SOAP/XML",
+        "Kafka and ActiveMQ for message-driven communication instead of chains of synchronous calls",
+        "Camunda BPMN for multi-step business processes that span several systems",
+      ],
+      result: "Channel services talk to core banking through one integration layer, and a slow or failed system no longer blocks the others.",
+    },
   },
   {
-    number: "03",
     icon: "◈",
-    eyebrow: "Go backend services",
-    title: "Porting core banking services to Go",
-    body: "Built Go services and internal APIs that integrate with existing enterprise applications, with hands-on debugging and performance optimization for production systems.",
-    tags: ["Go", "Gin", "Performance"],
+    eyebrow: "Go migration",
+    title: "Porting a production USSD gateway to Go",
+    body: "Rebuilt the USSD gateway from Java/Spring Boot in Go (Gin), with Redis and Cassandra sessions and Keycloak auth. A side-by-side review caught 12 behaviour differences before release.",
+    tags: ["Go", "Gin", "Redis", "Cassandra"],
+    featured: 1,
     slug: "go-backend-services",
-    github: "https://github.com/robeljonior",
+    flow: [
+      { label: "Phone", tech: "Dial *123#", note: "A customer dials the short code on any phone.", back: "The next menu appears on the customer's screen." },
+      { label: "Carrier", tech: "USSD", note: "The mobile network forwards the session to the bank's gateway." },
+      { label: "Go gateway", tech: "Go · Gin", note: "The gateway, rewritten from Java, routes the input to the right menu step.", back: "The gateway formats the next screen exactly as the Java version did." },
+      { label: "Session store", tech: "Redis · Cassandra", note: "Live session state is read from Redis; every step is also kept durably in Cassandra.", back: "The new session state is saved before replying." },
+      { label: "Auth", tech: "Keycloak", note: "PIN-protected actions are verified through Keycloak." },
+      { label: "Core banking", tech: "Camel · SOAP", note: "Balances and transfers are read from or posted to the core bank.", back: "The core bank's answer is turned into a short USSD screen." },
+    ],
     details: {
       summary:
-        "Core banking functionality rebuilt in Go for speed and reliability, replacing slower legacy components without disrupting the systems that depend on them.",
+        "A production USSD gateway moved from Java/Spring Boot to Go without changing what bank customers see. Running both versions side by side surfaced 12 behaviour differences, all fixed before release.",
       responsibilities: [
-        "Rebuilt existing banking service logic as new Go services with internal APIs",
-        "Profiled and optimized performance bottlenecks in high-traffic production paths",
-        "Debugged and resolved issues surfaced during the transition from legacy systems",
+        "Ported the gateway from Java/Spring Boot to Go (Gin)",
+        "Stored USSD sessions in Redis and Cassandra",
+        "Secured the service with Keycloak authentication",
+        "Ran a side-by-side review of old and new behaviour that caught 12 differences before release",
       ],
-      stack: ["Go", "Gin", "Performance Optimization"],
+      stack: ["Go", "Gin", "Java", "Spring Boot", "Redis", "Cassandra", "Keycloak"],
     },
     steps: [
-      { label: "Legacy reviewed", text: "The existing service's behavior is studied in detail so nothing is lost in translation." },
-      { label: "Service rebuilt", text: "The same functionality is rewritten in Go, designed to run faster and use fewer resources." },
-      { label: "Performance tuned", text: "The new service is tested under real load and optimized until it's measurably faster." },
-      { label: "Safely switched over", text: "Traffic is moved to the new service carefully, with the old one ready as a fallback." },
-      { label: "Monitored in production", text: "The service is watched closely after launch to catch and fix any edge cases." },
+      { label: "Legacy reviewed", text: "The Java service's behaviour is studied in detail so nothing is lost in translation." },
+      { label: "Service rebuilt", text: "The same flows are rewritten in Go with Gin, Redis and Cassandra sessions, and Keycloak auth." },
+      { label: "Side-by-side review", text: "Old and new run on the same inputs; 12 behaviour differences are found and fixed." },
+      { label: "Safely switched over", text: "Traffic moves to the Go gateway carefully, with the old one ready as a fallback." },
+      { label: "Monitored in production", text: "The service is watched closely after launch to catch any remaining edge cases." },
     ],
-  },
-  {
-    number: "04",
-    icon: "▣",
-    eyebrow: "Quality and release confidence",
-    title: "Testing that protects enterprise releases",
-    body: "Executed manual and regression testing, designed unit tests, tracked defects, and verified fixes in close collaboration with development teams.",
-    tags: ["JUnit", "Regression Testing", "Manual QA"],
-    slug: "quality-release-confidence",
-    github: "https://github.com/robeljonior",
-    details: {
-      summary:
-        "A testing process that catches problems before customers do, giving the team confidence that every release actually works as intended.",
-      responsibilities: [
-        "Designed and wrote unit tests covering critical application logic",
-        "Ran manual and regression testing ahead of releases to catch issues early",
-        "Tracked defects to resolution, working directly with developers to verify fixes",
+    caseStudy: {
+      context:
+        "USSD is how many customers of Ethiopian banks use mobile banking: they dial a short code like *123# on any phone, with no internet or smartphone needed.",
+      problem:
+        "The production USSD gateway ran on Java/Spring Boot. It had to move to Go without changing a single menu, message or session rule that live bank customers rely on.",
+      challenge: "A rewrite in a new language had to reproduce every menu, message and session rule exactly, including the edge cases nobody had written down.",
+      role: "Ported the gateway to Go (Gin) and ran the side-by-side review that verified it before release.",
+      decisions: [
+        "Gin for a small, fast HTTP layer in front of the carrier connection",
+        "Redis for live session state and Cassandra for durable session storage",
+        "Keycloak for authentication, shared with the rest of the platform",
+        "Ran old and new gateways on the same inputs and compared every response before switching traffic",
       ],
-      stack: ["JUnit", "Regression Testing", "Manual QA"],
+      result: "12 behaviour differences found and fixed before release, so customers saw no change when traffic moved to Go.",
     },
-    steps: [
-      { label: "Changes reviewed", text: "New code or features are examined to understand what could break." },
-      { label: "Tests written", text: "Automated tests are built to check the logic works correctly, every time." },
-      { label: "Full sweep run", text: "The wider application is retested to make sure nothing else was affected." },
-      { label: "Issues logged", text: "Anything that doesn't work as expected is documented clearly for the team." },
-      { label: "Fixes verified", text: "Once a fix is made, it's tested again to confirm the problem is actually resolved." },
-    ],
   },
   {
-    number: "05",
     icon: "◎",
-    eyebrow: ".NET enterprise applications",
-    title: "Maintainable backend modules in .NET",
-    body: "Developed backend modules and REST APIs for enterprise applications, resolving defects and improving the performance and maintainability of existing systems.",
-    tags: ["C#", ".NET", "REST APIs"],
-    slug: "dotnet-enterprise-applications",
-    github: "https://github.com/robeljonior",
+    eyebrow: "USSD banking platform",
+    title: "Mobile banking without a smartphone",
+    body: "A USSD banking platform built with Spring Boot and Camunda BPMN workflows, giving bank customers mobile banking with no smartphone or internet.",
+    tags: ["Spring Boot", "Camunda", "USSD"],
+    featured: 2,
+    slug: "ussd-mobile-gateway",
+    flow: [
+      { label: "Phone", tech: "Any phone", note: "The customer dials the bank's short code. No internet needed.", back: "The customer reads the next menu screen." },
+      { label: "USSD platform", tech: "Spring Boot", note: "The platform receives the session from the carrier and finds where the customer is in the menu." },
+      { label: "Workflow", tech: "Camunda BPMN", note: "A BPMN workflow decides the next step: a menu, a PIN prompt, or an approval.", back: "The workflow moves to its next state." },
+      { label: "Core services", tech: "REST", note: "Balances and transfers go to the same core services the app and web use.", back: "The result comes back and is fitted into a short screen." },
+    ],
     details: {
       summary:
-        "Backend modules built and maintained for enterprise applications, keeping the codebase healthy so future changes stay fast and low-risk.",
+        "Feature-phone banking for customers of Ethiopian banks: dial a short code, follow the menu, and complete balance checks and transfers over USSD.",
       responsibilities: [
-        "Developed backend modules and REST APIs supporting enterprise application features",
-        "Diagnosed and resolved defects reported from production and QA",
-        "Refactored existing code to improve performance and long-term maintainability",
+        "Built the USSD banking platform with Spring Boot",
+        "Modelled banking menus and approvals as Camunda BPMN workflows",
+        "Connected the channel to the same core services used by app and web",
       ],
-      stack: ["C#", ".NET", "REST APIs"],
+      stack: ["Java", "Spring Boot", "Camunda BPMN", "Redis", "USSD"],
     },
     steps: [
-      { label: "Need identified", text: "A new feature is requested, or a defect is reported by the team or users." },
-      { label: "Module built", text: "Backend logic and APIs are developed to meet the requirement cleanly." },
-      { label: "Defects resolved", text: "Any related bugs are tracked down and fixed at the root cause." },
-      { label: "Code refactored", text: "Existing code is cleaned up so it stays easy to maintain going forward." },
+      { label: "Customer dials", text: "A customer dials a short code like *123# from any phone — no internet needed." },
+      { label: "Gateway receives", text: "The USSD gateway receives the request from the carrier and identifies the session." },
+      { label: "Workflow runs", text: "A Camunda BPMN workflow decides the next step of the banking menu." },
+      { label: "Menu responds", text: "The service tracks where the customer is in the menu and sends back the next screen." },
+      { label: "Session completes", text: "Once the customer confirms an action, the result is processed and the session closes cleanly." },
+    ],
+    caseStudy: {
+      context:
+        "Many bank customers in Ethiopia use feature phones. USSD menus are often the only way they can bank on their phone.",
+      problem:
+        "Banks needed mobile banking that works on any phone, with multi-step menus (balance, transfers, approvals) that are easy to change per bank.",
+      challenge: "USSD sessions are short-lived and stateless at the network level, so every step has to restore where the customer was, quickly, on every request.",
+      role: "Built the USSD banking platform with Spring Boot and modelled the banking menus as Camunda BPMN workflows.",
+      decisions: [
+        "Camunda BPMN so each menu flow is a visible, editable workflow instead of nested if-statements",
+        "Session state kept outside the service so a USSD session survives across requests",
+        "Reused the same core banking services as the app and web channels",
+      ],
+      result: "Customers of partner banks can check balances and move money from any phone, with no smartphone or internet.",
+    },
+  },
+  {
+    icon: "▣",
+    eyebrow: "Enterprise Java",
+    title: "Jakarta EE services on WildFly",
+    body: "Migrated and maintained Jakarta EE services running on WildFly, keeping long-lived banking code healthy as it moved forward.",
+    tags: ["Jakarta EE", "WildFly", "Java"],
+    slug: "jakarta-ee-wildfly",
+    details: {
+      summary:
+        "Long-running enterprise services kept stable and up to date, so changes to established banking code stay fast and low-risk.",
+      responsibilities: [
+        "Migrated Jakarta EE services on WildFly",
+        "Maintained and debugged them in production",
+        "Kept business logic separated from integration and persistence concerns",
+      ],
+      stack: ["Java", "Jakarta EE", "WildFly", "SQL"],
+    },
+    steps: [
+      { label: "Need identified", text: "A migration, feature or defect is raised by the team or a bank." },
+      { label: "Change planned", text: "The affected modules and their dependencies are mapped before touching code." },
+      { label: "Service updated", text: "The service is migrated or changed and redeployed on WildFly." },
+      { label: "Behaviour verified", text: "Existing flows are retested so nothing that worked before breaks." },
       { label: "Shipped and stable", text: "The change goes live and is confirmed stable in production." },
     ],
   },
   {
-    number: "06",
-    icon: "☎",
-    eyebrow: "USSD & mobile gateway",
-    title: "USSD banking sessions through a Spring mobile gateway",
-    body: "A USSD session service built in Spring Boot, paired with a Go-based mobile gateway that routes carrier requests through Spring Cloud Gateway into core banking services.",
-    tags: ["Java", "Spring Boot", "Go", "Spring Cloud Gateway"],
-    slug: "ussd-mobile-gateway",
-    github: "https://github.com/robeljonior",
+    icon: "✓",
+    eyebrow: "Delivery pipelines",
+    title: "CI/CD that makes releases routine",
+    body: "CI/CD pipelines with Docker, Git and Jenkins so banking services build, test and ship the same way every time.",
+    tags: ["Docker", "Jenkins", "Git"],
+    slug: "quality-release-confidence",
     details: {
       summary:
-        "A USSD session service and a lightweight Go mobile gateway that connect feature-phone banking to the same core services used by the app and web channels.",
+        "Repeatable builds and deployments for transactional services, giving the team confidence that every release works as intended.",
       responsibilities: [
-        "Built a Spring Boot USSD service handling session state, menu navigation, and input validation for feature-phone banking",
-        "Developed a Go-based mobile gateway that authenticates and routes carrier USSD requests to backend services",
-        "Integrated the gateway with Spring Cloud Gateway for centralized routing, rate limiting, and service discovery",
-        "Ensured session timeouts, retries, and error messages behave predictably across unreliable mobile networks",
+        "Built CI/CD pipelines with Docker, Git and Jenkins",
+        "Containerized services for consistent environments",
+        "Investigated defects and production issues with developers and QA",
       ],
-      stack: ["Java", "Spring Boot", "Go", "Spring Cloud Gateway", "USSD"],
+      stack: ["Docker", "Jenkins", "Git", "CI/CD"],
     },
     steps: [
-      { label: "Customer dials", text: "A customer dials a short code like *123# from any phone — no internet needed." },
-      { label: "Gateway receives", text: "The mobile gateway, built in Go, receives the request from the carrier and identifies the session." },
-      { label: "Routed to service", text: "Spring Cloud Gateway routes the session to the Spring Boot USSD service handling the menu." },
-      { label: "Menu responds", text: "The USSD service tracks where the customer is in the menu and sends back the next screen." },
-      { label: "Session completes", text: "Once the customer confirms an action, the result is processed and the session closes cleanly." },
+      { label: "Code pushed", text: "A change is pushed to Git and picked up by Jenkins." },
+      { label: "Build & test", text: "The service is built and its tests run automatically." },
+      { label: "Image created", text: "A Docker image is produced so every environment runs the same thing." },
+      { label: "Deployed", text: "The image is rolled out to the target environment." },
+      { label: "Verified", text: "The release is checked in place before it's considered done." },
     ],
   },
   {
-    number: "07",
     icon: "◉",
-    eyebrow: "Distributed device tracking",
-    title: "Real-time tracking system for laptops and phones",
-    body: "A personal tracking platform built with Spring Boot, Go, and Next.js that lets a laptop and a phone continuously report their location and status to each other.",
-    tags: ["Go", "Spring Boot", "Next.js", "WebSockets"],
+    eyebrow: "Node.js & Next.js",
+    title: "Real-time device tracking dashboard",
+    body: "A laptop and a phone exchange location and status through a lightweight backend, shown live on a Next.js and TypeScript dashboard.",
+    tags: ["Next.js", "TypeScript", "WebSockets"],
     slug: "realtime-device-tracking",
-    github: "https://github.com/robeljonior",
     details: {
       summary:
         "A device-tracking system where a laptop and a phone continuously exchange location and status, coordinated through a lightweight backend and a live Next.js dashboard.",
       responsibilities: [
-        "Built a Go daemon running on the laptop that continuously reports location and status",
-        "Built a companion Android app that does the same from the phone",
-        "Designed a Spring Boot signaling backend that pairs devices and relays their updates",
-        "Built a Next.js dashboard that shows both devices' live position and connection state",
+        "Built the live dashboard in Next.js and TypeScript",
+        "Relayed device updates in real time over WebSockets",
+        "Handled reconnects so tracking resumes without losing state",
       ],
-      stack: ["Go", "Spring Boot", "Next.js", "WebSockets"],
+      stack: ["Next.js", "TypeScript", "Go", "Spring Boot", "WebSockets"],
     },
     steps: [
       { label: "Devices register", text: "The laptop and phone each register with the backend using a unique device ID." },
       { label: "Location sent", text: "Each device continuously sends its location and status over a lightweight connection." },
-      { label: "Backend relays", text: "The Spring Boot backend receives updates and relays them to the other paired device." },
+      { label: "Backend relays", text: "The backend receives updates and relays them to the other paired device." },
       { label: "Dashboard updates", text: "The Next.js dashboard shows both devices moving live, with no manual refresh needed." },
       { label: "Reconnects automatically", text: "If a connection drops, the device reconnects and picks up tracking without losing state." },
     ],
+  },
+  {
+    icon: "▤",
+    eyebrow: "Full stack",
+    title: "Node.js services and Next.js dashboards",
+    body: "Node.js services and web dashboards in Next.js and TypeScript, built on top of the banking backend APIs.",
+    tags: ["Next.js", "TypeScript", "Node.js"],
+    slug: "nextjs-banking-dashboards",
+    details: {
+      summary:
+        "The web side of the same banking platforms: Node.js services and Next.js dashboards that let bank teams see and work with what the backend services do.",
+      responsibilities: [
+        "Built services in Node.js on top of the backend APIs",
+        "Built web dashboards in Next.js and TypeScript",
+        "Worked across the stack, from the Go and Java services to the screens that use them",
+      ],
+      stack: ["Next.js", "TypeScript", "React", "Node.js", "REST APIs"],
+    },
+    steps: [
+      { label: "API defined", text: "The backend service exposes the data and actions the team needs." },
+      { label: "Service layer", text: "A Node.js service shapes backend responses for the screen." },
+      { label: "Dashboard built", text: "Next.js and TypeScript pages present the data and actions." },
+      { label: "Reviewed with users", text: "Bank teams try it and the rough edges are fixed." },
+      { label: "Shipped", text: "The dashboard goes live alongside the services it reads from." },
+    ],
+    caseStudy: {
+      context: "Banking backends are only useful when the people running them can see and act on what they do.",
+      problem: "Teams needed web tools on top of the Go and Java services, not just APIs.",
+      role: "Built the Node.js services and Next.js / TypeScript dashboards on top of the backend APIs.",
+      decisions: [
+        "Next.js and TypeScript so types flow from API responses to the screen",
+        "A thin Node.js layer to shape backend data for the UI instead of changing core services",
+        "Reused the same authenticated APIs as the other channels",
+      ],
+      result: "One engineer across the stack: the same person who builds the service builds the screen that uses it.",
+    },
+  },
+  {
+    featured: 5,
+    icon: "✦",
+    eyebrow: "AI agent",
+    title: "An AI twin that answers for me",
+    body: "A chat on this portfolio that answers recruiters' questions about my work in my voice, streamed live from Claude and grounded only in my real profile data.",
+    tags: ["Claude API", "Next.js", "TypeScript"],
+    slug: "portfolio-ai-twin",
+    flow: [
+      { label: "Visitor", tech: "Browser", note: "A recruiter asks a question in the chat.", back: "The answer streams in word by word." },
+      { label: "API route", tech: "Next.js", note: "The route validates the messages, trims the history and applies a per-IP rate limit." },
+      { label: "Prompt", tech: "Site data", note: "The question is paired with a cached profile built from this site's own data." },
+      { label: "Model", tech: "Claude API", note: "Claude answers only from the profile; anything else is routed to email.", back: "Tokens stream back through the route as they are generated." },
+    ],
+    details: {
+      summary:
+        "Recruiters can ask about my systems, stack and availability and get an answer in seconds. The assistant is built from the same data the site renders, so it can't drift from the page or invent experience.",
+      responsibilities: [
+        "Built a streaming chat API route in Next.js on the Claude API",
+        "Generated the system prompt from the site's own typed data, so the chat and the page never disagree",
+        "Added guardrails: answers only from the profile, no commitments on my behalf, hand-off to email for anything else",
+        "Hardened the endpoint: input validation, message and length limits, per-IP rate limiting, typed error handling",
+        "Enabled server-side model fallback and prompt caching to keep it reliable and cheap",
+      ],
+      stack: ["Claude API", "Next.js", "TypeScript", "React", "Streaming"],
+    },
+    steps: [
+      { label: "Visitor asks", text: "A recruiter opens the chat and asks a question, or taps a suggested topic." },
+      { label: "Request checked", text: "The API route validates the conversation, trims it, and applies a rate limit." },
+      { label: "Grounded prompt", text: "The question goes to Claude with a cached profile built from the site's own data." },
+      { label: "Answer streams", text: "The reply streams back word by word, so the visitor sees it start at once." },
+      { label: "Hand-off", text: "Anything the profile can't answer is routed to my email instead of guessed." },
+    ],
+    caseStudy: {
+      context: "A recruiter spends seconds on a portfolio. Most leave with questions they never ask.",
+      problem:
+        "Let visitors ask about my work and get a fast, accurate answer, without the assistant ever inventing experience or promising things for me.",
+      role: "Designed and built it end to end: the chat UI, the streaming API, the prompt and the guardrails.",
+      decisions: [
+        "Generate the prompt from the same typed data the page renders, so there's one source of truth",
+        "Stream responses so the first words appear immediately",
+        "Strict scope: profile-only answers, and anything uncertain goes to email",
+        "Validation, length limits and per-IP rate limiting before any model call",
+      ],
+      result: "Visitors get answers about my work in seconds, and every answer traces back to what's on the page.",
+    },
+  },
+  {
+    icon: "◫",
+    eyebrow: "Web & mobile",
+    title: "Custom DTF printing e-commerce site",
+    body: "A customizable DTF printing store built with React, plus React Native mobile work, from my early years at Atlas.",
+    tags: ["React", "React Native", "TypeScript"],
+    slug: "dtf-printing-ecommerce",
+    details: {
+      summary: "An e-commerce site where customers customize DTF (direct-to-film) prints before ordering, built with React, alongside React Native mobile apps.",
+      responsibilities: [
+        "Built web and mobile apps with React and React Native",
+        "Built the product customization flow for DTF printing orders",
+      ],
+      stack: ["React", "React Native", "TypeScript"],
+    },
+    steps: [
+      { label: "Pick a product", text: "The customer chooses what to print on." },
+      { label: "Customize", text: "They upload a design and adjust it on the product." },
+      { label: "Preview", text: "The site shows how the print will look." },
+      { label: "Order", text: "The customized order goes into checkout." },
+      { label: "Produce", text: "The print shop receives the order with the exact design." },
+    ],
+  },
+];
+
+/** Featured case studies first (by `featured`), then the rest in list order, numbered 01, 02 … */
+export const PROJECTS = [
+  ...SYSTEMS.filter((p) => p.featured).sort((a, b) => a.featured! - b.featured!),
+  ...SYSTEMS.filter((p) => !p.featured),
+].map((p, i) => ({ ...p, number: String(i + 1).padStart(2, "0") }));
+
+/* ---------- building next ---------- */
+
+export type RoadmapItem = {
+  title: string;
+  body: string;
+  /** What the project proves to a hiring team. */
+  shows: string[];
+  stack: string[];
+  /** Change to "In progress" when you start, and move it into SYSTEMS once it ships. */
+  status: "Planned" | "In progress";
+};
+
+/** Projects I'm planning to build in public. Shown with a status badge, never as finished work. */
+export const ROADMAP: RoadmapItem[] = [
+  {
+    title: "Payment ledger service in Go",
+    body: "A double-entry ledger with idempotent transfers, a Kafka outbox for events, and load tests that publish real throughput and latency numbers.",
+    shows: ["Distributed systems", "Database performance", "Payment correctness"],
+    stack: ["Go", "PostgreSQL", "Kafka", "Redis"],
+    status: "Planned",
+  },
+  {
+    title: "Running the ledger in production",
+    body: "The same service deployed the way a bank would run it: containers, Kubernetes, infrastructure as code, CI/CD, and dashboards and alerts on the metrics that matter.",
+    shows: ["Cloud infrastructure", "DevOps", "Observability"],
+    stack: ["Docker", "Kubernetes", "Terraform", "Prometheus", "Grafana"],
+    status: "Planned",
+  },
+  {
+    title: "AI banking support agent",
+    body: "A Claude agent that answers account questions through tools on the ledger's API, with read-only access, audit logs, and hard limits on what it may do.",
+    shows: ["AI agents", "Security", "Fintech integration"],
+    stack: ["Claude API", "Go", "TypeScript"],
+    status: "Planned",
   },
 ];
 
 /* ---------- stack ---------- */
 
 export const STACK_GROUPS: StackGroup[] = [
-  { label: "Languages", values: ["Java", "Go", "C#", "SQL"] },
-  { label: "Frameworks", values: ["Spring Boot", "JEE", "ASP.NET / .NET", "Gin"] },
-  { label: "Integration", values: ["REST APIs", "Distributed Systems", "Payment Processing", "USSD", "Spring Cloud Gateway", "WebSockets"] },
-  { label: "Quality & tools", values: ["JUnit", "Git", "Maven", "Jenkins", "Postman"] },
+  { label: "Backend engineering", values: ["Java", "Spring Boot", "Go (Gin)", "REST APIs", "Jakarta EE (WildFly)", "Node.js"] },
+  { label: "Architecture", values: ["Microservices", "Distributed systems", "API Gateway", "Event-driven design"] },
+  { label: "Databases", values: ["PostgreSQL", "MySQL", "Redis", "Cassandra"] },
+  { label: "Messaging & integration", values: ["Kafka", "ActiveMQ", "Apache Camel", "SOAP/XML"] },
+  { label: "DevOps", values: ["Docker", "CI/CD", "Jenkins", "Linux", "Git"] },
+  { label: "Workflow & security", values: ["Camunda BPMN", "Keycloak"] },
+  { label: "Frontend", values: ["Next.js", "TypeScript", "React"] },
 ];
 
 export const PRINCIPLES = [
-  { icon: "▣", title: "Think in states", text: "Model the transitions. Name the impossible ones." },
-  { icon: "◈", title: "Make it observable", text: "Logs are not a strategy. Context is." },
-  { icon: "✓", title: "Leave a clean trail", text: "The next engineer is part of the design." },
+  { icon: "▣", title: "Keep boundaries clear", text: "Separate business logic, integrations, and persistence." },
+  { icon: "◈", title: "Design for failure", text: "Validation, errors, and recovery belong in the design." },
+  { icon: "✓", title: "Prove it side by side", text: "A migration is done when old and new behave the same." },
 ];

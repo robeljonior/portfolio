@@ -1,78 +1,369 @@
-/* app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --paper: #edeae1;       /* ← the sand bg from your image */
-  --paper-2: #e8e5da;
-  --ink: #0d262b;
-  --teal-deep: #183c43;
-  --teal-mid: #1e4f57;
-  --teal-line: #1c4049;
-  --gold: #e6c669;
-  --gold-bright: #f0d482;
-  --gold-dim: #b8952e;
-}
-
 @layer base {
-  * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  /* Colour tokens as RGB triples, read by tailwind.config.ts. Night is the default. */
+  :root,
+  [data-theme="dark"] {
+    /* Design system: deep teal surfaces, electric mint for interaction, warm gold for money. */
+    --ground: 7 26 28; /* #071A1C background */
+    --panel: 11 36 38; /* #0B2426 secondary background */
+    --raised: 16 47 50; /* #102F32 cards */
+    --rule: 36 68 71; /* #244447 border */
+    --rule-strong: 52 92 96;
+    --ink: 244 241 232; /* #F4F1E8 primary text */
+    --muted: 165 184 179; /* #A5B8B3 secondary text */
+    --faint: 134 160 154; /* #86A09A, still 5:1 on cards */
+    --veil: 255 255 255;
+    --mint: 72 224 193; /* #48E0C1 primary accent */
+    --gold: 230 181 102; /* #E6B566 secondary accent: payments, emphasis */
+    --onaccent: 7 26 28;
+    --lcd: 131 217 165; /* #83D9A5 success */
+    --glow: 1;
+    --shadow: 0 0 0;
+    color-scheme: dark;
+  }
+
+  /* Day theme: warm paper with the same teal family, darker accents for contrast. */
+  [data-theme="light"] {
+    --ground: 245 242 234;
+    --panel: 236 231 219;
+    --raised: 255 253 248;
+    --rule: 218 212 198;
+    --rule-strong: 196 188 170;
+    --ink: 7 26 28;
+    --muted: 62 86 82;
+    --faint: 92 110 105;
+    --veil: 7 26 28;
+    --mint: 10 110 92;
+    --gold: 138 90 18;
+    --onaccent: 245 242 234;
+    --lcd: 22 120 70;
+    --glow: 0;
+    --shadow: 20 40 40;
+    color-scheme: light;
+  }
+
+  /* A block that stays in night colours whichever theme is on (the playground console). */
+  .theme-dark {
+    --ground: 7 26 28;
+    --panel: 11 36 38;
+    --raised: 16 47 50;
+    --rule: 36 68 71;
+    --rule-strong: 52 92 96;
+    --ink: 244 241 232;
+    --muted: 165 184 179;
+    --faint: 134 160 154;
+    --veil: 255 255 255;
+    --mint: 72 224 193;
+    --gold: 230 181 102;
+    --onaccent: 7 26 28;
+    --lcd: 131 217 165;
+    --glow: 1;
+    color: rgb(var(--ink));
+  }
+
+  :root {
+    /* Soft spring: a little overshoot for hovers and presses. */
+    --spring: cubic-bezier(0.34, 1.4, 0.64, 1);
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: var(--paper);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* THE whole page background */
-  html,
   body {
-    background-color: var(--paper);
-    color: var(--ink);
-    min-height: 100%;
+    @apply bg-ground text-ink;
   }
 
+  /* Soft light behind the page, so the glass panels have something to blur. */
+  body {
+    transition: background-color 400ms ease, color 400ms ease;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--glow);
+    transition: opacity 400ms ease;
+    background:
+      radial-gradient(48rem 36rem at 92% 6%, rgba(72, 224, 193, 0.07), transparent 70%),
+      radial-gradient(40rem 30rem at 4% 40%, rgba(230, 181, 102, 0.04), transparent 70%);
+  }
+
+  ::selection {
+    @apply bg-gold text-ground;
+  }
+
+  /* Heading face: Space Grotesk, tight and technical. */
+  .font-display {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 500;
+    letter-spacing: -0.035em;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display), system-ui, sans-serif;
+  }
+
+  :focus-visible {
+    @apply outline outline-2 outline-offset-2 outline-gold;
+  }
+
+  a {
+    text-underline-offset: 3px;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--rule-strong)) transparent;
+  }
 }
 
-@layer utilities {
-  .bg-paper     { background-color: var(--paper); }
-  .bg-paper-2   { background-color: var(--paper-2); }
-  .bg-ink       { background-color: var(--ink); }
-  .bg-teal-deep { background-color: var(--teal-deep); }
-  .bg-teal-mid  { background-color: var(--teal-mid); }
-  .bg-gold      { background-color: var(--gold); }
-  .bg-gold-bright { background-color: var(--gold-bright); }
-  .bg-gold-dim  { background-color: var(--gold-dim); }
-
-  .text-ink        { color: var(--ink); }
-  .text-paper      { color: var(--paper); }
-  .text-teal-line  { color: var(--teal-line); }
-  .text-teal-mid   { color: var(--teal-mid); }
-  .text-gold       { color: var(--gold); }
-  .text-gold-bright{ color: var(--gold-bright); }
-  .text-gold-dim   { color: var(--gold-dim); }
-
-  .border-ink { border-color: var(--ink); }
-
-  .eyebrow {
-    font-family: ui-monospace, "SFMono-Regular", monospace;
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(28px);
+@layer components {
+  /* Card surface: dark teal, thin muted border, minimal shadow, a touch of blur. */
+  .glass {
+    background: rgb(var(--raised) / 0.72);
+    border: 1px solid rgb(var(--rule));
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 10px 30px -20px rgb(var(--shadow) / 0.6);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
     transition:
-      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      border-color 250ms ease,
+      box-shadow 350ms var(--spring),
+      translate 350ms var(--spring);
   }
-  .reveal.is-visible {
+  a.glass:hover,
+  .glass:has(> a:hover),
+  li.glass:hover,
+  article.glass:hover {
+    border-color: rgb(var(--mint) / 0.35);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 18px 40px -22px rgb(var(--shadow) / 0.8);
+    translate: 0 -2px;
+  }
+
+  [data-theme="light"] .glass:not(.theme-dark) {
+    background: rgb(var(--raised));
+    box-shadow: 0 1px 2px rgb(var(--shadow) / 0.05), 0 10px 30px -22px rgb(var(--shadow) / 0.3);
+  }
+
+  /* Light glass for small, repeated pieces (chips, fields): no blur, so it stays cheap. */
+  .glass-soft {
+    background: rgb(var(--panel));
+    border: 1px solid rgb(var(--rule));
+  }
+
+  /* Frosted bar for sticky headers. */
+  .glass-bar {
+    background: rgb(var(--ground) / 0.72);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+  }
+
+  /* The hero is a small explorable world: technical grid underneath a soft glow. */
+  .world-frame {
+    isolation: isolate;
+  }
+  .world-frame::before,
+  .world-frame::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    z-index: 0;
+    border: 1px solid rgb(var(--mint) / 0.13);
+    border-radius: 999px;
+  }
+  .world-frame::before {
+    inset: 10% -12% 8% 8%;
+    transform: rotate(-18deg);
+  }
+  .world-frame::after {
+    inset: -10% 12% 12% -12%;
+    transform: rotate(22deg);
+    border-color: rgb(var(--gold) / 0.11);
+  }
+  .world-grid {
+    z-index: 0;
+    opacity: 0.8;
+    background:
+      radial-gradient(circle at 50% 45%, rgb(var(--mint) / 0.14), transparent 36%),
+      linear-gradient(rgb(var(--mint) / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(var(--mint) / 0.06) 1px, transparent 1px);
+    background-size: auto, 34px 34px, 34px 34px;
+    mask-image: linear-gradient(to bottom, transparent, black 16%, black 82%, transparent);
+  }
+
+  /* Glass card lit by a gold glow from one corner. */
+  .glow {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+  .glow::before {
+    content: "";
+    opacity: var(--glow);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(26rem 18rem at 0% 0%, rgba(72, 224, 193, 0.07), transparent 70%);
+  }
+
+  /* Pill button with a detached round arrow that turns on hover. */
+  .pill {
+    @apply inline-flex h-10 items-center rounded-full px-4 text-sm font-semibold transition-colors duration-200;
+  }
+  .pill-dot {
+    @apply -ml-1 grid h-10 w-10 place-items-center rounded-full transition-[transform,background-color] duration-300 ease-out group-hover:rotate-45;
+  }
+
+  .press {
+    transition: transform 220ms var(--spring);
+  }
+  .press:active {
+    transform: scale(0.97);
+  }
+}
+
+/* Scroll reveal: ScrollEffects adds .reveal-on to <html>, then .is-in to each
+   [data-reveal] element as it scrolls into view. Without JS nothing is hidden. */
+.reveal-on [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition:
+    opacity 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 700ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal-on [data-reveal].is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass {
+    background: rgb(var(--panel));
+  }
+  .glass-bar {
+    background: rgb(var(--ground) / 0.95);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass {
+    background: rgb(var(--panel));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  .glass-bar {
+    background: rgb(var(--ground));
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ---------- Pointer effects (PointerEffects.tsx), desktop + motion allowed only ---------- */
+
+/* Soft gold light that follows the cursor. Dark theme only (--glow is 0 by day). */
+.cursor-spot {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(72, 224, 193, 0.06), transparent 70%);
+}
+.pointer-fx.pointer-in .cursor-spot {
+  opacity: var(--glow);
+}
+
+/* 3D tilt + sheen on [data-tilt] cards. */
+.pointer-fx [data-tilt] {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 350ms cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
+}
+.pointer-fx.reveal-on [data-reveal][data-tilt].is-in {
+  transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition:
+    opacity 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    filter 700ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 350ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition-delay: 0ms;
+}
+.pointer-fx [data-tilt].tilt-on {
+  transition-duration: 700ms, 700ms, 120ms;
+}
+.pointer-fx [data-tilt]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 300ms ease;
+  background: radial-gradient(380px circle at var(--cx, 50%) var(--cy, 50%), rgb(var(--veil) / 0.08), transparent 60%);
+}
+.pointer-fx [data-tilt].tilt-on::after {
+  opacity: 1;
+}
+
+/* Magnetic buttons: the element's translate is set from JS; this eases it back. */
+.pointer-fx [data-magnetic] {
+  transition:
+    translate 250ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+/* Hero name: letters rise in one by one (SplitText.tsx). */
+.split-char {
+  display: inline-block;
+  animation: split-rise 650ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+@keyframes split-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.45em) rotate(6deg);
+    filter: blur(6px);
+  }
+  to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-packet {
+    display: none;
   }
 }

@@ -1,104 +1,177 @@
-import { SYSTEMS } from "@/lib/Data";
-import Image, { type StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { ReactNode } from "react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import ProcessFlow from "@/components/ProcessFlow";
-import deviceTrackingImage from "@/lib/images/Distributed device tracking.png";
-import integrationImage from "@/lib/images/Distributed_system_integration.png";
-import goBackendImage from "@/lib/images/Go_backend_services.png";
-import dotnetImage from "@/lib/images/NET_enterprise_applications.png";
-import qualityImage from "@/lib/images/Qualit_ and_release_confidence.png";
-import paymentImage from "@/lib/images/payment_system.png";
-import ussdImage from "@/lib/images/ussd.png";
-
-const SYSTEM_IMAGES: Record<string, StaticImageData> = {
-  "payment-transaction-flows": paymentImage,
-  "distributed-system-integration": integrationImage,
-  "go-backend-services": goBackendImage,
-  "quality-release-confidence": qualityImage,
-  "dotnet-enterprise-applications": dotnetImage,
-  "ussd-mobile-gateway": ussdImage,
-  "realtime-device-tracking": deviceTrackingImage,
-};
+import Footer from "@/components/site/Footer";
+import Nav from "@/components/site/Nav";
+import RequestFlow from "@/components/site/RequestFlow";
+import ScrollEffects from "@/components/site/ScrollEffects";
+import { Chip } from "@/components/site/TechIcon";
+import { GITHUB_URL, PROJECTS } from "@/lib/Data";
+import { PROJECT_IMAGES } from "@/lib/projectImages";
 
 export function generateStaticParams() {
-  return SYSTEMS.map((system) => ({ slug: system.slug }));
+  return PROJECTS.map((project) => ({ slug: project.slug }));
 }
 
-export default async function WorkDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const system = SYSTEMS.find((item) => item.slug === slug);
+  const project = PROJECTS.find((item) => item.slug === slug);
+  if (!project) return {};
+  const title = `${project.title} · Case study · Robel Mamushet`;
+  return {
+    title,
+    description: project.details.summary,
+    alternates: { canonical: `/work/${project.slug}` },
+    openGraph: { title, description: project.details.summary, type: "article" },
+  };
+}
 
-  if (!system) return notFound();
+/** One numbered part of the case study. */
+function Part({ n, title, children }: { n: number; title: string; children: ReactNode }) {
+  return (
+    <section data-reveal className="grid gap-4 border-t border-veil/[0.07] py-10 md:grid-cols-[220px_minmax(0,1fr)] md:gap-10">
+      <h2 className="flex items-baseline gap-3 md:block">
+        <span className="font-mono text-xs text-mint">{String(n).padStart(2, "0")}</span>
+        <span className="font-display text-3xl text-ink md:mt-2 md:block">{title}</span>
+      </h2>
+      <div className="min-w-0 text-[16px] leading-8 text-muted">{children}</div>
+    </section>
+  );
+}
+
+export default async function WorkDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = PROJECTS.find((item) => item.slug === slug);
+  if (!project) return notFound();
+
+  const image = PROJECT_IMAGES[project.slug];
+  const index = PROJECTS.indexOf(project);
+  const next = PROJECTS[(index + 1) % PROJECTS.length];
+  const cs = project.caseStudy;
+  let n = 0;
 
   return (
-    <section className="min-h-screen bg-ink px-5 py-20 text-paper sm:px-8 sm:py-28 lg:px-10">
-      <div className="mx-auto max-w-[900px]">
-        <div className="flex items-center justify-between">
-          <Link href="/#work" className="font-mono text-[11px] text-gold-bright hover:underline">
-            ← back to work
+    <>
+      <ScrollEffects />
+      <Nav />
+      <main id="content" className="relative z-[1] mx-auto max-w-page px-6 sm:px-10">
+        <div className="flex items-center justify-between py-6">
+          <Link href="/#work" className="press inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink">
+            <ArrowLeft className="h-3.5 w-3.5" /> All case studies
           </Link>
           <a
-            href={system.github}
+            href={project.repo ?? GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-[2px] border border-[#527078] px-3 py-1.5 font-mono text-[10px] text-[#d3dfd9] transition-colors hover:border-gold-bright hover:text-gold-bright"
+            className="press inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-ink"
           >
-            View on GitHub ↗
+            {project.repo ? "View code" : "GitHub"} <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
 
-        <p className="mt-8 font-mono text-[10px] uppercase tracking-[.13em] text-[#aebdb7]">
-          {system.number} / {system.eyebrow}
-        </p>
-        <h1 className="mt-4 text-4xl font-extrabold tracking-[-.06em] sm:text-6xl">
-          {system.title}
-        </h1>
-        <p className="mt-8 max-w-[640px] text-base leading-7 text-[#b9c7c1]">
-          {system.details.summary}
-        </p>
+        <header className="max-w-3xl pb-12 pt-6">
+          <p className="animate-rise font-mono text-xs text-mint">
+            Case study {project.number} · {project.eyebrow}
+          </p>
+          <h1 className="font-display mt-4 animate-rise text-5xl leading-[1.02] text-ink [animation-delay:80ms] sm:text-6xl">{project.title}</h1>
+          <p className="mt-6 animate-rise text-lg leading-8 text-muted [animation-delay:160ms]">{project.details.summary}</p>
+        </header>
 
-        {SYSTEM_IMAGES[system.slug] && (
-          <div className="mt-10 overflow-hidden rounded-[2px] border border-[#3a5259] bg-white/[0.03] p-3 sm:p-5">
-            <Image
-              src={SYSTEM_IMAGES[system.slug]}
-              alt={`${system.title} preview`}
-              className="h-auto w-full object-contain"
-              sizes="(max-width: 900px) 100vw, 900px"
-              priority
-            />
+        {project.flow && (
+          <div data-reveal className="pb-12">
+            <RequestFlow hops={project.flow} title="Architecture · follow a request" />
           </div>
         )}
 
-        <h2 className="mt-16 font-mono text-[10px] uppercase tracking-[.13em] text-[#aebdb7]">
-          How it works
-        </h2>
-        <ProcessFlow steps={system.steps} />
+        {cs && (
+          <Part n={++n} title="Business problem">
+            <p>{cs.context}</p>
+            <p className="mt-4 text-ink">{cs.problem}</p>
+          </Part>
+        )}
 
-        <h2 className="mt-16 font-mono text-[10px] uppercase tracking-[.13em] text-[#aebdb7]">
-          What I did
-        </h2>
-        <ul className="mt-4 space-y-3">
-          {system.details.responsibilities.map((item) => (
-            <li key={item} className="flex gap-3 text-sm leading-6 text-[#b9c7c1]">
-              <span className="text-gold-bright">—</span>
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+        {cs?.challenge && (
+          <Part n={++n} title="Technical challenge">
+            <p className="text-ink">{cs.challenge}</p>
+          </Part>
+        )}
 
-        <div className="mt-14 flex flex-wrap gap-2">
-          {system.details.stack.map((tag) => (
-            <span key={tag} className="rounded-[2px] border border-[#527078] px-2.5 py-1 font-mono text-[9px] text-[#d3dfd9]">
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </section>
+        {(image || !project.flow) && (
+          <Part n={++n} title="Architecture">
+            {image ? (
+              <figure>
+                <div className="glass overflow-hidden rounded-xl">
+                  <Image src={image} alt={`${project.title} architecture diagram`} className="h-auto w-full" sizes="(min-width: 768px) 820px, 100vw" />
+                </div>
+                <figcaption className="mt-2 font-mono text-[11px] text-faint">
+                  Fig. {project.number}. {project.eyebrow}
+                </figcaption>
+              </figure>
+            ) : (
+              <ProcessFlow steps={project.steps} />
+            )}
+          </Part>
+        )}
+
+        <Part n={++n} title="Technologies">
+          <div className="flex flex-wrap gap-1.5">
+            {project.details.stack.map((tag) => (
+              <Chip key={tag} name={tag} />
+            ))}
+          </div>
+        </Part>
+
+        {cs && (
+          <Part n={++n} title="Engineering decisions">
+            <ol className="space-y-4">
+              {cs.decisions.map((item, i) => (
+                <li key={item} className="flex gap-4">
+                  <span className="mt-[3px] font-mono text-xs text-mint">{i + 1}.</span>
+                  <span className="text-ink">{item}</span>
+                </li>
+              ))}
+            </ol>
+          </Part>
+        )}
+
+        <Part n={++n} title="Implementation">
+          {cs && <p className="mb-5 text-ink">{cs.role}</p>}
+          <ul className="space-y-2.5">
+            {project.details.responsibilities.map((item) => (
+              <li key={item} className="flex gap-3">
+                <span className="mt-[14px] h-1 w-1 shrink-0 rounded-full bg-mint" aria-hidden="true" />
+                {item}
+              </li>
+            ))}
+          </ul>
+          {project.flow && (
+            <div className="mt-8">
+              <ProcessFlow steps={project.steps} />
+            </div>
+          )}
+        </Part>
+
+        {cs && (
+          <Part n={++n} title="Outcome">
+            <p className="font-display text-3xl leading-tight text-ink sm:text-[2.1rem]">{cs.result}</p>
+          </Part>
+        )}
+
+        <Link
+          href={`/work/${next.slug}`}
+          className="group my-12 flex items-center justify-between gap-6 rounded-2xl border border-veil/[0.08] p-6 transition-colors hover:border-mint/40 sm:p-8"
+        >
+          <span>
+            <span className="block font-mono text-xs text-faint">Next case study</span>
+            <span className="font-display mt-2 block text-3xl text-ink transition-colors group-hover:text-mint">{next.title}</span>
+          </span>
+          <ArrowUpRight className="h-6 w-6 shrink-0 text-faint transition-[transform,color] duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-mint" />
+        </Link>
+      </main>
+      <Footer />
+    </>
   );
 }
