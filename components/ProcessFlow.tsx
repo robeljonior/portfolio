@@ -39,7 +39,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
       <div className="relative flex items-center justify-between">
         <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-rule-strong" />
         <div
-          className="absolute left-0 top-1/2 h-px -translate-y-1/2 bg-gold transition-all duration-700 ease-out"
+          className="absolute left-0 top-1/2 h-px -translate-y-1/2 bg-mint transition-all duration-700 ease-out"
           style={{
             width: inView ? `${(active / (steps.length - 1)) * 100}%` : "0%",
           }}
@@ -55,9 +55,9 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
             <span
               className={`flex h-8 w-8 items-center justify-center rounded-full border font-mono text-[10px] transition-all duration-500 ${
                 i <= active
-                  ? "scale-110 border-gold bg-gold text-onaccent"
+                  ? "scale-110 border-mint bg-mint text-onaccent"
                   : "border-rule-strong bg-ground text-muted"
-              } ${i === active ? "shadow-[0_0_0_4px_rgba(230,198,105,0.15)]" : ""}`}
+              } ${i === active ? "shadow-[0_0_0_4px_rgb(var(--mint)/0.15)]" : ""}`}
             >
               {String(i + 1).padStart(2, "0")}
             </span>
@@ -70,7 +70,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
           <span
             key={step.label}
             className={`w-20 text-center font-mono text-[10px] uppercase tracking-[.06em] transition-colors duration-500 sm:w-28 ${
-              i === active ? "text-gold" : "text-faint"
+              i === active ? "text-mint" : "text-faint"
             }`}
           >
             {step.label}

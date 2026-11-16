@@ -18,6 +18,7 @@ const ICONS: Record<string, SimpleIcon> = {
   Docker: si.siDocker,
   "Jenkins CI/CD": si.siJenkins,
   Jenkins: si.siJenkins,
+  Linux: si.siLinux,
   Git: si.siGit,
   Keycloak: si.siKeycloak,
   "Next.js": si.siNextdotjs,

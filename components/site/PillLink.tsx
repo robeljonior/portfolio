@@ -4,13 +4,13 @@ import type { ReactNode } from "react";
 type PillLinkProps = {
   href: string;
   children: ReactNode;
-  /** "solid" is the gold button; "ghost" a glass one. */
+  /** "solid" is the mint button; "ghost" a glass one. */
   tone?: "solid" | "ghost";
   download?: boolean;
 };
 
 const TONES = {
-  solid: "bg-gold text-onaccent group-hover:bg-gold/85",
+  solid: "bg-mint text-onaccent group-hover:bg-mint/85",
   ghost: "glass-soft text-ink group-hover:bg-veil/[0.1]",
 };
 

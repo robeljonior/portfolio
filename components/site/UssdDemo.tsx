@@ -279,7 +279,7 @@ export default function UssdDemo() {
               className="grid animate-rise grid-cols-[76px_1fr_auto] gap-3"
               style={{ animationDelay: `${i * 90}ms` }}
             >
-              <span className={hop.at === "gateway" ? "text-gold" : "text-lcd"}>{hop.at}</span>
+              <span className={hop.at === "gateway" ? "text-mint" : "text-lcd"}>{hop.at}</span>
               <span className="truncate text-muted">{hop.detail}</span>
               <span className="text-faint">{hop.ms}</span>
             </li>

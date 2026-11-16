@@ -153,7 +153,7 @@ export default function ChatTwin() {
         }`}
       >
         <header className="flex items-center gap-3 border-b border-veil/[0.08] px-4 py-3">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold font-mono text-sm font-medium text-onaccent">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-mint font-mono text-sm font-medium text-onaccent">
             RM
           </span>
           <div className="min-w-0 flex-1">
@@ -192,11 +192,11 @@ export default function ChatTwin() {
                 type="button"
                 onClick={() => send(topic.ask)}
                 style={{ animationDelay: `${120 + i * 70}ms` }}
-                className="group block w-full animate-rise rounded-2xl border border-veil/[0.08] bg-veil/[0.02] p-4 text-left transition-colors hover:border-gold/40 hover:bg-veil/[0.04]"
+                className="group block w-full animate-rise rounded-2xl border border-veil/[0.08] bg-veil/[0.02] p-4 text-left transition-colors hover:border-mint/40 hover:bg-veil/[0.04]"
               >
-                <span className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-gold">
+                <span className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-mint">
                   {topic.tag}
-                  <ArrowUp className="h-3.5 w-3.5 rotate-45 text-faint transition-transform duration-300 group-hover:rotate-90 group-hover:text-gold" />
+                  <ArrowUp className="h-3.5 w-3.5 rotate-45 text-faint transition-transform duration-300 group-hover:rotate-90 group-hover:text-mint" />
                 </span>
                 <span className="mt-2 block text-sm font-semibold text-ink">{topic.title}</span>
                 <span className="mt-1 block text-sm leading-6 text-muted">{topic.text}</span>
@@ -206,7 +206,7 @@ export default function ChatTwin() {
           {messages.map((m, i) =>
             m.role === "user" ? (
               <div key={i} className="flex justify-end">
-                <p className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-gold px-3.5 py-2.5 text-sm leading-6 text-onaccent">
+                <p className="max-w-[85%] whitespace-pre-wrap rounded-2xl rounded-br-md bg-mint px-3.5 py-2.5 text-sm leading-6 text-onaccent">
                   {m.content}
                 </p>
               </div>
@@ -216,7 +216,7 @@ export default function ChatTwin() {
                   {m.content || (
                     <span className="inline-flex gap-1 py-1" aria-label="Thinking">
                       {[0, 150, 300].map((d) => (
-                        <span key={d} className="h-1.5 w-1.5 animate-pulse rounded-full bg-gold" style={{ animationDelay: `${d}ms` }} />
+                        <span key={d} className="h-1.5 w-1.5 animate-pulse rounded-full bg-mint" style={{ animationDelay: `${d}ms` }} />
                       ))}
                     </span>
                   )}
@@ -233,7 +233,7 @@ export default function ChatTwin() {
           }}
           className="border-t border-veil/[0.08] p-3"
         >
-          <div className="flex items-end gap-2 rounded-2xl border border-veil/10 bg-veil/[0.04] p-2 transition-colors focus-within:border-gold/60">
+          <div className="flex items-end gap-2 rounded-2xl border border-veil/10 bg-veil/[0.04] p-2 transition-colors focus-within:border-mint/60">
             <textarea
               ref={inputRef}
               value={input}
@@ -249,7 +249,7 @@ export default function ChatTwin() {
               type="submit"
               disabled={busy || !input.trim()}
               aria-label="Send"
-              className="press grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gold text-onaccent transition-[background-color,opacity] hover:bg-gold/85 disabled:opacity-40"
+              className="press grid h-9 w-9 shrink-0 place-items-center rounded-full bg-mint text-onaccent transition-[background-color,opacity] hover:bg-mint/85 disabled:opacity-40"
             >
               <ArrowUp className="h-4 w-4" />
             </button>

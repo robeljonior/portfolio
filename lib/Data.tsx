@@ -1,19 +1,23 @@
 // lib/data.ts
 
-export type Tech = string;
-
-export type Social = {
-  label: string;
-  href: string;
-  iconKey: "github" | "linkedin" | "instagram";
-};
-
 export type CaseStudy = {
   context: string;
   problem: string;
+  /** The hard technical part, in one or two sentences. */
+  challenge?: string;
   role: string;
   decisions: string[];
   result: string;
+};
+
+/** One hop of a request through a system, for the interactive architecture diagram. */
+export type FlowHop = {
+  label: string;
+  tech: string;
+  /** What happens on the way in. */
+  note: string;
+  /** What happens on the way back, if different. */
+  back?: string;
 };
 
 export type SystemItem = {
@@ -34,6 +38,8 @@ export type SystemItem = {
   };
   steps: { label: string; text: string }[];
   caseStudy?: CaseStudy;
+  /** Request path for the interactive architecture diagram. Generic names only, nothing confidential. */
+  flow?: FlowHop[];
 };
 
 export type StackGroup = {
@@ -41,36 +47,21 @@ export type StackGroup = {
   values: string[];
 };
 
-/* ---------- nav ---------- */
-
-export const NAV_ITEMS = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Work", href: "#work" },
-  { label: "Stack", href: "#stack" },
-  { label: "Architecture", href: "#architecture" },
-  { label: "Contact", href: "#contact" },
-] as const;
-
 /* ---------- hero ---------- */
-
-export const TECH: Tech[] = ["Java", "Spring Boot", "Go", "Node.js", "Microservices"];
 
 export const EMAIL = "robelmamoshet@gmail.com";
 export const CV_URL = "/Robel-Mamushet-CV.txt";
 export const AVAILABILITY = "Addis Ababa · UTC+3 · Open to remote";
-export const TITLE = "Full-stack engineer, backend first";
-export const PITCH = "I build banking backends in Go and Java, and the Next.js dashboards on top of them.";
+export const TITLE = "Backend Software Engineer";
+/** The stack line under the title in the hero. */
+export const HEADLINE_STACK = ["Java", "Spring Boot", "Go", "Microservices"];
+export const PITCH =
+  "Nearly four years building banking and fintech backends: USSD banking, payment processing and core banking integrations that have to work every time.";
 /** Working-hours overlap from Addis Ababa (UTC+3, no daylight saving). */
 export const OVERLAP = "Full workday overlap with Europe, mornings with US East.";
 
 export const LINKEDIN_URL = "https://www.linkedin.com/in/robel-mamushet";
 export const GITHUB_URL = "https://github.com/robeljonior";
-
-export const SOCIALS: Social[] = [
-  { label: "GitHub", href: GITHUB_URL, iconKey: "github" },
-  { label: "LinkedIn", href: LINKEDIN_URL, iconKey: "linkedin" },
-];
 
 /* ---------- about ---------- */
 
@@ -126,7 +117,15 @@ export const SYSTEMS: SystemItem[] = [
     title: "Transaction services that stay traceable",
     body: "Backend services behind payment workflows for Ethiopian banks, with validation, error handling, tuned SQL, and production debugging.",
     tags: ["Java", "Spring Boot", "PostgreSQL"],
+    featured: 3,
     slug: "payment-transaction-flows",
+    flow: [
+      { label: "Client", tech: "App · USSD · partner", note: "A customer or partner system starts a payment.", back: "The customer sees a clear success, or the exact reason it failed." },
+      { label: "API Gateway", tech: "REST", note: "One entry point routes the request and applies limits.", back: "The response goes back through the same entry point." },
+      { label: "Authentication", tech: "Token check", note: "The caller's identity and permissions are verified before anything moves." },
+      { label: "Payment Service", tech: "Java · Spring Boot", note: "Validation, available-funds and duplicate checks run before money moves.", back: "The result is logged with a reference, so it can be traced later." },
+      { label: "Core Banking", tech: "SOAP/XML", note: "The debit and credit are posted in the bank's system of record.", back: "Core banking confirms the posting, or returns a specific error code." },
+    ],
     details: {
       summary:
         "Transaction services for banks including Hijra, Wegagen, Enat and Siinqee Bank, built for correctness under failure and full traceability in production.",
@@ -144,6 +143,19 @@ export const SYSTEMS: SystemItem[] = [
       { label: "Result confirmed", text: "Everyone gets a clear answer: success, or a specific reason it didn't go through." },
       { label: "Trail is kept", text: "Every step is logged, so any transaction can be traced and explained later." },
     ],
+    caseStudy: {
+      context: "Banks including Hijra, Wegagen, Enat and Siinqee Bank move customer money through these services every day.",
+      problem: "A payment has to be correct even when a network, a partner system or the core bank fails halfway, and every payment has to be explainable afterwards.",
+      challenge: "Payments cross several systems that can each time out. The services must never leave money half-moved, and must make every failure traceable to one step.",
+      role: "Developed transaction business logic, tuned the SQL behind it, and investigated payment and integration failures in production.",
+      decisions: [
+        "Validate and check funds before any money moves, so most failures happen before a debit",
+        "Return a specific reason for every failed payment instead of a generic error",
+        "Log each step with a reference so any transaction can be traced and explained later",
+        "Tune PostgreSQL and MySQL queries on the transactional paths",
+      ],
+      result: "Payment issues can be traced step by step across systems, so support questions get a specific answer instead of a guess.",
+    },
   },
   {
     icon: "⛓",
@@ -151,8 +163,14 @@ export const SYSTEMS: SystemItem[] = [
     title: "Core banking over SOAP/XML, events over Kafka",
     body: "Apache Camel routes into SOAP/XML core banking systems, and message-driven communication between microservices with Kafka and ActiveMQ.",
     tags: ["Apache Camel", "Kafka", "ActiveMQ"],
-    featured: 3,
+    featured: 4,
     slug: "distributed-system-integration",
+    flow: [
+      { label: "Channel service", tech: "REST microservice", note: "A modern service needs data from, or a change in, the core bank.", back: "The service gets a clean JSON answer, without knowing any SOAP." },
+      { label: "Event", tech: "Kafka · ActiveMQ", note: "The request is published as a message instead of a chain of direct calls." },
+      { label: "Integration route", tech: "Apache Camel", note: "One tested Camel route translates REST/JSON into the core bank's SOAP/XML.", back: "The route translates the SOAP reply back and publishes the result." },
+      { label: "Core banking", tech: "SOAP/XML", note: "The core bank processes the request in its own format.", back: "Core banking replies, or times out and the route fails safely." },
+    ],
     details: {
       summary:
         "The connective layer between modern microservices and the banks' core systems, so data stays accurate and consistent no matter which system it started in.",
@@ -175,6 +193,7 @@ export const SYSTEMS: SystemItem[] = [
         "Core banking systems at many banks expose SOAP/XML interfaces, while new channel services are REST microservices.",
       problem:
         "Modern services needed reliable access to the core bank, and to each other, without every service learning SOAP or calling every other service directly.",
+      challenge: "Translating between REST/JSON and SOAP/XML in one place, and keeping a slow or unavailable core system from blocking every service that depends on it.",
       role: "Built the Apache Camel routes into core banking and designed the messaging between microservices.",
       decisions: [
         "Apache Camel routes as the single, tested translation layer between REST and SOAP/XML",
@@ -192,6 +211,14 @@ export const SYSTEMS: SystemItem[] = [
     tags: ["Go", "Gin", "Redis", "Cassandra"],
     featured: 1,
     slug: "go-backend-services",
+    flow: [
+      { label: "Phone", tech: "Dial *123#", note: "A customer dials the short code on any phone.", back: "The next menu appears on the customer's screen." },
+      { label: "Carrier", tech: "USSD", note: "The mobile network forwards the session to the bank's gateway." },
+      { label: "Go gateway", tech: "Go · Gin", note: "The gateway, rewritten from Java, routes the input to the right menu step.", back: "The gateway formats the next screen exactly as the Java version did." },
+      { label: "Session store", tech: "Redis · Cassandra", note: "Live session state is read from Redis; every step is also kept durably in Cassandra.", back: "The new session state is saved before replying." },
+      { label: "Auth", tech: "Keycloak", note: "PIN-protected actions are verified through Keycloak." },
+      { label: "Core banking", tech: "Camel · SOAP", note: "Balances and transfers are read from or posted to the core bank.", back: "The core bank's answer is turned into a short USSD screen." },
+    ],
     details: {
       summary:
         "A production USSD gateway moved from Java/Spring Boot to Go without changing what bank customers see. Running both versions side by side surfaced 12 behaviour differences, all fixed before release.",
@@ -215,6 +242,7 @@ export const SYSTEMS: SystemItem[] = [
         "USSD is how many customers of Ethiopian banks use mobile banking: they dial a short code like *123# on any phone, with no internet or smartphone needed.",
       problem:
         "The production USSD gateway ran on Java/Spring Boot. It had to move to Go without changing a single menu, message or session rule that live bank customers rely on.",
+      challenge: "A rewrite in a new language had to reproduce every menu, message and session rule exactly, including the edge cases nobody had written down.",
       role: "Ported the gateway to Go (Gin) and ran the side-by-side review that verified it before release.",
       decisions: [
         "Gin for a small, fast HTTP layer in front of the carrier connection",
@@ -233,6 +261,12 @@ export const SYSTEMS: SystemItem[] = [
     tags: ["Spring Boot", "Camunda", "USSD"],
     featured: 2,
     slug: "ussd-mobile-gateway",
+    flow: [
+      { label: "Phone", tech: "Any phone", note: "The customer dials the bank's short code. No internet needed.", back: "The customer reads the next menu screen." },
+      { label: "USSD platform", tech: "Spring Boot", note: "The platform receives the session from the carrier and finds where the customer is in the menu." },
+      { label: "Workflow", tech: "Camunda BPMN", note: "A BPMN workflow decides the next step: a menu, a PIN prompt, or an approval.", back: "The workflow moves to its next state." },
+      { label: "Core services", tech: "REST", note: "Balances and transfers go to the same core services the app and web use.", back: "The result comes back and is fitted into a short screen." },
+    ],
     details: {
       summary:
         "Feature-phone banking for customers of Ethiopian banks: dial a short code, follow the menu, and complete balance checks and transfers over USSD.",
@@ -255,6 +289,7 @@ export const SYSTEMS: SystemItem[] = [
         "Many bank customers in Ethiopia use feature phones. USSD menus are often the only way they can bank on their phone.",
       problem:
         "Banks needed mobile banking that works on any phone, with multi-step menus (balance, transfers, approvals) that are easy to change per bank.",
+      challenge: "USSD sessions are short-lived and stateless at the network level, so every step has to restore where the customer was, quickly, on every request.",
       role: "Built the USSD banking platform with Spring Boot and modelled the banking menus as Camunda BPMN workflows.",
       decisions: [
         "Camunda BPMN so each menu flow is a visible, editable workflow instead of nested if-statements",
@@ -376,13 +411,19 @@ export const SYSTEMS: SystemItem[] = [
     },
   },
   {
-    featured: 4,
+    featured: 5,
     icon: "✦",
     eyebrow: "AI agent",
     title: "An AI twin that answers for me",
     body: "A chat on this portfolio that answers recruiters' questions about my work in my voice, streamed live from Claude and grounded only in my real profile data.",
     tags: ["Claude API", "Next.js", "TypeScript"],
     slug: "portfolio-ai-twin",
+    flow: [
+      { label: "Visitor", tech: "Browser", note: "A recruiter asks a question in the chat.", back: "The answer streams in word by word." },
+      { label: "API route", tech: "Next.js", note: "The route validates the messages, trims the history and applies a per-IP rate limit." },
+      { label: "Prompt", tech: "Site data", note: "The question is paired with a cached profile built from this site's own data." },
+      { label: "Model", tech: "Claude API", note: "Claude answers only from the profile; anything else is routed to email.", back: "Tokens stream back through the route as they are generated." },
+    ],
     details: {
       summary:
         "Recruiters can ask about my systems, stack and availability and get an answer in seconds. The assistant is built from the same data the site renders, so it can't drift from the page or invent experience.",
@@ -487,12 +528,13 @@ export const ROADMAP: RoadmapItem[] = [
 /* ---------- stack ---------- */
 
 export const STACK_GROUPS: StackGroup[] = [
-  { label: "Backend", values: ["Go (Gin)", "Java", "Spring Boot", "Jakarta EE (WildFly)", "Node.js", "REST APIs", "Microservices"] },
-  { label: "Messaging & workflow", values: ["Kafka", "ActiveMQ", "Apache Camel", "Camunda BPMN"] },
-  { label: "Data", values: ["PostgreSQL", "MySQL", "Redis", "Cassandra"] },
-  { label: "Infrastructure & security", values: ["Docker", "Jenkins CI/CD", "Git", "Keycloak"] },
-  { label: "Frontend", values: ["Next.js", "React", "TypeScript", "React Native"] },
-  { label: "Domain", values: ["USSD banking", "Payment workflows", "SOAP/XML core banking"] },
+  { label: "Backend engineering", values: ["Java", "Spring Boot", "Go (Gin)", "REST APIs", "Jakarta EE (WildFly)", "Node.js"] },
+  { label: "Architecture", values: ["Microservices", "Distributed systems", "API Gateway", "Event-driven design"] },
+  { label: "Databases", values: ["PostgreSQL", "MySQL", "Redis", "Cassandra"] },
+  { label: "Messaging & integration", values: ["Kafka", "ActiveMQ", "Apache Camel", "SOAP/XML"] },
+  { label: "DevOps", values: ["Docker", "CI/CD", "Jenkins", "Linux", "Git"] },
+  { label: "Workflow & security", values: ["Camunda BPMN", "Keycloak"] },
+  { label: "Frontend", values: ["Next.js", "TypeScript", "React"] },
 ];
 
 export const PRINCIPLES = [

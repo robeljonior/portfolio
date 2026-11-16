@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Page-wide scroll effects: a gold progress bar along the top, and fade-up
+ * Page-wide scroll effects: a mint progress bar along the top, and fade-up
  * reveals for every element marked `data-reveal` as it scrolls into view.
  * Stagger an item with `style={{ "--reveal-delay": "120ms" }}`.
  */
@@ -55,7 +55,7 @@ export default function ScrollEffects() {
     <div
       ref={bar}
       aria-hidden="true"
-      className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-gold-dim via-gold to-gold"
+      className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-mint"
     />
   );
 }

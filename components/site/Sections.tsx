@@ -2,21 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { ArrowUpRight, FileText } from "lucide-react";
-import { CV_URL, EDUCATION, EXPERIENCE, LANGUAGES, PROJECTS, ROADMAP, STACK_GROUPS, TIMELINE } from "@/lib/Data";
+import Playground from "@/components/playground/Playground";
+import { ABOUT_STATS, CV_URL, EDUCATION, EXPERIENCE, LANGUAGES, PRINCIPLES, PROJECTS, ROADMAP, TIMELINE } from "@/lib/Data";
 import { PROJECT_IMAGES } from "@/lib/projectImages";
 import PillLink from "./PillLink";
 import Section from "./Section";
+import Skills from "./Skills";
 import { Chip } from "./TechIcon";
-import UssdDemo from "./UssdDemo";
 
 /** Stagger for `data-reveal` items: each one starts a little after the last. */
 const delay = (i: number) => ({ "--reveal-delay": `${i * 90}ms` }) as CSSProperties;
 
-/** Round arrow that turns and fills gold when its `group` is hovered. */
+/** Round arrow that turns and fills mint when its `group` is hovered. */
 function ArrowDot({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border border-veil/10 text-faint transition-[transform,background-color,color,border-color] duration-300 ease-out group-hover:rotate-45 group-hover:border-gold group-hover:bg-gold group-hover:text-onaccent ${className}`}
+      className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border border-veil/10 text-faint transition-[transform,background-color,color,border-color] duration-300 ease-out group-hover:rotate-45 group-hover:border-mint group-hover:bg-mint group-hover:text-onaccent ${className}`}
       aria-hidden="true"
     >
       <ArrowUpRight className="h-4 w-4" />
@@ -26,74 +27,124 @@ function ArrowDot({ className = "" }: { className?: string }) {
 
 export function About() {
   return (
-    <Section id="about" title="About">
-      <div className="space-y-4 text-[15px] leading-7 text-muted">
+    <Section
+      id="about"
+      title="About"
+      heading={
+        <>
+          Backends that have to <span className="text-mint">work every time</span>.
+        </>
+      }
+    >
+      <div className="space-y-5 text-[17px] leading-8 text-muted">
         <p data-reveal style={delay(0)}>
-          I&apos;m a full-stack engineer who starts at the backend. For almost four years at{" "}
-          <span className="text-ink">Atlas Computer Technology</span> I&apos;ve built banking systems for four
-          Ethiopian banks: payment services, USSD banking that works on any phone, and the integrations that
-          connect new services to decades-old core banking systems.
+          <span className="text-ink">I build the systems behind people&apos;s money.</span> For almost four years at Atlas Computer
+          Technology I&apos;ve built banking software for four Ethiopian banks: payment services, USSD banking that works on any phone,
+          and the integrations that connect new services to decades-old core banking systems.
         </p>
         <p data-reveal style={delay(1)}>
-          My strongest work is careful migration. I ported a production USSD gateway from Java/Spring Boot to{" "}
-          <span className="text-ink">Go</span>; running the old and new gateways side by side caught{" "}
+          The problems I enjoy most sit where things fail: a network that drops a response, a core system that answers slowly, a
+          migration that must not change a single screen. I ported a production USSD gateway from Java/Spring Boot to{" "}
+          <span className="text-ink">Go</span>, and running the old and new gateways side by side caught{" "}
           <span className="text-ink">12 behaviour differences before any customer saw one</span>.
         </p>
         <p data-reveal style={delay(2)}>
-          I also build the front of the stack: Node.js services and <span className="text-ink">Next.js / TypeScript</span>{" "}
-          dashboards on top of the APIs, and earlier React and React Native apps.
-        </p>
-        <p data-reveal style={delay(3)}>
-          I&apos;m looking for a remote backend or full-stack role with a team that cares about correctness. I work in
+          Next, I want to go deeper into distributed systems and reliability on a remote team that cares about correctness. I work in
           English every day and overlap a full workday with Europe.
         </p>
       </div>
+
+      <dl className="mt-12 grid grid-cols-3 gap-px overflow-hidden rounded-2xl border border-veil/[0.08] bg-veil/[0.08]">
+        {ABOUT_STATS.map((s, i) => (
+          <div key={s.label} data-reveal style={delay(i)} className="flex flex-col bg-ground px-4 py-5 sm:px-6">
+            <dt className="order-2 mt-1 text-xs leading-5 text-muted sm:text-sm">{s.label}</dt>
+            <dd className="font-display text-4xl text-ink sm:text-5xl">{s.value}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <h3 data-reveal className="mt-14 font-mono text-xs uppercase tracking-[0.14em] text-faint">
+        How I approach architecture
+      </h3>
+      <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+        {PRINCIPLES.map((p, i) => (
+          <li key={p.title} data-reveal data-tilt style={delay(i)} className="glass relative rounded-2xl p-5">
+            <span className="font-mono text-sm text-mint" aria-hidden="true">
+              {p.icon}
+            </span>
+            <p className="mt-3 font-medium text-ink">{p.title}</p>
+            <p className="mt-1.5 text-sm leading-6 text-muted">{p.text}</p>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }
 
 export function Experience() {
+  const steps = [...TIMELINE].reverse();
   return (
-    <Section id="experience" title="Experience">
-      <ol className="group/list space-y-6">
-        <li data-reveal data-tilt className="glass glow grid gap-2 rounded-2xl p-5 sm:grid-cols-[130px_1fr] sm:gap-8 sm:p-6">
-          <p className="pt-0.5 font-mono text-xs uppercase tracking-[0.08em] text-faint">{EXPERIENCE.period}</p>
+    <Section
+      id="experience"
+      title="Experience"
+      heading="Production banking systems since 2022."
+      intro="One company, four banks, and a steady move from building features to owning the systems underneath them."
+    >
+      <article data-reveal data-tilt className="glass glow rounded-2xl p-6 sm:p-8">
+        <header className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h3 className="font-medium leading-snug text-ink">
-              {EXPERIENCE.role} · {EXPERIENCE.company}
-            </h3>
-            <p className="text-sm text-faint">Junior Developer → Software Engineer · {EXPERIENCE.location}</p>
-            <p className="mt-3 text-sm leading-6 text-muted">{EXPERIENCE.summary}</p>
-
-            <ul className="mt-4 space-y-3">
-              {TIMELINE.slice(1, -1).reverse().map((item) => (
-                <li key={item.title} className="text-sm leading-6">
-                  <span className="text-ink">{item.title}.</span> <span className="text-muted">{item.text}</span>
-                </li>
-              ))}
-            </ul>
-
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {["Go", "Java", "Spring Boot", "Kafka", "Redis", "PostgreSQL", "Next.js", "TypeScript"].map((t) => (
-                <Chip key={t} name={t} />
-              ))}
-            </div>
+            <h3 className="text-xl font-medium text-ink">{EXPERIENCE.role}</h3>
+            <p className="mt-1 text-muted">
+              {EXPERIENCE.company} · {EXPERIENCE.location}
+            </p>
           </div>
-        </li>
+          <p className="rounded-full border border-mint/30 px-3 py-1 font-mono text-xs text-mint">{EXPERIENCE.period}</p>
+        </header>
+        <p className="mt-4 text-[15px] leading-7 text-muted">{EXPERIENCE.summary}</p>
 
-        <li data-reveal data-tilt style={delay(1)} className="glass relative grid gap-2 rounded-2xl p-5 sm:grid-cols-[130px_1fr] sm:gap-8 sm:p-6">
-          <p className="pt-0.5 font-mono text-xs uppercase tracking-[0.08em] text-faint">{EDUCATION.period}</p>
-          <div>
-            <h3 className="font-medium leading-snug text-ink">{EDUCATION.degree}</h3>
-            <p className="text-sm text-faint">{EDUCATION.school}</p>
-            <p className="mt-3 text-sm text-muted">Languages: {LANGUAGES}</p>
-          </div>
-        </li>
-      </ol>
+        <ol className="relative mt-8 space-y-7 border-l border-veil/10 pl-7">
+          {steps.map((item, i) => (
+            <li key={item.title} data-reveal style={delay(i)} className="relative">
+              <span
+                aria-hidden="true"
+                className={`absolute -left-[33px] top-1.5 h-[11px] w-[11px] rounded-full border-2 ${
+                  i === 0 ? "border-mint bg-mint shadow-[0_0_0_5px_rgb(var(--mint)/0.15)]" : "border-mint/60 bg-ground"
+                }`}
+              />
+              {item.when && <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-faint">{item.when}</p>}
+              <p className="font-medium text-ink">{item.title}</p>
+              <p className="mt-1 text-sm leading-6 text-muted">{item.text}</p>
+            </li>
+          ))}
+        </ol>
 
-      <div data-reveal className="mt-10">
+        <h4 className="mt-10 font-mono text-xs uppercase tracking-[0.14em] text-faint">Engineering achievements</h4>
+        <ul className="mt-4 space-y-2.5">
+          {EXPERIENCE.responsibilities.slice(0, 6).map((r) => (
+            <li key={r} className="flex gap-3 text-sm leading-6 text-muted">
+              <span className="mt-[9px] h-1 w-1 shrink-0 rounded-full bg-mint" aria-hidden="true" />
+              {r}
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-8 flex flex-wrap gap-1.5">
+          {["Go", "Java", "Spring Boot", "Kafka", "Redis", "PostgreSQL", "Camunda BPMN", "Docker"].map((t) => (
+            <Chip key={t} name={t} />
+          ))}
+        </div>
+      </article>
+
+      <div data-reveal className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+        <div className="glass rounded-2xl p-5 sm:p-6">
+          <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-faint">{EDUCATION.period}</p>
+          <p className="mt-1 font-medium text-ink">{EDUCATION.degree}</p>
+          <p className="text-sm text-muted">
+            {EDUCATION.school} · {LANGUAGES}
+          </p>
+        </div>
         <PillLink href={CV_URL} download tone="ghost">
-          <FileText className="h-4 w-4" /> Download full CV
+          <FileText className="h-4 w-4" /> Download CV
         </PillLink>
       </div>
     </Section>
@@ -102,93 +153,108 @@ export function Experience() {
 
 export function Work() {
   const featured = PROJECTS.filter((p) => p.featured);
+  const more = PROJECTS.filter((p) => !p.featured);
 
   return (
-    <Section id="work" title="Work">
-      <div data-reveal className="theme-dark glass glow rounded-2xl bg-ground p-4 sm:p-6">
-        <h3 className="font-medium text-ink">Try it: a USSD banking session</h3>
-        <p className="mb-6 mt-1 text-sm leading-6 text-muted">
-          USSD is how millions of people without smartphones bank: dial a short code, answer a text menu. This is
-          the flow my Go gateway serves, with the real request path beside it.
-        </p>
-        <UssdDemo />
-      </div>
-
-      <ul className="mt-14 space-y-12">
+    <Section
+      id="work"
+      title="Work"
+      heading="Case studies"
+      intro="The problem, the hard part, the decisions and the outcome. Each one opens with an interactive diagram of how a request moves through the system."
+    >
+      <ul className="space-y-6">
         {featured.map((project) => {
           const image = PROJECT_IMAGES[project.slug];
+          const cs = project.caseStudy;
           return (
-            <li key={project.slug} data-reveal className="group relative isolate grid gap-4 sm:grid-cols-[150px_1fr] sm:gap-8">
-              <div className="relative order-2 w-full max-w-[200px] self-start overflow-hidden rounded-lg border border-veil/10 sm:order-1">
-                {image ? (
-                  <Image
-                    src={image}
-                    alt=""
-                    sizes="150px"
-                    className="aspect-[16/10] w-full object-cover opacity-80 grayscale transition-[filter,opacity,transform] duration-500 ease-out group-hover:scale-110 group-hover:opacity-100 group-hover:grayscale-0"
-                  />
-                ) : (
-                  <div className="grid aspect-[16/10] w-full place-items-center glass-soft font-mono text-xs text-faint transition-transform duration-500 ease-out group-hover:scale-110">
-                    {project.tags[0]}
+            <li key={project.slug} data-reveal data-tilt className="glass group relative overflow-hidden rounded-2xl">
+              <Link href={`/work/${project.slug}`} className="grid gap-0 sm:grid-cols-[minmax(0,1fr)_200px]">
+                <div className="p-6 sm:p-7">
+                  <p className="font-mono text-xs text-mint">
+                    {project.number} · {project.eyebrow}
+                  </p>
+                  <h3 className="mt-3 flex items-start justify-between gap-4 text-xl font-medium leading-snug text-ink sm:text-2xl">
+                    <span className="transition-colors group-hover:text-mint">{project.title}</span>
+                    <ArrowDot />
+                  </h3>
+                  {cs ? (
+                    <dl className="mt-5 grid gap-4 text-sm leading-6 sm:grid-cols-2">
+                      <div>
+                        <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">Problem</dt>
+                        <dd className="mt-1 text-muted">{cs.problem}</dd>
+                      </div>
+                      <div>
+                        <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">Outcome</dt>
+                        <dd className="mt-1 text-ink">{cs.result}</dd>
+                      </div>
+                    </dl>
+                  ) : (
+                    <p className="mt-3 text-sm leading-6 text-muted">{project.body}</p>
+                  )}
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <Chip key={tag} name={tag} />
+                    ))}
+                  </div>
+                </div>
+                {image && (
+                  <div className="relative hidden border-l border-veil/[0.08] sm:block">
+                    <Image
+                      src={image}
+                      alt=""
+                      fill
+                      sizes="200px"
+                      className="object-cover opacity-60 grayscale transition-[filter,opacity,transform] duration-500 ease-out group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0"
+                    />
                   </div>
                 )}
-              </div>
-              <div className="order-1 sm:order-2">
-                <h3 className="font-medium leading-snug text-ink">
-                  <Link href={`/work/${project.slug}`} className="flex items-start justify-between gap-3 group-hover:text-gold">
-                    <span className="glass absolute -inset-3 -z-10 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 sm:-inset-4" aria-hidden="true" />
-                    <span className="relative pt-1">{project.title}</span>
-                    <ArrowDot className="relative" />
-                  </Link>
-                </h3>
-                <p className="relative mt-2 text-sm leading-6 text-muted">{project.body}</p>
-                {project.caseStudy && (
-                  <p className="relative mt-2 text-sm leading-6 text-ink">
-                    <span className="text-gold">Result:</span> {project.caseStudy.result}
-                  </p>
-                )}
-                <div className="relative mt-3 flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <Chip key={tag} name={tag} />
-                  ))}
-                </div>
-              </div>
+              </Link>
             </li>
           );
         })}
       </ul>
 
-      <h3 data-reveal className="mt-16 font-mono text-xs uppercase tracking-[0.14em] text-faint">Building next</h3>
+      {more.length > 0 && (
+        <>
+          <h3 data-reveal className="mt-16 font-mono text-xs uppercase tracking-[0.14em] text-faint">
+            More work
+          </h3>
+          <ul className="mt-4 divide-y divide-veil/[0.07] border-y border-veil/[0.07]">
+            {more.map((p) => (
+              <li key={p.slug} data-reveal>
+                <Link href={`/work/${p.slug}`} className="group grid grid-cols-[2.5rem_1fr_auto] items-center gap-4 py-4">
+                  <span className="font-mono text-xs text-faint">{p.number}</span>
+                  <span>
+                    <span className="block text-ink transition-colors group-hover:text-mint">{p.title}</span>
+                    <span className="block text-sm text-muted">{p.tags.join(" · ")}</span>
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-faint transition-[transform,color] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-mint" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+
+      <h3 data-reveal className="mt-16 font-mono text-xs uppercase tracking-[0.14em] text-faint">
+        Building next
+      </h3>
       <p data-reveal className="mt-2 text-sm leading-6 text-muted">
         Projects I&apos;m building in public. Each one gets its own repo and case study here when it ships.
       </p>
-      <ul className="mt-4 space-y-3">
+      <ul className="mt-4 grid gap-3 sm:grid-cols-3">
         {ROADMAP.map((item, i) => (
-          <li
-            key={item.title}
-            data-reveal
-            style={delay(i)}
-            className="rounded-2xl border border-dashed border-veil/[0.14] p-4 sm:p-5"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <h4 className="font-medium leading-snug text-ink">{item.title}</h4>
-              <span
-                className={`shrink-0 rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] ${
-                  item.status === "In progress" ? "border-lcd/40 text-lcd" : "border-veil/15 text-faint"
-                }`}
-              >
-                {item.status}
-              </span>
-            </div>
+          <li key={item.title} data-reveal style={delay(i)} className="rounded-2xl border border-dashed border-veil/[0.14] p-4">
+            <span
+              className={`rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] ${
+                item.status === "In progress" ? "border-lcd/40 text-lcd" : "border-veil/15 text-faint"
+              }`}
+            >
+              {item.status}
+            </span>
+            <h4 className="mt-3 font-medium leading-snug text-ink">{item.title}</h4>
             <p className="mt-2 text-sm leading-6 text-muted">{item.body}</p>
-            <p className="mt-2 text-sm leading-6">
-              <span className="text-gold">Shows:</span> <span className="text-ink">{item.shows.join(" · ")}</span>
-            </p>
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {item.stack.map((tag) => (
-                <Chip key={tag} name={tag} />
-              ))}
-            </div>
+            <p className="mt-2 font-mono text-[11px] text-mint">{item.stack.join(" · ")}</p>
           </li>
         ))}
       </ul>
@@ -196,21 +262,28 @@ export function Work() {
   );
 }
 
+export function PlaygroundSection() {
+  return (
+    <Section
+      id="playground"
+      title="Playground"
+      stacked
+      heading={
+        <>
+          Inside my <span className="text-mint">engineering world</span>
+        </>
+      }
+      intro="Small, working demos of the ideas I use every day. Click around: each one shows a failure, and the design that handles it."
+    >
+      <Playground />
+    </Section>
+  );
+}
+
 export function Stack() {
   return (
-    <Section id="stack" title="Stack">
-      <dl className="glass divide-y divide-veil/[0.06] rounded-2xl px-5 sm:px-6">
-        {STACK_GROUPS.map((group, i) => (
-          <div key={group.label} data-reveal style={delay(i)} className="grid gap-3 py-4 sm:grid-cols-[150px_1fr]">
-            <dt className="text-sm text-muted">{group.label}</dt>
-            <dd className="flex flex-wrap gap-1.5">
-              {group.values.map((value) => (
-                <Chip key={value} name={value} />
-              ))}
-            </dd>
-          </div>
-        ))}
-      </dl>
+    <Section id="stack" title="Skills" heading="The tools I reach for." intro="Grouped by what they do in a system. Pick one to see where I used it.">
+      <Skills />
     </Section>
   );
 }

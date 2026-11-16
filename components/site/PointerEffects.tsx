@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 /**
  * Mouse-driven effects, desktop only (fine pointer, motion allowed):
- * - a soft gold spotlight that follows the cursor across the page;
+ * - a soft mint spotlight that follows the cursor across the page;
  * - 3D tilt plus a light sheen on cards marked `data-tilt`;
  * - buttons marked `data-magnetic` lean towards the cursor.
  * Touch screens and reduced-motion users get the plain page.

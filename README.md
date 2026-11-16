@@ -9,13 +9,23 @@ npm run dev
 
 Open http://localhost:3000.
 
+## Environment
+
+Set `NEXT_PUBLIC_SITE_URL` (for example `https://your-domain.dev`) in your hosting settings. It is used for
+canonical links, `sitemap.xml`, `robots.txt` and the social share card. On Vercel the production URL is picked up
+automatically if it isn't set.
+
 ## Structure
 
 - `app/layout.tsx` — root layout, fonts, metadata
 - `app/page.tsx` — page composition
 - `app/globals.css` — global theme and reveal animation styles
-- `components/` — hero, overview, experience, selected systems, toolkit, contact, and footer sections
-- `lib/Data.tsx` — portfolio content, navigation, project details, and social links
+- `components/home/` — hero, the 3D system scene (`HeroScene`, Three.js, lazy-loaded on desktop only) and its SVG fallback (`SystemMap`)
+- `components/site/` — nav, sections, case-study request flow (`RequestFlow`), skills explorer, contact, footer
+- `components/playground/` — "Inside my engineering world" demos: idempotency, Redis cache, Kafka (the USSD demo lives in `components/site/UssdDemo.tsx`)
+- `lib/Data.tsx` — portfolio content, project details, case studies and request flows (`flow`)
+- `lib/architecture.ts` — the services and connections drawn in the hero
+- `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx` — SEO and the social share card
 
 The content is based on Robel Mamushet's backend engineering experience at Atlas
 Computer Technology (Dec 2022 – present), including USSD banking, core banking

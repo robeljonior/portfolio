@@ -19,7 +19,8 @@ const config: Config = {
         faint: v('faint'),
         /** Overlay tint: white on dark, black on light. */
         veil: v('veil'),
-        gold: { DEFAULT: v('gold'), dim: v('gold-dim') },
+        mint: v('mint'),
+        gold: v('gold'),
         /** Text on accent buttons: dark on gold at night, white on black by day. */
         onaccent: v('onaccent'),
         lcd: { DEFAULT: v('lcd'), ground: '#1c2410', ink: '#d9ec9c' },
@@ -27,11 +28,11 @@ const config: Config = {
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
       },
-      maxWidth: { column: '760px' },
+      maxWidth: { page: '1180px' },
       transitionTimingFunction: {
         out: 'cubic-bezier(0.23, 1, 0.32, 1)',
-        'in-out': 'cubic-bezier(0.77, 0, 0.175, 1)',
       },
       keyframes: {
         rise: {
