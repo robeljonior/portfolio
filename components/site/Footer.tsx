@@ -1,12 +1,13 @@
 import { ArrowUp } from "lucide-react";
-import { CV_URL, EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/lib/Data";
+import { CV_TXT_URL, CV_URL, EMAIL, GITHUB_URL, LINKEDIN_URL } from "@/lib/Data";
 import { NAV_LINKS } from "@/lib/nav";
 
 const CHANNELS = [
   { label: "Email", href: `mailto:${EMAIL}` },
   { label: "LinkedIn", href: LINKEDIN_URL },
   { label: "GitHub", href: GITHUB_URL },
-  { label: "CV", href: CV_URL },
+  { label: "CV (PDF)", href: CV_URL },
+  { label: "CV (text)", href: CV_TXT_URL },
 ];
 
 export default function Footer() {

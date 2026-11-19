@@ -3,18 +3,19 @@ Backend Software Engineer | Java | Spring Boot | Go | Distributed Systems
 Addis Ababa, Ethiopia (UTC+3)
 Email: robelmamoshet@gmail.com
 LinkedIn: https://www.linkedin.com/in/robel-mamushet
+GitHub: https://github.com/robeljonior
+Portfolio: https://portfolio-phi-sepia-60quwmovxr.vercel.app
 
 SUMMARY
 Backend software engineer with nearly four years of experience building banking and fintech systems for Hijra, Wegagen, Enat and Siinqee Bank. Migrated a production USSD gateway from Java/Spring Boot to Go and caught 12 behaviour differences before release through a side-by-side review. Strong in transaction correctness, reliable integrations, event-driven services and clean service boundaries.
 
 SKILLS
-- Backend: Go (Gin), Java, Spring Boot, Jakarta EE (WildFly), Node.js, REST APIs, microservices
-- Architecture: Distributed systems, event-driven design, API gateways, service boundaries
-- Messaging & workflow: Kafka, ActiveMQ, Apache Camel, Camunda BPMN
-- Data: PostgreSQL, MySQL, Redis, Cassandra
-- Infrastructure & security: Docker, Jenkins CI/CD, Git, Keycloak
-- Frontend: Next.js, React, TypeScript, React Native
-- Domain: USSD banking, payment workflows, SOAP/XML core banking integration
+- Core backend: Java, Spring Boot, Go (Gin), REST APIs, microservices
+- Messaging & integration: Kafka, ActiveMQ, Apache Camel, SOAP/XML, Camunda BPMN
+- Data: PostgreSQL, Redis, Cassandra, MySQL
+- Delivery & security: Docker, Jenkins CI/CD, Git, Linux, Keycloak
+- Domain: USSD banking, payment workflows, core banking integration
+- Also used: Jakarta EE (WildFly), Node.js, Next.js, TypeScript, React, React Native
 
 EXPERIENCE
 Software Engineer, Atlas Computer Technology, Addis Ababa

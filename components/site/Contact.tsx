@@ -34,7 +34,7 @@ export default function Contact() {
   };
 
   return (
-    <Section id="contact" title="Contact" heading={<>Let&apos;s build something <span className="text-mint">dependable</span>.</>}>
+    <Section id="contact" title="Contact" heading={<>Hiring a backend engineer? <span className="text-mint">Let&apos;s talk</span>.</>}>
       <p data-reveal className="text-[17px] leading-8 text-muted">
         Hiring for a backend or full-stack role, or need someone who has shipped banking and fintech integrations? Write to me and
         I&apos;ll get back to you quickly.
