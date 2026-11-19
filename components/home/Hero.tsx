@@ -37,8 +37,8 @@ export default function Hero({ avatar }: { avatar: string | null }) {
           {HEADLINE_STACK.join(" · ")}
         </p>
         <p className="mt-6 max-w-[48ch] text-base leading-7 text-muted sm:text-[17px] sm:leading-8">
-          Nearly four years building banking and fintech backends: <Key>USSD banking</Key>, <Key>payment processing</Key> and{" "}
-          <Key>core banking integrations</Key> that have to work every time.
+          Nearly four years building Java and Go backends for four Ethiopian banks: <Key>USSD banking</Key>,{" "}
+          <Key>payment processing</Key> and <Key>SOAP/XML core banking integrations</Key>.
         </p>
 
         <div className="mt-9 flex animate-rise flex-wrap items-center gap-3 [animation-delay:620ms]">

@@ -50,13 +50,15 @@ export type StackGroup = {
 /* ---------- hero ---------- */
 
 export const EMAIL = "robelmamoshet@gmail.com";
-export const CV_URL = "/Robel-Mamushet-CV.txt";
+export const CV_URL = "/Robel-Mamushet-CV.pdf";
+/** Plain-text copy of the CV, for ATS forms that ask for pasted text. */
+export const CV_TXT_URL = "/Robel-Mamushet-CV.txt";
 export const AVAILABILITY = "Addis Ababa · UTC+3 · Open to remote";
 export const TITLE = "Backend Software Engineer";
 /** The stack line under the title in the hero. */
 export const HEADLINE_STACK = ["Java", "Spring Boot", "Go", "Microservices"];
 export const PITCH =
-  "Nearly four years building banking and fintech backends: USSD banking, payment processing and core banking integrations that have to work every time.";
+  "Nearly four years building Java and Go backends for four Ethiopian banks: USSD banking, payment processing and SOAP/XML core banking integrations.";
 /** Working-hours overlap from Addis Ababa (UTC+3, no daylight saving). */
 export const OVERLAP = "Full workday overlap with Europe, mornings with US East.";
 
@@ -528,13 +530,12 @@ export const ROADMAP: RoadmapItem[] = [
 /* ---------- stack ---------- */
 
 export const STACK_GROUPS: StackGroup[] = [
-  { label: "Backend engineering", values: ["Java", "Spring Boot", "Go (Gin)", "REST APIs", "Jakarta EE (WildFly)", "Node.js"] },
-  { label: "Architecture", values: ["Microservices", "Distributed systems", "API Gateway", "Event-driven design"] },
-  { label: "Databases", values: ["PostgreSQL", "MySQL", "Redis", "Cassandra"] },
-  { label: "Messaging & integration", values: ["Kafka", "ActiveMQ", "Apache Camel", "SOAP/XML"] },
-  { label: "DevOps", values: ["Docker", "CI/CD", "Jenkins", "Linux", "Git"] },
-  { label: "Workflow & security", values: ["Camunda BPMN", "Keycloak"] },
-  { label: "Frontend", values: ["Next.js", "TypeScript", "React"] },
+  { label: "Core backend", values: ["Java", "Spring Boot", "Go (Gin)", "REST APIs", "Microservices"] },
+  { label: "Messaging & integration", values: ["Kafka", "ActiveMQ", "Apache Camel", "SOAP/XML", "Camunda BPMN"] },
+  { label: "Data", values: ["PostgreSQL", "Redis", "Cassandra", "MySQL"] },
+  { label: "Delivery & security", values: ["Docker", "Jenkins", "Git", "Linux", "Keycloak"] },
+  /** Secondary tools, kept separate so the backend focus stays clear. */
+  { label: "Also used", values: ["Jakarta EE (WildFly)", "Node.js", "Next.js", "TypeScript", "React", "React Native"] },
 ];
 
 export const PRINCIPLES = [

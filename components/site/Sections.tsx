@@ -32,13 +32,16 @@ export function About() {
       title="About"
       heading={
         <>
-          Backends that have to <span className="text-mint">work every time</span>.
+          Banking backends in <span className="text-mint">Java and Go</span>.
         </>
       }
     >
       <div className="space-y-5 text-[17px] leading-8 text-muted">
         <p data-reveal style={delay(0)}>
-          <span className="text-ink">I build the systems behind people&apos;s money.</span> For almost four years at Atlas Computer
+          <span className="text-ink">
+            I build Java and Go services for banks: USSD banking, payment workflows, and integrations with legacy core banking systems.
+          </span>{" "}
+          For almost four years at Atlas Computer
           Technology I&apos;ve built banking software for four Ethiopian banks: payment services, USSD banking that works on any phone,
           and the integrations that connect new services to decades-old core banking systems.
         </p>
@@ -49,8 +52,8 @@ export function About() {
           <span className="text-ink">12 behaviour differences before any customer saw one</span>.
         </p>
         <p data-reveal style={delay(2)}>
-          Next, I want to go deeper into distributed systems and reliability on a remote team that cares about correctness. I work in
-          English every day and overlap a full workday with Europe.
+          I&apos;m looking for a remote backend role where payments, messaging or reliability are the core problem. I work in English
+          every day and overlap a full workday with Europe.
         </p>
       </div>
 
@@ -201,7 +204,7 @@ export function Work() {
                   <div className="relative hidden border-l border-veil/[0.08] sm:block">
                     <Image
                       src={image}
-                      alt=""
+                      alt={`Architecture diagram: ${project.title}`}
                       fill
                       sizes="200px"
                       className="object-cover opacity-60 grayscale transition-[filter,opacity,transform] duration-500 ease-out group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0"
