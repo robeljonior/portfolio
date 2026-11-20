@@ -4,4 +4,5 @@ out
 .env*.local
 *.tsbuildinfo
 .github
-.claude
+.claude/*
+!.claude/settings.json
