@@ -63,12 +63,12 @@ export function About() {
         ))}
       </dl>
 
-      <h3 data-reveal className="mt-14 font-mono text-xs uppercase tracking-[0.14em] text-faint">
+      <h3 data-reveal className="mt-14 font-mono text-xs text-faint">
         How I approach architecture
       </h3>
       <ul className="mt-5 grid gap-3 sm:grid-cols-3">
         {PRINCIPLES.map((p, i) => (
-          <li key={p.title} data-reveal data-tilt style={delay(i)} className="glass relative rounded-2xl p-5">
+          <li key={p.title} data-reveal style={delay(i)} className="glass relative rounded-2xl p-5">
             <span className="font-mono text-sm text-mint" aria-hidden="true">
               {p.icon}
             </span>
@@ -90,7 +90,7 @@ export function Experience() {
       heading="Production banking systems since 2022."
       intro="One company, four banks, and a steady move from building features to owning the systems underneath them."
     >
-      <article data-reveal data-tilt className="glass glow rounded-2xl p-6 sm:p-8">
+      <article data-reveal className="glass glow rounded-2xl p-6 sm:p-8">
         <header className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h3 className="text-xl font-medium text-ink">{EXPERIENCE.role}</h3>
@@ -108,17 +108,17 @@ export function Experience() {
               <span
                 aria-hidden="true"
                 className={`absolute -left-[33px] top-1.5 h-[11px] w-[11px] rounded-full border-2 ${
-                  i === 0 ? "border-mint bg-mint shadow-[0_0_0_5px_rgb(var(--mint)/0.15)]" : "border-mint/60 bg-ground"
+                  i === 0 ? "border-mint bg-mint" : "border-mint/60 bg-ground"
                 }`}
               />
-              {item.when && <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-faint">{item.when}</p>}
+              {item.when && <p className="font-mono text-[11px] text-faint">{item.when}</p>}
               <p className="font-medium text-ink">{item.title}</p>
               <p className="mt-1 text-sm leading-6 text-muted">{item.text}</p>
             </li>
           ))}
         </ol>
 
-        <h4 className="mt-10 font-mono text-xs uppercase tracking-[0.14em] text-faint">Engineering achievements</h4>
+        <h4 className="mt-10 font-mono text-xs text-faint">Engineering achievements</h4>
         <ul className="mt-4 space-y-2.5">
           {EXPERIENCE.responsibilities.slice(0, 6).map((r) => (
             <li key={r} className="flex gap-3 text-sm leading-6 text-muted">
@@ -137,7 +137,7 @@ export function Experience() {
 
       <div data-reveal className="mt-4 grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
         <div className="glass rounded-2xl p-5 sm:p-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-faint">{EDUCATION.period}</p>
+          <p className="font-mono text-[11px] text-faint">{EDUCATION.period}</p>
           <p className="mt-1 font-medium text-ink">{EDUCATION.degree}</p>
           <p className="text-sm text-muted">
             {EDUCATION.school} · {LANGUAGES}
@@ -167,7 +167,7 @@ export function Work() {
           const image = PROJECT_IMAGES[project.slug];
           const cs = project.caseStudy;
           return (
-            <li key={project.slug} data-reveal data-tilt className="glass group relative overflow-hidden rounded-2xl">
+            <li key={project.slug} data-reveal className="glass group relative overflow-hidden rounded-2xl">
               <Link href={`/work/${project.slug}`} className="grid gap-0 sm:grid-cols-[minmax(0,1fr)_200px]">
                 <div className="p-6 sm:p-7">
                   <p className="font-mono text-xs text-mint">
@@ -180,11 +180,11 @@ export function Work() {
                   {cs ? (
                     <dl className="mt-5 grid gap-4 text-sm leading-6 sm:grid-cols-2">
                       <div>
-                        <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">Problem</dt>
+                        <dt className="font-mono text-[10px] text-faint">Problem</dt>
                         <dd className="mt-1 text-muted">{cs.problem}</dd>
                       </div>
                       <div>
-                        <dt className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">Outcome</dt>
+                        <dt className="font-mono text-[10px] text-faint">Outcome</dt>
                         <dd className="mt-1 text-ink">{cs.result}</dd>
                       </div>
                     </dl>
@@ -204,7 +204,7 @@ export function Work() {
                       alt=""
                       fill
                       sizes="200px"
-                      className="object-cover opacity-60 grayscale transition-[filter,opacity,transform] duration-500 ease-out group-hover:scale-105 group-hover:opacity-90 group-hover:grayscale-0"
+                      className="object-cover opacity-60 grayscale transition-[filter,opacity,transform] duration-500 ease-out group-hover:opacity-90 group-hover:grayscale-0"
                     />
                   </div>
                 )}
@@ -216,7 +216,7 @@ export function Work() {
 
       {more.length > 0 && (
         <>
-          <h3 data-reveal className="mt-16 font-mono text-xs uppercase tracking-[0.14em] text-faint">
+          <h3 data-reveal className="mt-16 font-mono text-xs text-faint">
             More work
           </h3>
           <ul className="mt-4 divide-y divide-veil/[0.07] border-y border-veil/[0.07]">
@@ -236,7 +236,7 @@ export function Work() {
         </>
       )}
 
-      <h3 data-reveal className="mt-16 font-mono text-xs uppercase tracking-[0.14em] text-faint">
+      <h3 data-reveal className="mt-16 font-mono text-xs text-faint">
         Building next
       </h3>
       <p data-reveal className="mt-2 text-sm leading-6 text-muted">
@@ -246,7 +246,7 @@ export function Work() {
         {ROADMAP.map((item, i) => (
           <li key={item.title} data-reveal style={delay(i)} className="rounded-2xl border border-dashed border-veil/[0.14] p-4">
             <span
-              className={`rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] ${
+              className={`rounded-full border px-2 py-0.5 font-mono text-[10px] ${
                 item.status === "In progress" ? "border-lcd/40 text-lcd" : "border-veil/15 text-faint"
               }`}
             >

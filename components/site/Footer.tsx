@@ -14,7 +14,7 @@ export default function Footer() {
     <footer className="relative z-[1] border-t border-veil/[0.07]">
       <div className="mx-auto grid max-w-page gap-10 px-6 py-14 sm:grid-cols-3 sm:px-10">
         <nav aria-label="Index">
-          <p className="font-mono text-xs uppercase tracking-[0.14em] text-faint">Index</p>
+          <p className="font-mono text-xs text-faint">Index</p>
           <ul className="mt-4 space-y-2">
             {NAV_LINKS.map((item) => (
               <li key={item.id}>
@@ -24,7 +24,7 @@ export default function Footer() {
           </ul>
         </nav>
         <nav aria-label="Channels">
-          <p className="font-mono text-xs uppercase tracking-[0.14em] text-faint">Channels</p>
+          <p className="font-mono text-xs text-faint">Channels</p>
           <ul className="mt-4 space-y-2">
             {CHANNELS.map((item) => (
               <li key={item.label}>
@@ -34,9 +34,9 @@ export default function Footer() {
           </ul>
         </nav>
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.14em] text-faint">Status</p>
+          <p className="font-mono text-xs text-faint">Status</p>
           <p className="mt-4 flex items-center gap-2 text-sm text-ink">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lcd" aria-hidden="true" /> Open to remote roles
+            <span className="h-1.5 w-1.5 rounded-full bg-lcd" aria-hidden="true" /> Open to remote roles
           </p>
           <p className="mt-2 text-sm text-muted">Addis Ababa, Ethiopia (UTC+3)</p>
           <a href="/#top" className="press mt-6 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-mint">

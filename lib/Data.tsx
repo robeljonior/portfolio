@@ -67,7 +67,7 @@ export const GITHUB_URL = "https://github.com/robeljonior";
 
 export const ABOUT_STATS = [
   { value: "~4", label: "years in banking & fintech" },
-  { value: "04", label: "banks served" },
+  { value: "4", label: "banks served" },
   { value: "12", label: "diffs caught before a Go release" },
 ];
 

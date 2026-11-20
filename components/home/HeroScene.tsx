@@ -44,12 +44,8 @@ function ServiceNode({
   const pos = useMemo(() => toVec(node), [node]);
   // Money-moving services glow gold; the rest of the platform is mint.
   const core = MONEY.has(node.id) ? palette.gold : palette.mint;
-  const seed = useMemo(() => Math.random() * Math.PI * 2, []);
-
-  useFrame(({ clock }) => {
+  useFrame(() => {
     if (!ref.current) return;
-    // Gentle float so the system feels alive, not static.
-    ref.current.position.y = pos.y + Math.sin(clock.elapsedTime * 0.8 + seed) * 0.06;
     const target = active ? 1.35 : 1;
     ref.current.scale.lerp(new THREE.Vector3(target, target, target), 0.15);
   });
@@ -124,11 +120,10 @@ function Packets({ palette }: { palette: Palette }) {
 function System({ palette, onHover, active }: { palette: Palette; onHover: (id: string | null) => void; active: string | null }) {
   const group = useRef<THREE.Group>(null);
 
-  useFrame(({ pointer, clock }) => {
+  useFrame(({ pointer }) => {
     if (!group.current) return;
-    // Follow the mouse a little, plus a slow idle sway.
-    const idle = Math.sin(clock.elapsedTime * 0.25) * 0.08;
-    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, pointer.x * 0.35 + idle, 0.05);
+    // Follow the mouse a little; at rest the system holds still.
+    group.current.rotation.y = THREE.MathUtils.lerp(group.current.rotation.y, pointer.x * 0.35, 0.05);
     group.current.rotation.x = THREE.MathUtils.lerp(group.current.rotation.x, -pointer.y * 0.2, 0.05);
   });
 

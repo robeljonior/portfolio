@@ -46,7 +46,7 @@ export default function RequestFlow({ hops, title = "Follow a request" }: { hops
   return (
     <div className="glass glow rounded-2xl p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-faint">{title}</p>
+        <p className="font-mono text-xs text-faint">{title}</p>
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -100,7 +100,7 @@ export default function RequestFlow({ hops, title = "Follow a request" }: { hops
                 <span
                   className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border font-mono text-[11px] transition-all duration-300 ${
                     current
-                      ? "scale-110 border-gold bg-gold text-onaccent shadow-[0_0_0_6px_rgb(var(--gold)/0.18)]"
+                      ? "scale-110 border-gold bg-gold text-onaccent"
                       : passed
                         ? "border-mint/70 bg-mint/15 text-mint"
                         : sel
