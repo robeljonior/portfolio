@@ -55,7 +55,7 @@ export default function ScrollEffects() {
     <div
       ref={bar}
       aria-hidden="true"
-      className="fixed inset-x-0 top-0 z-50 h-[3px] origin-left scale-x-0 bg-mint"
+      className="fixed inset-x-0 top-0 z-50 h-[2px] origin-left scale-x-0 bg-mint/50"
     />
   );
 }

@@ -49,8 +49,8 @@ function ServiceNode({
   useFrame(({ clock }) => {
     if (!ref.current) return;
     // Gentle float so the system feels alive, not static.
-    ref.current.position.y = pos.y + Math.sin(clock.elapsedTime * 0.8 + seed) * 0.06;
-    const target = active ? 1.35 : 1;
+    ref.current.position.y = pos.y + Math.sin(clock.elapsedTime * 0.6 + seed) * 0.04;
+    const target = active ? 1.2 : 1;
     ref.current.scale.lerp(new THREE.Vector3(target, target, target), 0.15);
   });
 
@@ -64,7 +64,7 @@ function ServiceNode({
         onPointerOut={() => onHover(null)}
       >
         {node.kind === "data" ? <cylinderGeometry args={[0.22, 0.22, 0.3, 24]} /> : node.kind === "broker" ? <octahedronGeometry args={[0.25]} /> : <icosahedronGeometry args={[0.21, 1]} />}
-        <meshStandardMaterial color={core} emissive={core} emissiveIntensity={active ? 1.1 : 0.6} roughness={0.35} metalness={0.2} flatShading />
+        <meshStandardMaterial color={core} emissive={core} emissiveIntensity={active ? 0.7 : 0.35} roughness={0.35} metalness={0.2} flatShading />
       </mesh>
       {/* Halo ring that faces the camera. */}
       <mesh rotation={[0, 0, 0]}>
