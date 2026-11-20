@@ -4,12 +4,4 @@ out
 .env*.local
 *.tsbuildinfo
 .github
-# Claude Code: share the Impeccable skill, agents and hooks; keep local state out
-.claude/*
-!.claude/skills/
-!.claude/agents/
-!.claude/settings.json
-.claude/skills/impeccable/scripts/bin/
-
-# Impeccable: per-developer config stays local
-.impeccable/config.local.json
+.claude
