@@ -55,7 +55,7 @@ export default function Cache() {
           ["Hit rate", total ? `${Math.round((stats.hit / total) * 100)}%` : "—", `${stats.hit} hits · ${stats.miss} misses`],
         ].map(([k, v, s]) => (
           <div key={k} className="rounded-xl border border-veil/[0.08] bg-ground/60 p-3">
-            <p className="font-mono text-[10px] uppercase tracking-[0.12em] text-faint">{k}</p>
+            <p className="font-mono text-[10px] text-faint">{k}</p>
             <p className="mt-1 text-lg text-ink">{v}</p>
             <p className="text-xs text-muted">{s}</p>
           </div>
