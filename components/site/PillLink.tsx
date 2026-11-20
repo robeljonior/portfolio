@@ -17,7 +17,7 @@ const TONES = {
 /** A pill button with a detached round arrow that turns on hover. */
 export default function PillLink({ href, children, tone = "solid", download }: PillLinkProps) {
   return (
-    <a href={href} download={download} data-magnetic className="press group inline-flex items-center">
+    <a href={href} download={download} className="press group inline-flex items-center">
       <span className={`pill gap-2 ${TONES[tone]}`}>{children}</span>
       <span className={`pill-dot ${TONES[tone]}`} aria-hidden="true">
         <ArrowUpRight className="h-4 w-4" />
