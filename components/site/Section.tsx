@@ -27,9 +27,9 @@ export default function Section({ id, title, heading, intro, stacked = false, ch
       <div className={stacked ? "" : "lg:grid lg:grid-cols-[minmax(0,320px)_minmax(0,1fr)] lg:gap-16"}>
         <div className={stacked ? "mb-12 max-w-2xl" : "mb-10 lg:mb-0"}>
           <div className={stacked ? "" : "lg:sticky lg:top-28"}>
-            <p data-reveal className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-mint">
+            <p data-reveal className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-faint">
               {number && <span>{number}</span>}
-              <span className="h-px w-8 bg-mint/50" aria-hidden="true" />
+              <span className="h-px w-8 bg-rule-strong" aria-hidden="true" />
               <span id={`${id}-title`}>{title}</span>
             </p>
             {heading && (

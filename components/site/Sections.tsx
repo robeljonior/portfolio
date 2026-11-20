@@ -68,7 +68,7 @@ export function About() {
       </h3>
       <ul className="mt-5 grid gap-3 sm:grid-cols-3">
         {PRINCIPLES.map((p, i) => (
-          <li key={p.title} data-reveal data-tilt style={delay(i)} className="glass relative rounded-2xl p-5">
+          <li key={p.title} data-reveal style={delay(i)} className="glass relative rounded-2xl p-5">
             <span className="font-mono text-sm text-mint" aria-hidden="true">
               {p.icon}
             </span>
@@ -90,7 +90,7 @@ export function Experience() {
       heading="Production banking systems since 2022."
       intro="One company, four banks, and a steady move from building features to owning the systems underneath them."
     >
-      <article data-reveal data-tilt className="glass glow rounded-2xl p-6 sm:p-8">
+      <article data-reveal className="glass glow rounded-2xl p-6 sm:p-8">
         <header className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <h3 className="text-xl font-medium text-ink">{EXPERIENCE.role}</h3>
@@ -167,7 +167,7 @@ export function Work() {
           const image = PROJECT_IMAGES[project.slug];
           const cs = project.caseStudy;
           return (
-            <li key={project.slug} data-reveal data-tilt className="glass group relative overflow-hidden rounded-2xl">
+            <li key={project.slug} data-reveal className="glass group relative overflow-hidden rounded-2xl">
               <Link href={`/work/${project.slug}`} className="grid gap-0 sm:grid-cols-[minmax(0,1fr)_200px]">
                 <div className="p-6 sm:p-7">
                   <p className="font-mono text-xs text-mint">

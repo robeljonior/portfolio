@@ -100,7 +100,7 @@ export default function RequestFlow({ hops, title = "Follow a request" }: { hops
                 <span
                   className={`grid h-10 w-10 shrink-0 place-items-center rounded-full border font-mono text-[11px] transition-all duration-300 ${
                     current
-                      ? "scale-110 border-gold bg-gold text-onaccent shadow-[0_0_0_6px_rgb(var(--gold)/0.18)]"
+                      ? "border-gold bg-gold text-onaccent shadow-[0_0_0_4px_rgb(var(--gold)/0.12)]"
                       : passed
                         ? "border-mint/70 bg-mint/15 text-mint"
                         : sel
