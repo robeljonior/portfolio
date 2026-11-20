@@ -36,7 +36,7 @@ export default function Footer() {
         <div>
           <p className="font-mono text-xs text-faint">Status</p>
           <p className="mt-4 flex items-center gap-2 text-sm text-ink">
-            <span className="h-1.5 w-1.5 rounded-full bg-lcd" aria-hidden="true" /> Open to remote roles
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-lcd" aria-hidden="true" /> Open to remote roles
           </p>
           <p className="mt-2 text-sm text-muted">Addis Ababa, Ethiopia (UTC+3)</p>
           <a href="/#top" className="press mt-6 inline-flex items-center gap-1.5 text-sm text-muted transition-colors hover:text-mint">

@@ -88,7 +88,7 @@ export default function Contact() {
           <textarea name="message" rows={4} required className={`${field} resize-y`} placeholder="The role, the team, the problem." />
         </label>
         <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
-          <button type="submit" className="press group inline-flex items-center">
+          <button type="submit" data-magnetic className="press group inline-flex items-center">
             <span className="pill gap-2 bg-mint text-onaccent group-hover:bg-mint/85">
               <Send className="h-4 w-4" /> Send
             </span>

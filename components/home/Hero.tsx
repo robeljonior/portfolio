@@ -21,7 +21,7 @@ export default function Hero({ avatar }: { avatar: string | null }) {
             <img src={avatar} alt="" width={32} height={32} className="h-8 w-8 rounded-full object-cover ring-1 ring-veil/15" />
           )}
           <p className="inline-flex items-center gap-2 font-mono text-xs text-faint">
-            <span className="h-1.5 w-1.5 rounded-full bg-mint" aria-hidden="true" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-mint" aria-hidden="true" />
             Open to remote roles · Addis Ababa<span className="hidden sm:inline">&nbsp;· <LocalTime /></span>
           </p>
         </div>
@@ -41,23 +41,23 @@ export default function Hero({ avatar }: { avatar: string | null }) {
         </p>
 
         <div className="mt-10 flex animate-rise flex-wrap items-center gap-3 [animation-delay:700ms]">
-          <a href="#work" className="press group inline-flex items-center">
+          <a href="#work" data-magnetic className="press group inline-flex items-center">
             <span className="pill gap-2 bg-ink text-ground group-hover:bg-ink/90">View projects</span>
             <span className="pill-dot bg-ink text-ground group-hover:bg-ink/90" aria-hidden="true">
               <ArrowDown className="h-4 w-4 -rotate-45" />
             </span>
           </a>
-          <a href="#contact" className="press group inline-flex items-center">
+          <a href="#contact" data-magnetic className="press group inline-flex items-center">
             <span className="pill glass-soft gap-2 text-ink group-hover:bg-raised">Contact me</span>
             <span className="pill-dot glass-soft text-ink group-hover:bg-raised" aria-hidden="true">
               <ArrowUpRight className="h-4 w-4" />
             </span>
           </a>
           <span className="mx-2 hidden h-5 w-px bg-veil/10 sm:block" aria-hidden="true" />
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub" className="grid h-10 w-10 place-items-center rounded-[10px] text-faint transition-colors duration-300 hover:text-ink">
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub" data-magnetic className="grid h-10 w-10 place-items-center rounded-[10px] text-faint transition-colors duration-300 hover:text-ink">
             <SocialIcon iconKey="github" className="h-[18px] w-[18px]" />
           </a>
-          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="grid h-10 w-10 place-items-center rounded-[10px] text-faint transition-colors duration-300 hover:text-ink">
+          <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" data-magnetic className="grid h-10 w-10 place-items-center rounded-[10px] text-faint transition-colors duration-300 hover:text-ink">
             <SocialIcon iconKey="linkedin" className="h-[18px] w-[18px]" />
           </a>
         </div>
