@@ -145,18 +145,9 @@
     backdrop-filter: blur(16px) saturate(150%);
   }
 
-  /* The hero is a small explorable world: technical grid underneath a soft glow. */
+  /* The hero map sits on a plain surface. */
   .world-frame {
     isolation: isolate;
-  }
-  .world-grid {
-    z-index: 0;
-    opacity: 0.5;
-    background:
-      linear-gradient(rgb(var(--veil) / 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgb(var(--veil) / 0.05) 1px, transparent 1px);
-    background-size: 34px 34px, 34px 34px;
-    mask-image: linear-gradient(to bottom, transparent, black 16%, black 82%, transparent);
   }
 
   /* Featured card: same flat surface (the corner glow was removed to keep the page calm). */
@@ -165,12 +156,18 @@
     overflow: hidden;
   }
 
-  /* Pill button with a detached round arrow that turns on hover. */
+  /* Button: label and arrow read as one control, on the shared 10px control radius. */
   .pill {
-    @apply inline-flex h-10 items-center rounded-full px-4 text-sm font-semibold transition-colors duration-200;
+    @apply inline-flex h-10 items-center rounded-l-[10px] pl-4 pr-1 text-sm font-medium transition-colors duration-200;
   }
   .pill-dot {
-    @apply -ml-1 grid h-10 w-10 place-items-center rounded-full transition-[transform,background-color] duration-300 ease-out group-hover:rotate-45;
+    @apply grid h-10 w-9 place-items-center rounded-r-[10px] pr-1 transition-colors duration-200;
+  }
+  .pill.glass-soft {
+    border-right-width: 0;
+  }
+  .pill-dot.glass-soft {
+    border-left-width: 0;
   }
 
   .press {

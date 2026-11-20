@@ -39,7 +39,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
       <div className="relative flex items-center justify-between">
         <div className="absolute left-0 right-0 top-1/2 h-px -translate-y-1/2 bg-rule-strong" />
         <div
-          className="absolute left-0 top-1/2 h-px -translate-y-1/2 bg-mint transition-all duration-700 ease-out"
+          className="absolute left-0 top-1/2 h-px -translate-y-1/2 bg-mint transition-[width] duration-700 ease-out"
           style={{
             width: inView ? `${(active / (steps.length - 1)) * 100}%` : "0%",
           }}
@@ -53,7 +53,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
             aria-label={step.label}
           >
             <span
-              className={`flex h-8 w-8 items-center justify-center rounded-full border font-mono text-[10px] transition-all duration-500 ${
+              className={`flex h-8 w-8 items-center justify-center rounded-full border font-mono text-[10px] transition-colors duration-500 ${
                 i <= active
                   ? "scale-110 border-mint bg-mint text-onaccent"
                   : "border-rule-strong bg-ground text-muted"
@@ -69,7 +69,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
         {steps.map((step, i) => (
           <span
             key={step.label}
-            className={`w-20 text-center font-mono text-[10px] uppercase tracking-[.06em] transition-colors duration-500 sm:w-28 ${
+            className={`w-20 text-center font-mono text-[10px] transition-colors duration-500 sm:w-28 ${
               i === active ? "text-mint" : "text-faint"
             }`}
           >
@@ -82,7 +82,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
         {steps.map((step, i) => (
           <p
             key={step.label}
-            className={`absolute inset-x-5 top-4 text-sm leading-6 text-ink transition-all duration-500 ${
+            className={`absolute inset-x-5 top-4 text-sm leading-6 text-ink transition-colors duration-500 ${
               i === active ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
             }`}
           >

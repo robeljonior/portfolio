@@ -34,9 +34,8 @@ export default function HeroVisual() {
   }, []);
 
   return (
-    <div className="world-frame relative mx-auto aspect-square w-full max-w-[640px] overflow-hidden rounded-[2rem] border border-rule bg-panel/40 p-3 sm:p-5">
-      <div className="world-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-      <div className="pointer-events-none absolute inset-x-6 top-5 z-10 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-faint sm:inset-x-9 sm:top-8">
+    <div className="world-frame relative mx-auto aspect-square w-full max-w-[640px] overflow-hidden rounded-2xl border border-rule bg-panel/40 p-3 sm:p-5">
+      <div className="pointer-events-none absolute inset-x-6 top-5 z-10 flex items-center justify-between font-mono text-[10px] text-faint sm:inset-x-9 sm:top-8">
         <span className="inline-flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-mint/70" />Robel systems world</span>
         <span className="hidden sm:inline">Live architecture map</span>
       </div>

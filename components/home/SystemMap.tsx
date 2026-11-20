@@ -67,7 +67,7 @@ export default function SystemMap({ className = "" }: { className?: string }) {
               onBlur={() => setActive(null)}
               className="cursor-default outline-none"
             >
-              <circle cx={n.x} cy={n.y} r={on ? 4.4 : 3.6} className={`transition-all duration-300 ${on ? "fill-mint/15 stroke-mint" : "fill-ground stroke-mint/50"}`} strokeWidth={0.4} />
+              <circle cx={n.x} cy={n.y} r={on ? 4.4 : 3.6} className={`transition-colors duration-300 ${on ? "fill-mint/15 stroke-mint" : "fill-ground stroke-mint/50"}`} strokeWidth={0.4} />
               <circle cx={n.x} cy={n.y} r={1.2} className={n.id === "payment" || n.id === "transaction" ? "fill-gold" : "fill-mint"} />
               <text x={n.x} y={n.y + 8} textAnchor="middle" className={`font-mono transition-colors ${on ? "fill-ink" : "fill-muted"}`} style={{ fontSize: 2.6 }}>
                 {n.label}

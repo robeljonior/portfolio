@@ -3,7 +3,6 @@ import SocialIcon from "@/components/ui/SocialIcon";
 import LocalTime from "@/components/site/LocalTime";
 import SplitText from "@/components/site/SplitText";
 import { ABOUT_STATS, GITHUB_URL, HEADLINE_STACK, LINKEDIN_URL, TITLE } from "@/lib/Data";
-import AskTwin from "./HeroActions";
 import HeroVisual from "./HeroVisual";
 
 /** An engineering keyword picked out in the intro (same words as PITCH in lib/Data). */
@@ -26,7 +25,7 @@ export default function Hero({ avatar }: { avatar: string | null }) {
           </p>
         </div>
 
-        <p className="mt-8 font-mono text-xs uppercase tracking-[0.16em] text-faint">Backend systems · banking · fintech</p>
+        <p className="mt-8 font-mono text-xs text-faint">Backend systems · banking · fintech</p>
         <h1 id="hero-name" className="font-display mt-4 text-[3.2rem] leading-[0.95] text-ink sm:text-7xl xl:text-[4.5rem]">
           <SplitText text="Robel Mamushet" step={30} start={120} />
         </h1>
@@ -60,10 +59,6 @@ export default function Hero({ avatar }: { avatar: string | null }) {
           <a href={LINKEDIN_URL} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="press grid h-10 w-10 place-items-center rounded-full text-muted transition-colors hover:bg-veil/[0.06] hover:text-ink">
             <SocialIcon iconKey="linkedin" className="h-5 w-5" />
           </a>
-        </div>
-
-        <div className="mt-8 animate-rise [animation-delay:700ms]">
-          <AskTwin />
         </div>
 
         <div className="mt-10 grid max-w-[30rem] grid-cols-3 gap-px overflow-hidden rounded-xl border border-veil/[0.1] bg-veil/[0.08] animate-rise [animation-delay:760ms]">

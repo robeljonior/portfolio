@@ -194,7 +194,7 @@ export default function ChatTwin() {
                 style={{ animationDelay: `${120 + i * 70}ms` }}
                 className="group block w-full animate-rise rounded-2xl border border-veil/[0.08] bg-veil/[0.02] p-4 text-left transition-colors hover:border-mint/40 hover:bg-veil/[0.04]"
               >
-                <span className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-mint">
+                <span className="flex items-center justify-between font-mono text-[10px] text-mint">
                   {topic.tag}
                   <ArrowUp className="h-3.5 w-3.5 rotate-45 text-faint transition-transform duration-300 group-hover:rotate-90 group-hover:text-mint" />
                 </span>
