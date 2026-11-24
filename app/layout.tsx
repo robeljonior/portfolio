@@ -1,15 +1,10 @@
 // app/layout.tsx
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import ChatTwin from "@/components/site/ChatTwin";
 import { EMAIL, EXPERIENCE, GITHUB_URL, LINKEDIN_URL } from "@/lib/Data";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
-
-const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
-const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
-const display = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-display" });
 
 const title = "Robel Mamushet · Backend Software Engineer (Java, Spring Boot, Go)";
 const description =
@@ -28,8 +23,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0D0E10" },
-    { media: "(prefers-color-scheme: light)", color: "#F4F2ED" },
+    { media: "(prefers-color-scheme: dark)", color: "#0E1013" },
+    { media: "(prefers-color-scheme: light)", color: "#EEF0F3" },
   ],
 };
 
@@ -52,7 +47,7 @@ const themeScript = `try{var t=localStorage.getItem("theme");document.documentEl
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${sans.variable} ${mono.variable} ${display.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" suppressHydrationWarning>
       <body className="font-sans antialiased">
         <Script id="theme" strategy="beforeInteractive">
           {themeScript}

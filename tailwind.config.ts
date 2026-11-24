@@ -20,15 +20,17 @@ const config: Config = {
         /** Overlay tint: white on dark, black on light. */
         veil: v('veil'),
         mint: v('mint'),
+        /** Backwards-compatible alias for the old secondary accent. */
         gold: v('gold'),
-        /** Text on accent buttons: dark on gold at night, white on black by day. */
+        /** Text on lime controls. */
         onaccent: v('onaccent'),
-        lcd: { DEFAULT: v('lcd'), ground: '#1c2410', ink: '#d9ec9c' },
+        lcd: v('lcd'),
+        error: v('error'),
       },
       fontFamily: {
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Arial', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
-        display: ['var(--font-display)', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'Arial Narrow', 'sans-serif'],
       },
       maxWidth: { page: '1180px' },
       transitionTimingFunction: {

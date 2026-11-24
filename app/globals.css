@@ -2,69 +2,99 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Self-hosted equivalents keep the visual system build-safe in offline environments. */
+@font-face {
+  font-family: "Display Narrow";
+  src: url("/fonts/display-narrow.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Interface Sans";
+  src: url("/fonts/interface-sans.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Tech Mono";
+  src: url("/fonts/tech-mono.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+}
+
 @layer base {
   /* Colour tokens as RGB triples, read by tailwind.config.ts. Night is the default. */
   :root,
   [data-theme="dark"] {
-    /* Night: deep charcoal, soft off-white text, one muted teal accent used sparingly. */
-    --ground: 13 14 16; /* #0D0E10 page */
-    --panel: 19 20 23; /* #131417 recessed surface */
-    --raised: 24 26 29; /* #181A1D cards */
-    --rule: 36 38 42; /* #24262A hairline */
-    --rule-strong: 58 61 66;
-    --ink: 236 233 226; /* #ECE9E2 primary text */
-    --muted: 160 160 156; /* #A0A09C secondary text */
-    --faint: 118 119 117; /* #767775 meta, 4.6:1 on the page */
+    /* Dark fintech palette: charcoal, brushed silver text, one lime accent. */
+    --ground: 14 16 19; /* #0E1013 page */
+    --panel: 20 23 28;
+    --raised: 22 25 30; /* #16191E cards */
+    --rule: 42 47 54; /* #2A2F36 hairline */
+    --rule-strong: 64 70 80;
+    --ink: 237 239 242; /* #EDEFF2 primary text */
+    --muted: 154 161 171; /* #9AA1AB secondary text */
+    --faint: 107 114 124; /* #6B727C meta */
     --veil: 255 255 255;
-    --mint: 110 168 156; /* #6EA89C muted deep teal, the only accent */
-    --gold: 190 184 170; /* #BEB8AA warm stone, neutral not accent */
-    --onaccent: 13 14 16;
-    --lcd: 110 168 156;
+    --mint: 182 227 90; /* #B6E35A the only accent */
+    --gold: 182 227 90; /* legacy alias, same lime accent */
+    --onaccent: 14 16 19;
+    --lcd: 76 195 138; /* #4CC38A success */
+    --error: 229 72 77; /* #E5484D error */
     --glow: 1;
     --shadow: 0 0 0;
     color-scheme: dark;
   }
 
-  /* Day: warm paper, same structure, darker teal for contrast. */
+  /* Light fintech palette: cool haze, white cards, black controls. */
   [data-theme="light"] {
-    --ground: 244 242 237;
-    --panel: 236 233 226;
-    --raised: 250 249 246;
-    --rule: 222 218 208;
-    --rule-strong: 196 192 182;
-    --ink: 22 23 26;
-    --muted: 82 82 80;
-    --faint: 108 108 104;
-    --veil: 22 23 26;
-    --mint: 36 104 92;
-    --gold: 110 100 82;
-    --onaccent: 244 242 237;
-    --lcd: 36 104 92;
-    --glow: 0;
-    --shadow: 30 28 24;
+    --ground: 238 240 243; /* #EEF0F3 page */
+    --panel: 244 246 248;
+    --raised: 248 249 251; /* #F8F9FB cards */
+    --rule: 221 225 230; /* #DDE1E6 hairline */
+    --rule-strong: 192 199 207;
+    --ink: 15 17 21; /* #0F1115 primary text */
+    --muted: 91 99 110; /* #5B636E secondary text */
+    --faint: 138 146 156; /* #8A929C meta */
+    --veil: 15 17 21;
+    --mint: 182 227 90; /* #B6E35A */
+    --gold: 182 227 90;
+    --onaccent: 15 17 21;
+    --lcd: 76 195 138;
+    --glow: 0.35;
+    --shadow: 15 17 21;
     color-scheme: light;
   }
 
   /* A block that stays in night colours whichever theme is on (the playground console). */
   .theme-dark {
-    --ground: 13 14 16;
-    --panel: 19 20 23;
-    --raised: 24 26 29;
-    --rule: 36 38 42;
-    --rule-strong: 58 61 66;
-    --ink: 236 233 226;
-    --muted: 160 160 156;
-    --faint: 118 119 117;
+    --ground: 14 16 19;
+    --panel: 20 23 28;
+    --raised: 22 25 30;
+    --rule: 42 47 54;
+    --rule-strong: 64 70 80;
+    --ink: 237 239 242;
+    --muted: 154 161 171;
+    --faint: 107 114 124;
     --veil: 255 255 255;
-    --mint: 110 168 156;
-    --gold: 190 184 170;
-    --onaccent: 13 14 16;
-    --lcd: 110 168 156;
+    --mint: 182 227 90;
+    --gold: 182 227 90;
+    --onaccent: 14 16 19;
+    --lcd: 76 195 138;
+    --error: 229 72 77;
     --glow: 1;
     color: rgb(var(--ink));
   }
 
   :root {
+    --font-sans: "Interface Sans";
+    --font-mono: "Tech Mono";
+    --font-display: "Display Narrow";
     /* One easing curve for the whole site: a calm ease-out. */
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
     --spring: var(--ease);
@@ -84,7 +114,7 @@
     transition: background-color 400ms ease, color 400ms ease;
   }
 
-  /* Atmosphere: a faint cool light from the top and a whisper of film grain. */
+  /* Atmosphere: a faint white haze in dark mode, and cool white in light mode. */
   body::before {
     content: "";
     position: fixed;
@@ -93,7 +123,7 @@
     pointer-events: none;
     opacity: var(--glow);
     background:
-      radial-gradient(70rem 40rem at 50% -12%, rgb(110 168 156 / 0.06), transparent 70%),
+      radial-gradient(70rem 40rem at 50% -12%, rgb(255 255 255 / 0.055), transparent 70%),
       radial-gradient(50rem 40rem at 100% 100%, rgb(255 255 255 / 0.025), transparent 70%);
   }
   body::after {
@@ -111,17 +141,116 @@
     color: rgb(var(--ink));
   }
 
-  /* Display face: Instrument Serif for names and section titles, set large and calm. */
+  /* Display face: condensed uppercase sans for names and section titles. */
   .font-display {
-    font-family: var(--font-display), Georgia, serif;
+    font-family: var(--font-display), Impact, sans-serif;
     font-weight: 400;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
   }
 
   h1,
   h2 {
-    font-family: var(--font-display), Georgia, serif;
+    font-family: var(--font-display), Impact, sans-serif;
     font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .headline {
+    letter-spacing: -0.03em;
+  }
+
+  .hero-name {
+    color: rgb(var(--ink));
+    letter-spacing: -0.035em;
+  }
+
+  .hero-name-line {
+    display: block;
+    width: fit-content;
+    max-width: none;
+    overflow: visible;
+    white-space: nowrap;
+  }
+
+  .hero-name-line--long {
+    font-size: 0.82em;
+  }
+
+  .hero-name-block {
+    display: inline-block;
+    padding: 0 0.07em 0.04em;
+    background: rgb(var(--mint) / 0.34);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.06) inset;
+  }
+
+  .hero-name-char {
+    display: inline-block;
+    color: rgb(var(--ink));
+    animation: hero-char-rise 650ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  }
+
+  @keyframes hero-char-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.4em);
+      filter: blur(5px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  [data-theme="dark"] .headline {
+    background: linear-gradient(180deg, rgb(245 246 248) 0%, rgb(169 175 184) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+    -webkit-text-fill-color: transparent;
+  }
+
+  [data-theme="light"] .headline {
+    color: rgb(15 17 21) !important;
+  }
+
+  /* Light mode follows the quiet, product-led reference: clean sans type and white haze. */
+  [data-theme="light"] body::before {
+    opacity: 1;
+    background:
+      radial-gradient(44rem 30rem at 52% 4%, rgb(255 255 255 / 0.92), transparent 72%),
+      radial-gradient(32rem 24rem at 4% 72%, rgb(255 255 255 / 0.62), transparent 72%),
+      radial-gradient(36rem 24rem at 100% 92%, rgb(255 255 255 / 0.58), transparent 72%);
+  }
+
+  [data-theme="light"] body {
+    background:
+      radial-gradient(circle at 75% 45%, rgb(210 216 228 / 0.85) 0%, rgb(232 236 243 / 0.6) 45%, transparent 75%),
+      radial-gradient(circle at 20% 80%, rgb(198 205 220 / 0.55) 0%, transparent 60%),
+      linear-gradient(160deg, #eef1f6 0%, #dfe4ee 55%, #cfd6e4 100%);
+  }
+
+  [data-theme="light"] body::after {
+    opacity: 0.012;
+  }
+
+  [data-theme="light"] .hero-name {
+    font-family: var(--font-sans), Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.075em;
+    line-height: 0.93;
+    text-transform: none;
+  }
+
+  [data-theme="light"] .hero-name-block {
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  [data-theme="light"] .hero-name-char {
+    color: rgb(15 17 21);
   }
 
   :focus-visible {
@@ -139,11 +268,11 @@
 }
 
 @layer components {
-  /* Card: a raised charcoal layer, hairline edge, soft depth, light frost. */
+  /* Card: a raised charcoal/white layer, hairline edge, soft depth, light frost. */
   .glass {
-    background: rgb(var(--raised) / 0.7);
+    background: rgb(var(--raised) / 0.76);
     border: 1px solid rgb(var(--rule));
-    box-shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 24px 48px -32px rgb(var(--shadow) / 0.7);
+    box-shadow: 0 1px 0 rgb(255 255 255 / 0.055) inset, 0 24px 48px -32px rgb(var(--shadow) / 0.7);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     transition: border-color 300ms var(--ease), background-color 300ms var(--ease);
@@ -158,7 +287,7 @@
 
   [data-theme="light"] .glass:not(.theme-dark) {
     background: rgb(var(--raised));
-    box-shadow: 0 1px 2px rgb(var(--shadow) / 0.04), 0 16px 40px -28px rgb(var(--shadow) / 0.25);
+    box-shadow: 0 1px 2px rgb(var(--shadow) / 0.05), 0 18px 42px -28px rgb(var(--shadow) / 0.2);
   }
 
   /* Small repeated pieces (chips, fields): no blur. */
@@ -270,7 +399,7 @@
 
 /* ---------- Pointer effects (PointerEffects.tsx), desktop + motion allowed only ---------- */
 
-/* Soft gold light that follows the cursor. Dark theme only (--glow is 0 by day). */
+/* Soft lime light that follows the cursor. Dark theme only (--glow is 0 by day). */
 .cursor-spot {
   position: fixed;
   inset: 0;
@@ -278,7 +407,7 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 500ms ease;
-  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgb(110 168 156 / 0.06), transparent 70%);
+  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgb(182 227 90 / 0.06), transparent 70%);
 }
 .pointer-fx.pointer-in .cursor-spot {
   opacity: var(--glow);

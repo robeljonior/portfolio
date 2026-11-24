@@ -1,7 +1,6 @@
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import SocialIcon from "@/components/ui/SocialIcon";
 import LocalTime from "@/components/site/LocalTime";
-import SplitText from "@/components/site/SplitText";
 import { ABOUT_STATS, GITHUB_URL, HEADLINE_STACK, LINKEDIN_URL, TITLE } from "@/lib/Data";
 import AskTwin from "./HeroActions";
 import HeroVisual from "./HeroVisual";
@@ -26,12 +25,29 @@ export default function Hero({ avatar }: { avatar: string | null }) {
           </p>
         </div>
 
-        <h1 id="hero-name" className="font-display mt-10 text-[3.75rem] leading-[0.92] text-ink sm:text-[5.5rem] xl:text-[6.5rem]">
-          <SplitText text="Robel Mamushet" step={45} start={150} />
+        <h1 id="hero-name" aria-label="Robel Mamushet" className="hero-name font-display mt-10 text-[3.5rem] leading-[0.84] sm:text-[5.75rem] xl:text-[8rem]">
+          <span aria-hidden="true" className="hero-name-line">
+            <span className="hero-name-block">
+              {[..."Robel"].map((char, i) => (
+                <span key={`${char}-${i}`} className="hero-name-char" style={{ animationDelay: `${180 + i * 45}ms` }}>
+                  {char}
+                </span>
+              ))}
+            </span>
+          </span>
+          <span aria-hidden="true" className="hero-name-line hero-name-line--long">
+            <span className="hero-name-block">
+              {[..."Mamushet"].map((char, i) => (
+                <span key={`${char}-${i}`} className="hero-name-char" style={{ animationDelay: `${390 + i * 45}ms` }}>
+                  {char}
+                </span>
+              ))}
+            </span>
+          </span>
         </h1>
 
         <p className="mt-8 animate-rise text-lg text-ink [animation-delay:500ms] sm:text-xl">
-          {TITLE} <span className="text-faint">·</span> <span className="font-display text-[1.35em] italic text-muted">systems that move money</span>
+          {TITLE} <span className="text-faint">·</span> <span className="text-muted">systems that move money</span>
         </p>
         <p className="mt-3 animate-rise font-mono text-[13px] text-faint [animation-delay:560ms]">{HEADLINE_STACK.join("  /  ")}</p>
 

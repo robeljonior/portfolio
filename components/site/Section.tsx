@@ -27,13 +27,13 @@ export default function Section({ id, title, heading, intro, stacked = false, ch
       <div className={stacked ? "" : "lg:grid lg:grid-cols-[minmax(0,340px)_minmax(0,1fr)] lg:gap-20"}>
         <div className={stacked ? "mb-12 max-w-2xl" : "mb-10 lg:mb-0"}>
           <div className={stacked ? "" : "lg:sticky lg:top-28"}>
-            <p data-reveal className="flex items-center gap-3 font-mono text-xs text-faint">
+            <p data-reveal className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.15em] text-faint">
               {number && <span className="text-mint">{number}</span>}
               <span className="h-px w-8 bg-veil/15" aria-hidden="true" />
               <span id={`${id}-title`}>{title}</span>
             </p>
             {heading && (
-              <h2 data-reveal className="font-display mt-6 text-[2.75rem] leading-[1.02] text-ink sm:text-[3.5rem]">
+              <h2 data-reveal className="headline font-display mt-6 text-[2.75rem] leading-[0.92] text-ink sm:text-[4.5rem]">
                 {heading}
               </h2>
             )}

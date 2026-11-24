@@ -72,7 +72,7 @@ export default function Kafka() {
             <div key={p} className="grid grid-cols-[88px_1fr] items-center gap-3 rounded-xl border border-veil/[0.08] bg-ground/60 p-2.5">
               <div className="font-mono text-[11px] leading-4">
                 <div className="text-ink">partition {p}</div>
-                <div className={o >= 0 ? "text-mint" : "text-[#e59a8f]"}>{o >= 0 ? `→ consumer ${o + 1}` : "unassigned"}</div>
+                <div className={o >= 0 ? "text-mint" : "text-error"}>{o >= 0 ? `→ consumer ${o + 1}` : "unassigned"}</div>
               </div>
               <div className="flex min-h-[28px] flex-wrap gap-1 overflow-hidden">
                 {l.slice(-14).map((m) => {
@@ -104,7 +104,7 @@ export default function Kafka() {
             aria-pressed={on}
             onClick={() => setConsumers((c) => c.map((v, j) => (j === i ? !v : v)))}
             className={`press rounded-full border px-3 py-1 font-mono text-[11px] transition-colors ${
-              on ? "border-mint/50 text-mint" : "border-[#e59a8f]/50 text-[#e59a8f] line-through"
+              on ? "border-mint/50 text-mint" : "border-error/50 text-error line-through"
             }`}
           >
             consumer {i + 1}

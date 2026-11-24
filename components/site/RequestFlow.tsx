@@ -51,7 +51,7 @@ export default function RequestFlow({ hops, title = "Follow a request" }: { hops
           <button
             type="button"
             onClick={playing ? () => setPlaying(false) : start}
-            className="press inline-flex items-center gap-2 rounded-full bg-mint px-3.5 py-1.5 text-xs font-semibold text-onaccent transition-colors hover:bg-mint/85"
+            className="press inline-flex items-center gap-2 rounded-full bg-ink px-3.5 py-1.5 text-xs font-semibold text-ground transition-colors hover:bg-mint hover:text-onaccent"
           >
             {playing ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
             {playing ? "Pause" : pos >= last ? "Send again" : pos >= 0 ? "Resume" : "Send a request"}
