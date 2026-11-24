@@ -69,7 +69,7 @@ export default function Nav({ home = false }: { home?: boolean }) {
                   <a
                     href={href(l.id)}
                     aria-current={on ? "true" : undefined}
-                    className={`relative rounded-full px-3 py-1.5 text-sm transition-colors duration-200 ${on ? "text-ink" : "text-muted hover:text-ink"}`}
+                    className={`relative rounded-full px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] transition-colors duration-200 ${on ? "text-ink" : "text-muted hover:text-ink"}`}
                   >
                     {on && <span className="absolute inset-0 -z-10 rounded-full bg-veil/[0.07]" aria-hidden="true" />}
                     {l.label}
@@ -107,7 +107,7 @@ export default function Nav({ home = false }: { home?: boolean }) {
           <ul className="grid gap-1">
             {NAV_LINKS.map((l, i) => (
               <li key={l.id} className="animate-rise" style={{ animationDelay: `${i * 30}ms` }}>
-                <a href={href(l.id)} onClick={() => setOpen(false)} className="flex items-baseline gap-3 py-2 text-lg text-ink">
+                <a href={href(l.id)} onClick={() => setOpen(false)} className="flex items-baseline gap-3 py-2 text-lg uppercase tracking-[0.08em] text-ink">
                   <span className="font-mono text-xs text-faint">{String(i + 1).padStart(2, "0")}</span>
                   {l.label}
                 </a>

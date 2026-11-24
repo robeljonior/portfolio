@@ -89,15 +89,15 @@ export default function Contact() {
         </label>
         <div className="flex flex-wrap items-center gap-4 sm:col-span-2">
           <button type="submit" data-magnetic className="press group inline-flex items-center">
-            <span className="pill gap-2 bg-mint text-onaccent group-hover:bg-mint/85">
+            <span className="pill gap-2 bg-ink text-ground group-hover:bg-mint group-hover:text-onaccent">
               <Send className="h-4 w-4" /> Send
             </span>
-            <span className="pill-dot bg-mint text-onaccent group-hover:bg-mint/85" aria-hidden="true">
+            <span className="pill-dot bg-ink text-ground group-hover:bg-mint group-hover:text-onaccent" aria-hidden="true">
               <ArrowUpRight className="h-4 w-4" />
             </span>
           </button>
           <p className="text-xs text-faint" role="status" aria-live="polite">
-            {error ? <span className="text-[#e59a8f]">{error}</span> : opened ? "Your email app should open now." : "Opens your email app with the message filled in."}
+            {error ? <span className="text-error">{error}</span> : opened ? "Your email app should open now." : "Opens your email app with the message filled in."}
           </p>
         </div>
       </form>

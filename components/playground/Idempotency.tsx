@@ -60,7 +60,7 @@ export default function Idempotency() {
           Send an idempotency key
         </label>
         <span className="ml-auto font-mono text-xs text-muted">
-          Balance <span className="text-ink">ETB {balance.toLocaleString()}</span> · debits <span className={charges > 1 ? "text-[#e59a8f]" : "text-ink"}>{charges}</span>
+          Balance <span className="text-ink">ETB {balance.toLocaleString()}</span> · debits <span className={charges > 1 ? "text-error" : "text-ink"}>{charges}</span>
         </span>
       </div>
       <div className="mt-4 flex flex-wrap gap-2">

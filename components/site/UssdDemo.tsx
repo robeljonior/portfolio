@@ -219,7 +219,7 @@ export default function UssdDemo() {
             type="button"
             onClick={() => send(input)}
             aria-label="Call or send"
-            className="press grid h-8 place-items-center rounded-md bg-[#1f3a24] text-[#8fdc9a] transition-colors hover:bg-[#25462b]"
+            className="press grid h-8 place-items-center rounded-md bg-lcd/15 text-lcd transition-colors hover:bg-lcd/25"
           >
             <Phone className="h-4 w-4" />
           </button>
@@ -235,7 +235,7 @@ export default function UssdDemo() {
             type="button"
             onClick={hangUp}
             aria-label="Hang up"
-            className="press grid h-8 place-items-center rounded-md bg-[#3a1f1f] text-[#e59a8f] transition-colors hover:bg-[#462525]"
+            className="press grid h-8 place-items-center rounded-md bg-error/15 text-error transition-colors hover:bg-error/25"
           >
             <PhoneOff className="h-4 w-4" />
           </button>

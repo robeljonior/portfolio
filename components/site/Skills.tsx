@@ -52,7 +52,7 @@ export default function Skills() {
       </dl>
 
       <aside aria-live="polite" className="xl:sticky xl:top-28 xl:self-start">
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-faint">{skill ? `Used in · ${skill}` : "Used in"}</p>
+        <p className="font-mono text-xs text-faint">{skill ? `Used in · ${skill}` : "Used in"}</p>
         {skill ? (
           projects.length ? (
             <ul className="mt-3 space-y-2">

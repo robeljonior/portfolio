@@ -57,7 +57,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
                 i <= active
                   ? "scale-110 border-mint bg-mint text-onaccent"
                   : "border-rule-strong bg-ground text-muted"
-              } ${i === active ? "shadow-[0_0_0_4px_rgb(var(--mint)/0.15)]" : ""}`}
+              } ${i === active ? "" : ""}`}
             >
               {String(i + 1).padStart(2, "0")}
             </span>
@@ -69,7 +69,7 @@ export default function ProcessFlow({ steps }: { steps: Step[] }) {
         {steps.map((step, i) => (
           <span
             key={step.label}
-            className={`w-20 text-center font-mono text-[10px] uppercase tracking-[.06em] transition-colors duration-500 sm:w-28 ${
+            className={`w-20 text-center font-mono text-[10px] transition-colors duration-500 sm:w-28 ${
               i === active ? "text-mint" : "text-faint"
             }`}
           >
